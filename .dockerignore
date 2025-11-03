@@ -1,0 +1,9 @@
+api/node_modules
+api/npm-debug.log
+frontend/node_modules
+frontend/npm-debug.log
+.git
+.gitignore
+api/.env
+frontend/.env
+.DS_Store

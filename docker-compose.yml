@@ -1,0 +1,33 @@
+services:
+  api:
+    build: ./api
+    container_name: express_api
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+
+  db:
+    image: postgres:16
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: netuser
+      POSTGRES_PASSWORD: netpass
+      POSTGRES_DB: netdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./book.sql:/docker-entrypoint-initdb.d/book.sql:ro
+
+  frontend:
+    build: ./frontend
+    container_name: react_frontend
+    env_file:
+      - .env
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+
+volumes:
+  pgdata:

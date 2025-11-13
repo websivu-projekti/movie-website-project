@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getMovies, getMovie, addMovie, updateMovie, deleteMovie } from "../controllers/book_controller.js";
+import { getMovies, getMovie, addMovie, updateMovie, deleteMovie } from "../controllers/movie_controller.js";
 
 const movieRouter = Router();
 

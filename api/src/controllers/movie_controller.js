@@ -2,8 +2,8 @@ import { getAll, getOne, addOne, updateOne, deleteOne } from "../models/movie_mo
 
 export async function getMovies(req, res, next) {
   try {
-    const movies = await getAll();
-    res.json(movies);
+    const content = await getAll();
+    res.json(content);
   } catch (err) {
     next(err);
   }
@@ -11,11 +11,11 @@ export async function getMovies(req, res, next) {
 
 export async function getMovie(req, res, next) {
   try {
-    const movie = await getOne(req.params.id);
-    if (!movie) {
+    const content = await getOne(req.params.id);
+    if (!content) {
       return res.status(404).json({ error: "Movie not found" });
     }
-    res.json(movie);
+    res.json(content);
   } catch (err) {
     next(err);
   }
@@ -43,11 +43,11 @@ export async function updateMovie(req, res, next) {
 
 export async function deleteMovie(req, res, next) {
   try {
-    const movie = await deleteOne(req.params.id);
-    if (!movie) {
+    const content = await deleteOne(req.params.id);
+    if (!content) {
       return res.status(404).json({ error: "Movie not found" });
     }
-    res.json(movie);
+    res.json(content);
   } catch (err) {
     next(err);
   }

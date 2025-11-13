@@ -1,4 +1,22 @@
-import { useEffect, useState } from "react";
+import React from "react"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Home from "./pages/Home" 
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
+  )
+}
+
+export default App
+
+
+
+/*import { useEffect, useState } from "react";
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -53,3 +71,4 @@ function App() {
 }
 
 export default App;
+*/

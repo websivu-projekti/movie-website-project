@@ -3,9 +3,9 @@ services:
     build: ./api
     container_name: express_api
     env_file:
-      - .env
+      - ./api/.env
     ports:
-      - "${PORT}:${PORT}"
+      - "3001:3001"
 
   db:
     image: postgres:16

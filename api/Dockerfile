@@ -2,12 +2,14 @@ FROM node:20
 
 WORKDIR /usr/src/app
 
-# Kopioi package.json ja + package-lock.json ensin (nopeampi cache npm installille)
+# Kopioidaan package.json ja package-lock.json ensin
 COPY package*.json ./
 
-RUN npm install -g nodemon && npm install
+# Asennetaan kaikki riippuvuudet (sis. node-fetch ja nodemon devDependency)
+RUN npm install
 
-# Kopioidaan sovelluksen lähdekoodi
+# Kopioidaan koko lähdekoodi
 COPY . .
 
-CMD ["npm", "start"]
+# Käytetään nodemonia kehityksessä
+CMD ["npx", "nodemon", "--legacy-watch", "src/index.js"]

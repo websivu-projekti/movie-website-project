@@ -1,0 +1,102 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding-top: 50px;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 100px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.column {
+  flex: 1;
+  padding: 20px;
+  text-align: start;
+}
+
+.image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.imageContainer {
+  width: 250px;
+  height: 250px;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 8px;
+  border: 8px solid #ccc;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 300px;
+}
+
+.field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.label {
+  width: 200px;
+  font-size: 1rem;
+}
+
+.input {
+  flex: 1;
+  padding: 8px;
+  font-size: 1rem;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button {
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.deleteButton {
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #ef4a31;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+.button:active {
+  background-color: #004080;
+}   

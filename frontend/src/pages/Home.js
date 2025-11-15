@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import "./Home.css"
 
 function Home() {
   const sections = ["Films", "Now on Cinema", "My groups", "Profile"]
@@ -23,24 +24,24 @@ function Home() {
   }, [])
 
   return (
-    <div style={styles.container}>
-     <header style={styles.header}>
-        <h1 style={styles.title}>🎬 Movie Website</h1>
-        <div style={styles.searchBox}>
-          <input type="text" placeholder="Search movies..." style={styles.searchInput} />
+    <div className="homeContainer">
+     <header className="homeHeader">
+        <h1 className="homeTitle">🎬 Movie Website</h1>
+        <div className="searchBox">
+          <input type="text" placeholder="Search movies..." className="searchInput" />
         </div>
       </header>
-      <div style={styles.buttonBox}>
+      <div className="buttonBox">
         {sections.map(section => (
-          <button key={section} style={styles.sectionButton}>{section}</button>
+          <button key={section} className="sectionButton">{section}</button>
         ))}
       </div>
 
       {loading
         ? <p>Ladataan elokuvia...</p>
-        : <div style={styles.movieRow}>
+        : <div className="movieRow">
             {movies.map((movie, index) => (
-              <div key={index} style={styles.movieCard}>{movie}</div>
+              <div key={index} className="movieCard">{movie}</div>
             ))}
           </div>
       }
@@ -50,7 +51,7 @@ function Home() {
 
 
 // testi Tyylit
-const styles = {
+/*const styles = {
   container: {
     fontFamily: "Arial, sans-serif",
     color: "#fff",
@@ -78,6 +79,6 @@ const styles = {
   sectionButton: { padding: "0.5rem 1rem", backgroundColor: "#3a3a3a", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer" },
   movieRow: { display: "flex", justifyContent: "space-around", flexWrap: "wrap", gap: "0.5rem" },
   movieCard: { backgroundColor: "#3a3a3a", borderRadius: "4px", padding: "0.5rem", textAlign: "center", minWidth: "80px" },
-};
+};*/
 
 export default Home;

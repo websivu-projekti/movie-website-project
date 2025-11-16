@@ -20,32 +20,42 @@
 
 .container {
     min-height: 100vh;
-  }
+}
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
     margin-bottom: 0.5rem;
-  }
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    'title empty empty empty login search';
+}
 
 .title{ 
     font-size: 3em;
     font-family: var(--title-font);
+    grid-area: title;
     color: var(--blue-acc1);
+    margin: 0px;
 }
 
 .searchBox{ 
     background-color: var(--bg-acc1);
+    grid-area: search;
     padding: 0.5rem;
     border-radius: 8px; 
+    height: fit-content;
+    width: inherit;
+    align-self: center;
 }
 
 .searchInput{ 
     padding: 0.5rem; 
     border-radius: 4px; 
+    width: stretch;
+    width: -moz-available;
+    width: -webkit-fill-available;
     border: none; 
-    width: 200px;
 }
 
 .buttonBox{
@@ -58,8 +68,9 @@ header {
   }
 
 .loginBar{
-    margin-left: auto;
-    margin-right: 10px;
+    grid-area: login;
+    align-self: center;
+    margin: auto;
 }
 
 button{ 
@@ -94,4 +105,47 @@ button:active{
     padding: 0.5rem;
     text-align: center; 
     min-width: 80px;
+}
+
+@media only screen and (max-width: 740px){
+    .container{
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: fit-content(100px) fit-content(100px) fit-content(100px);
+        grid-template-areas: 
+            'header'
+            'menubar'
+            'main';
+    }
+    header{
+        grid-area: header;
+        grid-template-areas: 
+        'title login'
+        'search search';
+        height: fit-content;
+    }
+    .title{
+        grid-area: title;
+        align-self: center;
+    }
+    .loginBar{
+        grid-area: login;
+        margin:auto;
+    }
+    .searchBox{
+        grid-area: search;
+        height: fit-content;
+    }
+    .searchInput{
+        width: stretch;
+        width: -moz-available;
+        width: -webkit-fill-available;
+    }
+    .buttonBox{
+        grid-area: menubar;
+        height: fit-content;
+    }
+    .movieRow{
+        grid-area: main;
+    }
 }

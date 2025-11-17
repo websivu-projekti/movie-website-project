@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
+/*import "./Login.css"*/
 
 function SignUp() {
   const [username, setUsername] = useState("")
@@ -11,7 +12,54 @@ function SignUp() {
     console.log("Sign up submitted", { username, email, password })
   }
 
-  const styles = {
+  return (
+    <div className="container">
+      <h1 className="title">Sign Up</h1>
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="field">
+          <label className="label">Username</label>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="input"
+          />
+        </div>
+        <div className="field">
+          <label className="label">Email</label>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="input"
+          />
+        </div>
+        <div className="field">
+          <label className="label">Password</label>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="input"
+          />
+        </div>
+        <button type="submit" className="button">
+          Sign Up
+        </button>
+      </form>
+      <Link to="/login" className="link">
+        Already a user? Log in here!
+      </Link>
+    </div>
+  )
+}
+
+export default SignUp
+
+const styles = {
     container: {
       display: "flex",
       flexDirection: "column",
@@ -64,53 +112,4 @@ function SignUp() {
       textDecoration: "none",
       fontSize: "0.9rem",
     },
-  }
-
-  return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>Sign Up</h1>
-      <form style={styles.form} onSubmit={handleSubmit}>
-        <div style={styles.field}>
-          <label style={styles.label}>Username</label>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.field}>
-          <label style={styles.label}>Email</label>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.field}>
-          <label style={styles.label}>Password</label>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={styles.input}
-          />
-        </div>
-        <button type="submit" style={styles.button}>
-          Sign Up
-        </button>
-      </form>
-      <Link to="/login" style={styles.link}>
-        Already a user? Log in here!
-      </Link>
-    </div>
-  )
-}
-
-export default SignUp
-
-
+  } 

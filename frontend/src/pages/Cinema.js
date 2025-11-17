@@ -5,7 +5,7 @@ import "../index.css"
 function Home() {
   const navigate = useNavigate()
   const sections = [
-    { label: "Films", path: "/films" },
+    { label: "Films", path: "/" },
     { label: "Now in Cinemas", path: "/cinema" },
     { label: "My groups", path: "/groups" },
     { label: "Profile", path: "/profile" }
@@ -16,7 +16,7 @@ function Home() {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/popularFilms`)
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/now-playing`)
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
         setMovies(data.map(m => m.title))
@@ -53,6 +53,9 @@ function Home() {
           </button>
         ))}
       </div>
+
+      <h2>Currently playing in theaters</h2>
+
 
       {loading
         ? <p>Ladataan elokuvia...</p>

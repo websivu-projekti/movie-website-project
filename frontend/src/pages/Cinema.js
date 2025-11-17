@@ -5,7 +5,7 @@ import "../index.css"
 function Home() {
   const navigate = useNavigate()
   const sections = [
-    { label: "Films", path: "/" },
+    { label: "Films", path: "/films" },
     { label: "Now in Cinemas", path: "/cinema" },
     { label: "My groups", path: "/groups" },
     { label: "Profile", path: "/profile" }

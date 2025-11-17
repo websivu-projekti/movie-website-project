@@ -1,7 +1,7 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 
-function Profile(){
+function Films(){
   const navigate = useNavigate()
   return (
     <div style={{padding:20}}>

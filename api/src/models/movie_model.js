@@ -1,12 +1,12 @@
 import pool from "../database.js";
 
 export async function getAll() {
-  const result = await pool.query("SELECT * FROM book");
+  const result = await pool.query("SELECT * FROM content");
   return result.rows; 
 }
 
 export async function getOne(id) {
-  const result = await pool.query("SELECT * FROM book WHERE id = $1", [id]);
+  const result = await pool.query("SELECT * FROM content WHERE content_id = $1", [id]);
   return result.rows.length > 0 ? result.rows[0] : null;
 }
 

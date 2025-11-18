@@ -3,6 +3,7 @@ import cors from "cors"
 import "dotenv/config"
 
 import movieRouter from "./routers/movie_router.js" // uusi reitti
+import authRouter from "./routers/auth_router.js" // authentication routes
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -18,6 +19,9 @@ app.get("/", async (req, res) => {
 
 // uusi TMDB-elokuvat reitti
 app.use("/movies", movieRouter)
+
+// authentication routes
+app.use("/auth", authRouter)
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`)

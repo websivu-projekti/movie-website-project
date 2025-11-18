@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
+/*import "./Login.css"*/
 
 function Login() {
   const [username, setUsername] = useState("")
@@ -9,6 +10,43 @@ function Login() {
     e.preventDefault()
     console.log("Login submitted", { username, password })
   }
+
+  return (
+    <div className="container">
+      <h1 className="title">Log In</h1>
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="field">
+          <label className="label">Username</label>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="input"
+          />
+        </div>
+        <div className="field">
+          <label className="label">Password</label>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="input"
+          />
+        </div>
+        <button type="submit" className="button">
+          Log In
+        </button>
+      </form>
+      <Link to="/signup" className="link">
+        Not yet an user? Sign up here!
+      </Link>
+    </div>
+  )
+}
+
+export default Login
 
   const styles = {
     container: {
@@ -66,40 +104,3 @@ function Login() {
       fontSize: "0.9rem",
     },
   }
-
-  return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>Log In</h1>
-      <form style={styles.form} onSubmit={handleSubmit}>
-        <div style={styles.field}>
-          <label style={styles.label}>Username</label>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.field}>
-          <label style={styles.label}>Password</label>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={styles.input}
-          />
-        </div>
-        <button type="submit" style={styles.button}>
-          Log In
-        </button>
-      </form>
-      <Link to="/signup" style={styles.link}>
-        Not yet an user? Sign up here!
-      </Link>
-    </div>
-  )
-}
-
-export default Login

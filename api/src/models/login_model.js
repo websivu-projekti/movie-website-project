@@ -6,7 +6,7 @@ export async function registerUser(email, password, username) {
     try {
         // Tarkista jos käyttäjä on olemassa
         const existingUser = await pool.query(
-            "SELECT * FROM users WHERE email = $1",
+            'SELECT * FROM "user" WHERE email = $1',
             [email]
         )
         
@@ -20,8 +20,8 @@ export async function registerUser(email, password, username) {
         
         // Uuden käyttäjän lisäys databaseen
         const result = await pool.query(
-            "INSERT INTO users (email, password, username, created_at) VALUES ($1, $2, $3, NOW()) RETURNING id, email, username, created_at",
-            [email, hashedPassword, username]
+            'INSERT INTO "user" (username, email, password) VALUES ($1, $2, $3) RETURNING user_id, username, email',
+            [username, email, hashedPassword]
         )
         
         return result.rows[0]
@@ -35,7 +35,7 @@ export async function loginUser(email, password) {
     try {
         // Etsi sähköpostilla
         const result = await pool.query(
-            "SELECT * FROM users WHERE email = $1",
+            'SELECT * FROM "user" WHERE email = $1',
             [email]
         )
         
@@ -64,7 +64,7 @@ export async function loginUser(email, password) {
 export async function getUserById(userId) {
     try {
         const result = await pool.query(
-            "SELECT id, email, username, created_at FROM users WHERE id = $1",
+            'SELECT user_id, email, username, pfp_url FROM "user" WHERE user_id = $1',
             [userId]
         )
         

@@ -36,7 +36,7 @@ export async function register(req, res) {
 
         // Generoi JWT tokeni
         const token = jwt.sign(
-            { userId: newUser.id, email: newUser.email },
+            { userId: newUser.user_id, email: newUser.email },
             JWT_SECRET,
             { expiresIn: "24h" }
         )
@@ -72,7 +72,7 @@ export async function login(req, res) {
 
         // Generoi JWT tokeni
         const token = jwt.sign(
-            { userId: user.id, email: user.email },
+            { userId: user.user_id, email: user.email },
             JWT_SECRET,
             { expiresIn: "24h" }
         )

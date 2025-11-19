@@ -83,7 +83,7 @@
 
 .movie-rating {
   margin-top: 5px;
-  color: gold; /* voit myöhemmin korvata esim. var(--green-acc1) halutessasi */
+  color: gold; 
   font-size: 18px;
 }
 

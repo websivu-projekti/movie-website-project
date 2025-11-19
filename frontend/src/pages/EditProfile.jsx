@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./EditProfile.css";
+import "../EditProfile.css";
+import Header from '../components/header.jsx'
 
 function SignUp() {
   const [username, setUsername] = useState("")
@@ -13,6 +14,7 @@ function SignUp() {
 
   return (
     <div className="container">
+      <Header/>
       <h1 className="title">Edit Profile</h1>
       <div className="row">
         <div className="column">
@@ -92,83 +94,3 @@ function SignUp() {
 }
 
 export default SignUp;
-
-  /*const styles = {
-    container: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "flex-start",
-      minHeight: "100vh",
-      paddingTop: "50px",
-      fontFamily: "Arial, sans-serif",
-    },
-    title: {
-      fontSize: "2rem",
-      marginBottom: "20px",
-      fontWeight: "bold",
-    },
-
-    row: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "flex-start",
-      gap: "100px",
-      width: "100%",
-      maxWidth: "800px",
-    },
-    column: {
-      flex: 1,
-      padding: "20px",
-      textAlign: "start",
-    },
-    image: {
-      width: "150px",
-      height: "150px",
-      objectFit: "cover",
-    },
-    imageContainer: {
-      width: "250px",
-      height: "250px",
-      backgroundColor: "#e0e0e0",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      overflow: "hidden",
-      textAlign: "center",
-      borderRadius: "8px",
-      border: "8px solid #ccc",
-    },
-    form: {
-      display: "flex",
-      flexDirection: "column",
-      gap: "15px",
-      width: "300px",
-    },
-    field: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-    },
-    label: {
-      width: "200px",
-      fontSize: "1rem",
-    },
-    input: {
-      flex: 1,
-      padding: "8px",
-      fontSize: "1rem",
-      color: "#000",
-      border: "1px solid #ccc",
-      borderRadius: "4px",
-    },
-    button: {
-      padding: "10px",
-      fontSize: "1rem",
-      backgroundColor: "#007BFF",
-      color: "#fff",
-      border: "none",
-      cursor: "pointer",
-      borderRadius: "4px",
-    },
-  };*/

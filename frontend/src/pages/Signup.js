@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-/*import "./Login.css"*/
+import "../index.css"
+import Header from '../components/header.jsx'
 
 function SignUp() {
   const [username, setUsername] = useState("")
@@ -14,6 +15,7 @@ function SignUp() {
 
   return (
     <div className="container">
+      <Header/>
       <h1 className="title">Sign Up</h1>
       <form className="form" onSubmit={handleSubmit}>
         <div className="field">

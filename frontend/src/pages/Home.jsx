@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import "../index.css"
+import Header from '../components/header.jsx'
 
 function Home() {
-  const sections = ["Films", "Now in Cinemas", "My groups", "Profile"]
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -25,21 +25,7 @@ function Home() {
 
   return (
     <div class="container">
-     <header>
-        <h1 class="title">🎬 Clipper</h1>
-        <div class="loginBar">
-          <button class="loginBtn">Log In</button>
-          <button class="registerBtn">Register</button>
-        </div>
-        <div class="searchBox">
-          <input type="text" placeholder="Search movies..." class="searchInput" />
-        </div>
-      </header>
-      <div class="buttonBox">
-        {sections.map(section => (
-          <button key={section} class="menuButton">{section}</button>
-        ))}
-      </div>
+     <Header/>
 
       {loading
         ? <p>Ladataan elokuvia...</p>

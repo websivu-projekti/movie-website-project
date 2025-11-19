@@ -32,11 +32,12 @@ header {
 }
 
 .title{ 
-    font-size: 3em;
+    font-size: 5em;
     font-family: var(--title-font);
     grid-area: title;
     color: var(--blue-acc1);
     margin: 0px;
+    text-decoration: none;
 }
 
 .searchBox{ 
@@ -73,7 +74,7 @@ header {
     margin: auto;
 }
 
-button{ 
+.loginBtn, .registerBtn, .menuButton{ 
     margin: 2px;
     padding: 0.5rem 1rem; 
     background-color: var(--bg-acc2);
@@ -81,13 +82,14 @@ button{
     border: none; 
     border-radius: 4px; 
     cursor: pointer;
+    text-decoration: none;
 }
 
-button:hover{
+.loginBtn:hover, .registerBtn:hover, .menuButton:hover{
     outline: solid var(--green-acc2) 2px;
 }
 
-button:active{
+.loginBtn:active, .registerBtn:active, .menuButton:active{
     color: var(--text-col2);
     background-color: var(--green-acc1);
 }
@@ -107,6 +109,7 @@ button:active{
     min-width: 80px;
 }
 
+/* Breakpoints */ 
 @media only screen and (max-width: 740px){
     .container{
         display: grid;

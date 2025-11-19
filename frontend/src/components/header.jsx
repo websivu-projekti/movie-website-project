@@ -11,7 +11,7 @@ export default function Header(){
     return(
         <>
             <header>
-                <a href="/" class="title">🎬 Clipper</a>
+                <a href="/" class="pageTitle">🎬 Clipper</a>
                 <div class="loginBar">
                     <a href="/login" class="loginBtn">Log In</a>
                     <a href="/signup" class="registerBtn">Register</a>

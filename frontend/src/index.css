@@ -33,7 +33,7 @@ header {
     'title empty empty empty login search';
 }
 
-.title{ 
+.pageTitle{ 
     font-size: 3em;
     font-family: var(--title-font);
     grid-area: title;

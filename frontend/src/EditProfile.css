@@ -101,7 +101,8 @@
 }
 
 .label {
-  width: 200px;
+  width: max-content;
+  padding: 5px;
   font-size: 1rem;
 }
 

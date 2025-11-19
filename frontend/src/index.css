@@ -6,6 +6,8 @@
     --blue-acc2: #7c80de;
     --green-acc1: #a5e364;
     --green-acc2: #cdf0a8;
+    --red-acc1: #ef4a31;
+    --red-acc2: #d33e27;
     --text-col1: #F5F5F5;
     --text-col2: #0f0f0f;
     --title-font: "Bagel Fat One", system-ui;
@@ -32,7 +34,7 @@ header {
 }
 
 .title{ 
-    font-size: 5em;
+    font-size: 3em;
     font-family: var(--title-font);
     grid-area: title;
     color: var(--blue-acc1);
@@ -147,6 +149,7 @@ header {
     .buttonBox{
         grid-area: menubar;
         height: fit-content;
+        width: auto;
     }
     .movieRow{
         grid-area: main;

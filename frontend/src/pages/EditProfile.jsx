@@ -15,20 +15,18 @@ function SignUp() {
   return (
     <div className="container">
       <Header/>
-      <h1 className="title">Edit Profile</h1>
-      <div className="row">
-        <div className="column">
+      <div className="content">
+          <h1 className="editTitle">Edit Profile</h1>
           <div className="imageContainer">
-            <img src="" alt="Profile picture" className="image"></img>
+            <img src="" alt="Profile picture" className="pfp"></img>
           </div>
-          <div style={{ marginTop: "15px", textAlign: "start" }}>
-            <button type="submit" className="button">
+            <button type="submit" className="changePfp button">
               Change Profile Picture
             </button>
-            <h4>
-              Settings
-            </h4>
-            <form className="form">
+            <form className="accessibility">
+              <h4>
+                Settings
+              </h4>
               <div className="field">
                 <input type="checkbox" />
                 <label className="label">Dyslexia friendly font</label>
@@ -46,11 +44,8 @@ function SignUp() {
                 <label className="label">Show adult content</label>
               </div>
             </form>
-          </div>
-        </div>
-        <div className="column">
-          <form className="form" onSubmit={handleSubmit}>
-            <div className="field">
+          <form className="manageUser" onSubmit={handleSubmit}>
+            <div className="field usrnameField">
               <label className="label">Username</label>
               <input
                 type="text"
@@ -60,7 +55,7 @@ function SignUp() {
                 className="input"
               />
             </div>
-            <div className="field">
+            <div className="field emailField">
               <label className="label">Email</label>
               <input
                 type="email"
@@ -70,7 +65,7 @@ function SignUp() {
                 className="input"
               />
             </div>
-            <div className="field">
+            <div className="field passwordField">
               <label className="label">Password</label>
               <input
                 type="password"
@@ -80,7 +75,7 @@ function SignUp() {
                 className="input"
               />
             </div>
-            <button type="submit" className="button">
+            <button type="submit" className="changeBtn button">
               Change Password
             </button>
             <button className="deleteButton">
@@ -88,8 +83,7 @@ function SignUp() {
             </button>
           </form>
         </div>
-      </div>
-    </div>
+        </div>
   );
 }
 

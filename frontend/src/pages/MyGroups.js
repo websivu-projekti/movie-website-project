@@ -1,27 +1,13 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import "./MyGroups.css"
+import Header from '../components/header.jsx'
 
 
 function MyGroups() {
 return (
 <div className="container">
-<header>
-<h1 className="title">Clipper</h1>
-
-
-<div className="searchBox">
-<input type="text" className="searchInput" placeholder="Search" />
-</div>
-</header>
-
-
-<div className="buttonBox">
-<button>Films</button>
-<button>Now in Cinema</button>
-<button>MyGroups</button>
-<button>Profile</button>
-</div>
+<Header/>
 
 <div className="my-groups-container">
   <h1 className="groups-title">My Groups</h1>

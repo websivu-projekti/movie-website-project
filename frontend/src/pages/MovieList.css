@@ -14,8 +14,7 @@
 
 .list-title {
   font-size: 2rem;
-  font-family: var(--title-font);
-  font-weight: normal;
+  font-weight: bold;
   color: var(--blue-acc1);
 }
 
@@ -90,5 +89,17 @@
 .movie-rating span {
   margin-right: 2px;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 1200px){
+    .movies-grid{
+      grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (max-width: 740px){
+    .movies-grid{
+      grid-template-columns: repeat(1, 1fr);
+    }
 }
 

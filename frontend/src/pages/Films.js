@@ -4,7 +4,7 @@ import Header from '../components/header.jsx'
 
 function Films(){
   return (
-    <div>
+    <div className="container">
       <Header/>
       <h1>Films</h1>
       <p>Films will be here</p>

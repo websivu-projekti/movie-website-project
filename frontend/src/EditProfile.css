@@ -101,9 +101,9 @@
 }
 
 .label {
-  width: max-content;
   padding: 5px;
   font-size: 1rem;
+  width: 100px;
 }
 
 .input {

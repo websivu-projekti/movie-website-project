@@ -1,7 +1,6 @@
-
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import "../index.css"
+import "../loginsignup.css"
 import Header from '../components/header.jsx'
 
 function SignUp() {

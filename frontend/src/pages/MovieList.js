@@ -1,8 +1,11 @@
 import React from "react"
+import Header from '../components/header.jsx'
 import "./MovieList.css"
 
 function MovieList() {
   return (
+    <div className="container">
+    <Header/>
     <div className="movie-list-container">
       {/* Otsikko ja käyttäjän nimi */}
       <div className="list-header">
@@ -58,6 +61,7 @@ function MovieList() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }

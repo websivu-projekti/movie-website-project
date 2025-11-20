@@ -1,10 +1,11 @@
 import React from "react"
-import { useNavigate } from "react-router-dom"
+import "../index.css"
+import Header from '../components/header.jsx'
 
 function Profile(){
-  const navigate = useNavigate()
   return (
-    <div style={{padding:20}}>
+    <div>
+      <Header/>
       <h1>Profile</h1>
       <p>User profile will appear here</p>
       <button onClick={() => navigate(-1)}>Back</button>

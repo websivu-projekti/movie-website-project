@@ -1,10 +1,11 @@
 import React from "react"
-import { useNavigate } from "react-router-dom"
+import "../index.css"
+import Header from '../components/header.jsx'
 
 function Films(){
-  const navigate = useNavigate()
   return (
-    <div style={{padding:20}}>
+    <div>
+      <Header/>
       <h1>Films</h1>
       <p>Films will be here</p>
       <button onClick={() => navigate(-1)}>Back</button>

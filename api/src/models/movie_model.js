@@ -11,7 +11,7 @@ export async function getOne(id) {
 }
 
 export async function addOne(book) {
-  const result = await pool.query("INSERT INTO book (name,author,isbn) VALUES($1,$2,$3)", [book.name, book.author,book.isbn]);
+  const result = await pool.query("INSERT INTO content (content_id, title,release_year,genre,description, poster_url, content_type) VALUES($1,$2,$3,$4,$5,$6,$7)", [content.content_id, content.title,content.release_year,content.genre,content.description,content.poster_url,content.content_type]);
   return result.rows;
 }
 

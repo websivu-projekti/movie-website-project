@@ -20,7 +20,7 @@ app.get("/", async (req, res) => {
 // uusi TMDB-elokuvat reitti
 app.use("/movies", movieRouter)
 
-// authentication routes
+// Authentikaatio reitti
 app.use("/auth", authRouter)
 
 app.listen(port, () => {

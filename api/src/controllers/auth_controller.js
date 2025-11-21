@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken"
 import { registerUser, loginUser, getUserById } from "../models/login_model.js"
 
 // JWT Salaus
-const JWT_SECRET = process.env.JWT_SECRET || "fallback-secret-key-for-development"
+const JWT_SECRET = process.env.JWT_SECRET || "secret-key-for-development"
 
 // Rekisteröi käyttäjä
 export async function register(req, res) {

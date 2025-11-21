@@ -3,11 +3,11 @@ import { register, login, getProfile, authenticateToken } from "../controllers/a
 
 const authRouter = Router()
 
-// Public routes
+// Yleiset reitit
 authRouter.post("/register", register)
 authRouter.post("/login", login)
 
-// Protected routes (require authentication)
+// Yksityiset reitit (vaatii autentikaation)
 authRouter.get("/profile", authenticateToken, getProfile)
 
 export default authRouter

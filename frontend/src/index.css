@@ -104,6 +104,10 @@ header {
     gap: 0.5rem;
 }
 
+.movieTitle{
+    background-color: var(--bg-acc2);
+}
+
 .movieCard{ 
     background-color: var(--bg-acc2);
     border-radius: 4px;

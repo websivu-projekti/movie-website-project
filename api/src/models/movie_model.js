@@ -10,6 +10,9 @@ export async function getOne(id) {
   return result.rows.length > 0 ? result.rows[0] : null;
 }
 
+// Näiden poistaminen/muuttaminen rikkoo jtn
+// Apuva
+
 export async function addOne(book) {
   const result = await pool.query("INSERT INTO content (content_id, title,release_year,genre,description, poster_url, content_type) VALUES($1,$2,$3,$4,$5,$6,$7)", [content.content_id, content.title,content.release_year,content.genre,content.description,content.poster_url,content.content_type]);
   return result.rows;

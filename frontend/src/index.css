@@ -1,0 +1,158 @@
+:root{
+    --bg-colour: #0e1c1f;
+    --bg-acc1: #2d464d;
+    --bg-acc2: #3C5E67;
+    --blue-acc1: #585cd5;
+    --blue-acc2: #7c80de;
+    --green-acc1: #a5e364;
+    --green-acc2: #cdf0a8;
+    --red-acc1: #ef4a31;
+    --red-acc2: #d33e27;
+    --text-col1: #F5F5F5;
+    --text-col2: #0f0f0f;
+    --title-font: "Bagel Fat One", system-ui;
+    --font: "DM Sans", sans-serif;
+}
+
+*{
+    font-family: var(--font);
+    background-color: var(--bg-colour);
+    color: var(--text-col1);
+}
+
+.container {
+    min-height: 100vh;
+    padding: 20px;
+}
+
+header {
+    display: grid;
+    margin-bottom: 0.5rem;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    'title empty empty empty login search';
+}
+
+.pageTitle{ 
+    font-size: 3em;
+    font-family: var(--title-font);
+    grid-area: title;
+    color: var(--blue-acc1);
+    margin: 0px;
+    text-decoration: none;
+}
+
+.searchBox{ 
+    background-color: var(--bg-acc1);
+    grid-area: search;
+    padding: 0.5rem;
+    border-radius: 8px; 
+    height: fit-content;
+    width: inherit;
+    align-self: center;
+}
+
+.searchInput{ 
+    padding: 0.5rem; 
+    border-radius: 4px; 
+    width: stretch;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    border: none; 
+}
+
+.buttonBox{
+    background-color: var(--bg-acc1);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+  }
+
+.loginBar{
+    grid-area: login;
+    align-self: center;
+    margin: auto;
+}
+
+.loginBtn, .registerBtn, .menuButton{ 
+    margin: 2px;
+    padding: 0.5rem 1rem; 
+    background-color: var(--bg-acc2);
+    color: var(--text-col1);
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.loginBtn:hover, .registerBtn:hover, .menuButton:hover{
+    outline: solid var(--green-acc2) 2px;
+}
+
+.loginBtn:active, .registerBtn:active, .menuButton:active{
+    color: var(--text-col2);
+    background-color: var(--green-acc1);
+}
+
+.movieRow{ 
+    display: flex;
+    justify-content: space-around; 
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.movieCard{ 
+    background-color: var(--bg-acc2);
+    border-radius: 4px;
+    padding: 0.5rem;
+    text-align: center; 
+    min-width: 80px;
+}
+
+/* Breakpoints */ 
+@media only screen and (max-width: 740px){
+    .container{
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: fit-content(100px) fit-content(100px) fit-content(100px);
+        grid-template-areas: 
+            'header'
+            'menubar'
+            'main';
+    }
+    header{
+        grid-area: header;
+        grid-template-areas: 
+        'title login'
+        'search search';
+        height: fit-content;
+    }
+    .title{
+        grid-area: title;
+        align-self: center;
+    }
+    .loginBar{
+        grid-area: login;
+        margin:auto;
+    }
+    .searchBox{
+        grid-area: search;
+        height: fit-content;
+    }
+    .searchInput{
+        width: stretch;
+        width: -moz-available;
+        width: -webkit-fill-available;
+    }
+    .buttonBox{
+        grid-area: menubar;
+        height: fit-content;
+        width: auto;
+    }
+    .movieRow{
+        grid-area: main;
+    }
+}

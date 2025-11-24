@@ -1,0 +1,79 @@
+.body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+
+.container {
+  min-height: 100vh;
+}
+
+.groups-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: var(--blue-acc1); 
+}
+
+.groupsBox {
+background-color: var(--bg-acc2);
+border-radius: 8px;
+padding: 15px;
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.groupItem {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px;
+}
+
+.groupLeft {
+display: flex;
+align-items: center;
+gap: 15px;
+}
+
+.groupIcon {
+width: 50px;
+height: 50px;
+background-color: #555;
+border-radius: 4px;
+flex-shrink: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 12px;
+}
+
+.groupName {
+font-size: 18px;
+}
+
+.groupOwner {
+font-size: 14px;
+color: #ccc;
+}
+
+@media only screen and (max-width: 740px) {
+.container {
+padding: 10px;
+}
+
+.groupIcon {
+width: 40px;
+height: 40px;
+font-size: 10px;
+}
+
+.groupName {
+font-size: 16px;
+}
+
+.groupOwner {
+font-size: 12px;
+}
+}

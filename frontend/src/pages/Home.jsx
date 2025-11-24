@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import "../index.css"
 import Header from '../components/header.jsx'
 import Carousel from 'react-bootstrap/Carousel'
+import Card from 'react-bootstrap/Card'
 
 function Home() {
   const [movies, setMovies] = useState([])
@@ -24,6 +25,14 @@ function Home() {
     fetchMovies()
   }, [])
 
+  const reduceMovies = (acc, cur, index) => {
+    const groupIndex = Math.floor(index / 3);
+    if (!acc[groupIndex]) acc[groupIndex] = [];
+    acc[groupIndex].push(cur);
+    console.log(acc)
+    return acc;
+  };
+
   return (
     <div class="container">
      <Header/>
@@ -32,10 +41,20 @@ function Home() {
         ? <p>Ladataan elokuvia...</p>
         : <div className="movieRow">
           <Carousel interval={null} indicators={false}>
-           {movies.map((movie, index) => (
-            <Carousel.Item key={movie.id} className="movieCard">
-                <img src={`https://image.tmdb.org/t/p/w154/${movie.poster_path}`}/>
-                <p className="movieTitle">{movie.title}</p>
+           {movies.reduce(reduceMovies, []).map((item, index) => (
+            <Carousel.Item key={index}>
+              <div className="d-flex justify-content-center">
+              {item.map((item, index) =>{
+                return(
+                  <Card key={index} style={{ width: "8rem" }}>
+                    <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w154/${item.poster_path}`}/>
+                    <Card.Body>
+                      <Card.Title className="movieTitle">{item.title}</Card.Title>
+                    </Card.Body>
+                  </Card>
+                )   
+              })}
+              </div>
             </Carousel.Item>
            ))}   
           </Carousel>

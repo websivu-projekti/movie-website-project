@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import "./EditProfile.css";
 
-function SignUp() {
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
+function ChangePassword() {
   const [password, setPassword] = useState("")
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log("Password change submitted", { username, email, password })
+    console.log("Password change submitted", { password })
   }
 
   return (
@@ -49,30 +47,30 @@ function SignUp() {
         <div className="column">
           <form className="form" onSubmit={handleSubmit}>
             <div className="field">
-              <label className="label">Username</label>
+              <label className="label">Old password</label>
               <input
                 type="text"
-                placeholder="Username"
+                placeholder="Type old password"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="input"
               />
             </div>
             <div className="field">
-              <label className="label">Email</label>
+              <label className="label">New password</label>
               <input
                 type="email"
-                placeholder="Email"
+                placeholder="Type new password"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="input"
               />
             </div>
             <div className="field">
-              <label className="label">Password</label>
+              <label className="label">New password again</label>
               <input
                 type="password"
-                placeholder="Password"
+                placeholder="Type new password again"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="input"

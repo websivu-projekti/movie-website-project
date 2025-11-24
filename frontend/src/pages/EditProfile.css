@@ -52,7 +52,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 300px;
+  width: 330px;
 }
 
 .field {
@@ -100,3 +100,10 @@
 .button:active {
   background-color: #004080;
 }   
+
+.deleteButton:hover {
+  background-color: #d73720;
+}
+.deleteButton:active {
+  background-color: #b32a16;
+}

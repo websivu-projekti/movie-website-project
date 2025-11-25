@@ -109,6 +109,10 @@ header {
     background-color: var(--bg-acc2);
 }
 
+.movieLink{
+    background-color: var(--bg-acc2);
+}
+
 .movieCard{ 
     background-color: var(--bg-acc2);
     border-radius: 4px;
@@ -116,12 +120,16 @@ header {
     text-align: center;
     margin: auto;
     width: fit-content;
+    max-width: min-content;
 }
 
 .swiper-wrapper{
     width: 80%;
 }
 
+.swiper-button-prev, .swiper-button-next, .swiper-navigation-icon {
+    background-color: transparent;
+}
 
 /* Breakpoints */ 
 @media only screen and (max-width: 740px){
@@ -132,6 +140,7 @@ header {
         grid-template-areas: 
             'header'
             'menubar'
+            'title'
             'main';
     }
     header{

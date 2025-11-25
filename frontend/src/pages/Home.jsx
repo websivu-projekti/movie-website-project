@@ -30,7 +30,7 @@ function Home() {
   return (
     <div class="container">
      <Header/>
-
+      <h2>Popular movies</h2>
       {loading
         ? <p>Ladataan elokuvia...</p>
         : <div className="movieRow">
@@ -45,16 +45,19 @@ function Home() {
               navigation
               breakpoints={{
                 740: {
-                  slidesPerView: 2,
+                  slidesPerView: 1,
                   spaceBetween: 20
                 },
-                768: {
-                  slidesPerView: 3,
+                748: {
+                  slidesPerView: 2,
                   spaceBetween: 30
                 },
-                1024:{
+                1024: {
+                  slidesPerView: 3
+                },
+                1424:{
                   slidesPerView: 4,
-                  spaceBetween: 50
+                  spaceBetween: 30
                 }
               }}
               modules={[Navigation]}
@@ -62,8 +65,8 @@ function Home() {
               {movies.map((movie, index) => (
                 <SwiperSlide key={index}>
                   <div key={movie.id} class="movieCard">
-                    <img src={`http://image.tmdb.org/t/p/w185/${movie.poster_path}`}/>
-                    <p className="movieTitle"><a href="">{movie.title}</a></p>
+                    <img src={`http://image.tmdb.org/t/p/w300/${movie.poster_path}`}/>
+                    <p className="movieTitle"><a className="movieLink" href="">{movie.title}</a></p>
                   </div>
                 </SwiperSlide>
               ))}

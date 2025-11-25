@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import "../index.css"
 import Header from '../components/header.jsx'
+import Carousel from 'react-bootstrap/Carousel'
 
 function Home() {
   const [movies, setMovies] = useState([])

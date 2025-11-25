@@ -31,5 +31,4 @@ function App() {
     </Router>
   )
 }
-import 'bootstrap/dist/css/bootstrap.min.css'
 export default App

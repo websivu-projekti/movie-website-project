@@ -1,0 +1,18 @@
+.searchContainer{
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        'filter results'
+    ;
+}
+
+.filtersRow{
+    grid-area: filter;
+    background-color: var(--bg-acc2);
+    height: 500px;
+}
+
+.movieRow{
+    grid-area: results;
+}

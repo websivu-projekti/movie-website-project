@@ -101,15 +101,34 @@ header {
     display: flex;
     justify-content: space-around; 
     flex-wrap: wrap;
+    overflow: hidden;
     gap: 0.5rem;
+}
+
+.movieTitle{
+    background-color: var(--bg-acc2);
+}
+
+.movieLink{
+    background-color: var(--bg-acc2);
 }
 
 .movieCard{ 
     background-color: var(--bg-acc2);
     border-radius: 4px;
     padding: 0.5rem;
-    text-align: center; 
-    min-width: 80px;
+    text-align: center;
+    margin: auto;
+    width: fit-content;
+    max-width: min-content;
+}
+
+.swiper-wrapper{
+    width: 80%;
+}
+
+.swiper-button-prev, .swiper-button-next, .swiper-navigation-icon {
+    background-color: transparent;
 }
 
 /* Breakpoints */ 
@@ -117,10 +136,11 @@ header {
     .container{
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: fit-content(100px) fit-content(100px) fit-content(100px);
+        grid-template-rows: fit-content(100px) fit-content(100px) fit-content(900px);
         grid-template-areas: 
             'header'
             'menubar'
+            'title'
             'main';
     }
     header{

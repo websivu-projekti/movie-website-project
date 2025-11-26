@@ -10,7 +10,6 @@ import MovieList from "./pages/MovieList"
 import Groups from "./pages/Groups"
 import MyGroups from "./pages/MyGroups"
 import Films from "./pages/Films"
-import Groups from "./pages/Groups"
 
 function App() {
   return (
@@ -19,22 +18,17 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-         <Route path="/cinema" element={<Cinema />} />
+        <Route path="/cinema" element={<Cinema />} />
         <Route path="/groups" element={<Groups />} />
-          <Route path="/films" element={<Films />} />
+        <Route path="/films" element={<Films />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/editprofile" element={<EditProfile />} />
-<<<<<<< Updated upstream
-        <Route path="/my-lists" element={<MovieList />} />
-        <Route path="/my-groups" element={<MyGroups />} />
-=======
+
         <Route path="/mylists" element={<MovieList />} />
-        <Route path="/groups" element={<Groups />} />
         <Route path="/mygroups" element={<MyGroups />} />
-        
+
         {/* LISÄTTY: Reitti yksittäiselle ryhmälle parametrilla groupId */}
         <Route path="/groups/:groupId" element={<Groups />} />
->>>>>>> Stashed changes
       </Routes>
     </Router>
   )

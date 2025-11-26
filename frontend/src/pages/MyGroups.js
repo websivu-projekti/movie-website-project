@@ -3,28 +3,7 @@ import { useNavigate } from "react-router-dom"
 import "./MyGroups.css"
 
 function MyGroups() {
-<<<<<<< Updated upstream
-return (
-<div className="container">
-<header>
-<h1 className="title">Clipper</h1>
-
-
-<div className="searchBox">
-<input type="text" className="searchInput" placeholder="Search" />
-</div>
-</header>
-
-
-<div className="buttonBox">
-<button>Films</button>
-<button>Now in Cinema</button>
-<button>MyGroups</button>
-<button>Profile</button>
-</div>
-=======
   const navigate = useNavigate();
->>>>>>> Stashed changes
 
   const groups = [
     { id: 1, name: "Group 1", creator: "User 1" },

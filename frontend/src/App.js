@@ -7,7 +7,7 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import EditProfile from "./pages/EditProfile"
 import MovieList from "./pages/MovieList"
-import MyGroups from "./pages/MyGroups"
+import Groups from "./pages/Groups"
 import Films from "./pages/Films"
 
 
@@ -26,7 +26,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/movielist" element={<MovieList />} />
-        <Route path="/mygroups" element={<MyGroups />} />
+        <Route path="/groups" element={<Groups />} />
       </Routes>
     </Router>
   )

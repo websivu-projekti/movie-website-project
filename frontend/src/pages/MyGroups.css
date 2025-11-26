@@ -8,72 +8,108 @@
   min-height: 100vh;
 }
 
+.my-groups-container{
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  grid-template-areas: 
+  'title empty button'
+  'groups groups groups'
+  ;
+}
+
 .groups-title {
+  grid-area: title;
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 15px;
-  color: var(--blue-acc1); 
+}
+
+.groupsBtn{
+  grid-area: button;
+  margin-right: 0;
+  margin-left: auto;
+  align-self: center;
+  width: fit-content;
+  height: fit-content;
+  padding: 0.5rem 1rem; 
+  background-color: var(--bg-acc2);
+  color: var(--text-col1);
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.groupsBtn:hover{
+  outline: solid var(--green-acc2) 2px;
+}
+
+.groupsBtn:active{
+  color: var(--text-col2);
+  background-color: var(--green-acc1);
 }
 
 .groupsBox {
-background-color: var(--bg-acc2);
-border-radius: 8px;
-padding: 15px;
-display: flex;
-flex-direction: column;
-gap: 10px;
+  grid-area: groups;
+  background-color: var(--bg-acc2);
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .groupItem {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
 }
 
 .groupLeft {
-display: flex;
-align-items: center;
-gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .groupIcon {
-width: 50px;
-height: 50px;
-background-color: #555;
-border-radius: 4px;
-flex-shrink: 0;
-display: flex;
-justify-content: center;
-align-items: center;
-font-size: 12px;
+  width: 50px;
+  height: 50px;
+  background-color: #555;
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
 }
 
 .groupName {
-font-size: 18px;
+  font-size: 18px;
 }
 
 .groupOwner {
-font-size: 14px;
-color: #ccc;
+  font-size: 14px;
+  color: #ccc;
 }
 
 @media only screen and (max-width: 740px) {
-.container {
-padding: 10px;
-}
+  .container {
+    padding: 10px;
+  }
 
-.groupIcon {
-width: 40px;
-height: 40px;
-font-size: 10px;
-}
+  .groupIcon {
+    width: 40px;
+    height: 40px;
+    font-size: 10px;
+  }
 
-.groupName {
-font-size: 16px;
-}
+  .groupName {
+    font-size: 16px;
+  }
 
-.groupOwner {
-font-size: 12px;
-}
+  .groupOwner {
+    font-size: 12px; 
+  }
 }

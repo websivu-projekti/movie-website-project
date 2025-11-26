@@ -1,0 +1,240 @@
+.group-container {
+  padding: 20px;
+}
+
+.group-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.group-title {
+  font-size: 28px;
+  font-family: var(--title-font);
+  color: var(--blue-acc1);
+  margin: 0;
+}
+
+.group-info-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+}
+
+.group-info-text {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.group-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.group-buttons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.group-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.group-members {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.members-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.member {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.member img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #555;
+  object-fit: cover;
+}
+
+.see-all {
+  font-size: 12px;
+  color: var(--blue-acc1);
+  cursor: pointer;
+}
+
+.group-content {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.group-movie-card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.group-movie-card {
+  background-color: var(--bg-acc2);
+  border-radius: 4px;
+  padding: 10px;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.group-movie-image {
+  height: 150px;
+  background-color: #777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+}
+
+.group-movie-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.group-movie-details {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.group-movie-extra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.showtimes,
+.services {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 4px;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+}
+
+.showtimes-header,
+.services-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.showtime-entry,
+.service-entry {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.service-icon {
+  width: 24px;
+  height: 24px;
+  background-color: #ccc;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.add-button {
+  margin-top: 5px;
+  padding: 3px 8px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}
+
+.group-movie-rating .star {
+  color: #ccc;
+  font-size: 16px;
+}
+
+.group-movie-rating .star.filled {
+  color: #f5b50a;
+}
+
+/* Share list & Copy link same line with buttons */
+.group-info-share-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto; /* siirtää rivin oikealle */
+}
+
+.share-list {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.share-input {
+  padding: 3px 6px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #222;
+  color: #fff;
+  width: 200px;
+}
+
+/* Responsiivisuus */
+@media only screen and (max-width: 740px) {
+  .group-info-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .members-list {
+    gap: 8px;
+  }
+
+  .group-movie-card-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .group-movie-extra {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .group-info-share-row {
+    margin-left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .share-input {
+    width: 100%;
+  }
+}

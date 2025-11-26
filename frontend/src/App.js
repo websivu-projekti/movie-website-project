@@ -25,11 +25,10 @@ function App() {
         <Route path="/films" element={<Films />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/editprofile" element={<EditProfile />} />
-        <Route path="/mylists" element={<MovieList />} />
+        <Route path="/movielist" element={<MovieList />} />
         <Route path="/mygroups" element={<MyGroups />} />
       </Routes>
     </Router>
   )
 }
-
 export default App

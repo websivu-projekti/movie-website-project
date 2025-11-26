@@ -9,6 +9,7 @@ import EditProfile from "./pages/EditProfile"
 import MovieList from "./pages/MovieList"
 import MyGroups from "./pages/MyGroups"
 import Films from "./pages/Films"
+import MovieInfo from "./pages/MovieInfo"
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/mylists" element={<MovieList />} />
         <Route path="/mygroups" element={<MyGroups />} />
+        <Route path="/movieinfo/:movieId" element={<MovieInfo />} />
       </Routes>
     </Router>
   )

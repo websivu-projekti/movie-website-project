@@ -50,7 +50,7 @@ export async function getGenres(req, res) {
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en`
     )
     const data = await response.json()
-    res.json(data.results)
+    res.json(data.genres)
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: "Error fetching genres" })
@@ -64,7 +64,7 @@ export async function getLanguages(req, res) {
       `https://api.themoviedb.org/3/configuration/languages?api_key=${apiKey}`
     )
     const data = await response.json()
-    res.json(data.results)
+    res.json(data)
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: "Error fetching languages" })

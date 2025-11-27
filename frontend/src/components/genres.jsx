@@ -21,11 +21,17 @@ export default function Genres() {
             fetchGenres()
     }, [])
 
+    const genreOptions = genres.map((genre) => ({
+        value: genre.id,
+        label: genre.name
+    }))
+
     return(
         <Select 
         className="filter genre"
         classNamePrefix='select'
         isMulti
+        options={genreOptions}
         theme={(theme) => ({
             ...theme,
                 borderRadius: 0,
@@ -57,10 +63,7 @@ export default function Genres() {
                 ...baseStyles,
                 top: 'auto'
             })
-        }}>
-            {genres.map((genre, index) => (
-              <option value={genre.id}>{genre.name}</option>
-            ))}
-          </Select>
+        }}
+        />
     )
 }

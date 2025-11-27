@@ -21,11 +21,17 @@ export default function FilterLanguages(){
                 fetchLanguages()
         }, [])
 
+    const languageOptions = languages.map((lan) => ({
+        value: lan.iso_639_1,
+        label: lan.english_name
+    }))
+
     return(
         <Select 
         className="filter languages"
         classNamePrefix='select'
         isMulti
+        options={languageOptions}
         theme={(theme) => ({
             ...theme,
                 borderRadius: 0,
@@ -57,10 +63,7 @@ export default function FilterLanguages(){
                 ...baseStyles,
                 top: 'auto'
             })
-        }}>
-            {languages.map((lan, index) => (
-              <option value={lan.id}>{lan.name}</option>
-            ))}
-          </Select>
+        }}
+        />
     )
 }

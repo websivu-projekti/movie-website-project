@@ -1,31 +1,22 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import Select from 'react-select'
 
-export default function Genres() {
-    const [genres, setGenres] = useState([])
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        async function fetchGenres() {
-              try {
-                const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/genres`)
-                if (!res.ok) throw new Error("Verkkovirhe")
-                const data = await res.json()
-                setGenres(data)
-              } catch (err) {
-                console.error("Virhe haettaessa genrejä:", err)
-              } finally {
-                setLoading(false)
-              }
-            }
-            fetchGenres()
-    }, [])
-
+export default function SortBy(){
+    const Options = [
+        { value: 'popularity.desc', label: 'Popularity' },
+        { value: 'primary_release_date.desc', label: 'Newest first' },
+        { value: 'primary_release_date.asc', label: 'Oldest first' },
+        { value: 'title.desc', label: 'Title A-Z' },
+        { value: 'title.asc', label: 'Title Z-A' },
+        { value: 'vote_average.desc', label: 'Best rated first' },
+        { value: 'vote_average.asc', label: 'Worst rated first' }
+    ]
     return(
         <Select 
-        className="filter genre"
+        className="filter sortby"
+        options={Options}
+        defaultValue={Options[0]}
         classNamePrefix='select'
-        isMulti
         theme={(theme) => ({
             ...theme,
                 borderRadius: 0,
@@ -56,11 +47,13 @@ export default function Genres() {
             menu: (baseStyles) => ({
                 ...baseStyles,
                 top: 'auto'
+            }),
+            inputContainer: (baseStyles) => ({
+                ...baseStyles,
+                paddingTop: '3px',
+                paddingBottom: '3px'
             })
-        }}>
-            {genres.map((genre, index) => (
-              <option value={genre.id}>{genre.name}</option>
-            ))}
-          </Select>
+        }}
+        />
     )
 }

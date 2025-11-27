@@ -11,8 +11,29 @@
     grid-area: filter;
     background-color: var(--bg-acc2);
     height: 500px;
+    padding: 10px;
+    border-radius: 10px;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    'title'
+    'genre'
+    'language'
+    'rating'
+    'year'
+    'service'
+    'type'
+    ;
 }
 
 .movieRow{
     grid-area: results;
+}
+
+.filter, .filterTitle,.filter > label{
+    background-color: var(--bg-acc2);
+}
+
+.genre{
+    grid-area: genre;
 }

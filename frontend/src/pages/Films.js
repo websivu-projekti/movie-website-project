@@ -3,6 +3,9 @@ import "../index.css"
 import "../filters.css"
 import Header from '../components/header.jsx'
 import Genres from '../components/genres.jsx'
+import FilterRating from "../components/filterrating.jsx"
+import SortBy from "../components/sortby.jsx"
+import FilterLanguages from "../components/languages.jsx"
 
 function Films(){
   const [movies, setMovies] = useState([])
@@ -33,7 +36,18 @@ function Films(){
       <div className="searchContainer">
         <div className="filtersRow">
           Filters
+          {/* SORT BY */}
+          <div className="filterTitle">Sort by:</div>
+          <SortBy/>
+          {/* GENRES */}
+          <div className="filterTitle">Genres:</div>
           <Genres/>
+          {/* LANGUAGES */}
+          <div className="filterTitle">Language:</div>
+          <FilterLanguages/>
+          {/* RATING */}
+          <div className="filterTitle">Rating:</div>
+          <FilterRating/>
         </div>
         <div className="movieRow">
           {movies.map((movie, index) => (

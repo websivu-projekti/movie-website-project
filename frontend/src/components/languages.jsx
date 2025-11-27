@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from "react"
 import Select from 'react-select'
+import React, { useEffect, useState } from "react"
 
-export default function Genres() {
-    const [genres, setGenres] = useState([])
+export default function FilterLanguages(){
+    const [ languages, setLanguages ] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        async function fetchGenres() {
-              try {
-                const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/genres`)
-                if (!res.ok) throw new Error("Verkkovirhe")
-                const data = await res.json()
-                setGenres(data)
-              } catch (err) {
-                console.error("Virhe haettaessa genrejä:", err)
-              } finally {
-                setLoading(false)
-              }
-            }
-            fetchGenres()
-    }, [])
+            async function fetchLanguages() {
+                  try {
+                    const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/languages`)
+                    if (!res.ok) throw new Error("Verkkovirhe")
+                    const data = await res.json()
+                    setLanguages(data)
+                  } catch (err) {
+                    console.error("Virhe haettaessa kieliä:", err)
+                  } finally {
+                    setLoading(false)
+                  }
+                }
+                fetchLanguages()
+        }, [])
 
     return(
         <Select 
-        className="filter genre"
+        className="filter languages"
         classNamePrefix='select'
         isMulti
         theme={(theme) => ({
@@ -58,8 +58,8 @@ export default function Genres() {
                 top: 'auto'
             })
         }}>
-            {genres.map((genre, index) => (
-              <option value={genre.id}>{genre.name}</option>
+            {languages.map((lan, index) => (
+              <option value={lan.id}>{lan.name}</option>
             ))}
           </Select>
     )

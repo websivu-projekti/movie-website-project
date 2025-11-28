@@ -135,7 +135,7 @@ header {
 @media only screen and (max-width: 740px){
     .container{
         display: grid;
-        grid-template-columns: auto;
+        grid-template-columns: 1fr;
         grid-template-rows: fit-content(100px) fit-content(100px) fit-content(900px);
         grid-template-areas: 
             'header'

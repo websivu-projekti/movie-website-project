@@ -12,7 +12,6 @@
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 15px;
-  color: var(--blue-acc1); 
 }
 
 .groupsBox {
@@ -59,9 +58,6 @@ color: #ccc;
 }
 
 @media only screen and (max-width: 740px) {
-.container {
-padding: 10px;
-}
 
 .groupIcon {
 width: 40px;

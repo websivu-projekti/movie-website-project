@@ -38,10 +38,10 @@ function Home() {
   return (
     <div className="container">
       <Header/>
-      <h2>Currently playing in theaters</h2>
+      <h2 className="title">Currently playing in theaters</h2>
         {loading
           ? <p>Ladataan elokuvia...</p>
-          : <div className="movieRow">
+          : <div className="movieRow" style={{gridArea: 'main'}}>
               <Swiper
               slidesPerView={1}
               spaceBetween={10}

@@ -10,8 +10,8 @@
 .filtersRow{
     grid-area: filter;
     background-color: var(--bg-acc2);
-    height: 500px;
-    padding: 10px;
+    height: fit-content;
+    padding: 15px;
     border-radius: 10px;
     grid-template-columns: auto;
     grid-template-rows: auto;
@@ -32,6 +32,11 @@
 
 .filter, .filterTitle,.filter > label{
     background-color: var(--bg-acc2);
+}
+
+.resetLink{
+    background-color: var(--bg-acc2);
+    float: right;
 }
 
 .genre{

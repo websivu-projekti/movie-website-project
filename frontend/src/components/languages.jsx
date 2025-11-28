@@ -46,14 +46,20 @@ export default function FilterLanguages(){
             },
         })}
         styles={{
-            singleValue: (baseStyles) => ({
+            multiValueLabel: (baseStyles) => ({
                 ...baseStyles,
-                color: '#F5F5F5'
+                color: '#0f0f0f',
+                backgroundColor: '#a5e364'
+            }),
+            multiValueRemove: (baseStyles) => ({
+                ...baseStyles,
+                color: '#0f0f0f',
+                backgroundColor: '#a5e364'
             }),
             valueContainer: (baseStyles) => ({
                 ...baseStyles,
                 display: 'flex',
-                padding: '3px 8px'
+                padding: '4px 8px'
             }),
             container: (baseStyles) => ({
                 ...baseStyles,

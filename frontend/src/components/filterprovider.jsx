@@ -1,41 +1,30 @@
 import React, { useEffect, useState } from "react"
 import Select, { InputActionMeta } from 'react-select'
 
-export default function Genres() {
-    const [genres, setGenres] = useState([])
+export default function FilterProviders(){
+    const [providers, setProviders] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        async function fetchGenres() {
-              try {
-                const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/genres`)
-                if (!res.ok) throw new Error("Verkkovirhe")
-                const data = await res.json()
-                setGenres(data)
-              } catch (err) {
-                console.error("Virhe haettaessa genrejä:", err)
-              } finally {
-                setLoading(false)
-              }
-            }
-            fetchGenres()
-    }, [])
-
-    const chooseLan = e => {
-      console.log(e.getOptionValue)
-    }
-    const genreOptions = genres.map((genre) => ({
-        value: genre.id,
-        label: genre.name
-    }))
+            async function fetchProviders() {
+                  try {
+                    const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/movieproviders`)
+                    if (!res.ok) throw new Error("Verkkovirhe")
+                    const data = await res.json()
+                    setProviders(data)
+                  } catch (err) {
+                    console.error("Virhe haettaessa sisällöntarjoajia:", err)
+                  } finally {
+                    setLoading(false)
+                  }
+                }
+                fetchProviders()
+        }, [])
 
     return(
         <Select 
         className="filter genre"
         classNamePrefix='select'
-        isMulti
-        onInputChange={chooseLan}
-        options={genreOptions}
         theme={(theme) => ({
             ...theme,
                 borderRadius: 0,

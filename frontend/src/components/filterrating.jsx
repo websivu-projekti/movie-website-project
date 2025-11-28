@@ -3,6 +3,7 @@ export default function FilterRating(){
         <form className="filter rating">
             <label>
               <input
+                defaultChecked={true}
                 type="radio"
                 name="rating"
                 value={"any"}

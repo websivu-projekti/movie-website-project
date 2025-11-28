@@ -33,7 +33,7 @@ export async function getDiscover(req, res) {
   try {
     const apiKey = process.env.TMDB_API_KEY
     const response = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=27`
+      `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}`
     )
     const data = await response.json()
     res.json(data.results)
@@ -68,6 +68,34 @@ export async function getLanguages(req, res) {
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: "Error fetching languages" })
+  }
+}
+
+export async function getMovieProviders(req, res) {
+  try {
+    const apiKey = process.env.TMDB_API_KEY
+    const response = await fetch(
+      `https://api.themoviedb.org/3/watch/providers/movie?api_key=${apiKey}`
+    )
+    const data = await response.json()
+    res.json(data)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: "Error fetching movie providers" })
+  }
+}
+
+export async function getTvProviders(req, res) {
+  try {
+    const apiKey = process.env.TMDB_API_KEY
+    const response = await fetch(
+      `https://api.themoviedb.org/3/watch/providers/tv?api_key=${apiKey}`
+    )
+    const data = await response.json()
+    res.json(data)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: "Error fetching TV providers" })
   }
 }
 

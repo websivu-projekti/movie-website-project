@@ -1,21 +1,26 @@
 import React from "react"
 import Select from 'react-select'
 
-export default function SortBy(){
+export default function FilterYear(){
     const Options = [
-        { value: 'popularity.desc', label: 'Popularity' },
-        { value: 'primary_release_date.desc', label: 'Newest first' },
-        { value: 'primary_release_date.asc', label: 'Oldest first' },
-        { value: 'title.desc', label: 'Title A-Z' },
-        { value: 'title.asc', label: 'Title Z-A' },
-        { value: 'vote_average.desc', label: 'Best rated first' },
-        { value: 'vote_average.asc', label: 'Worst rated first' }
+        { value: 'popularity.desc', label: `1900's` },
+        { value: 'popularity.desc', label: `1910's` },
+        { value: 'popularity.desc', label: `1920's` },
+        { value: 'popularity.desc', label: `1930's` },
+        { value: 'popularity.desc', label: `1940's` },
+        { value: 'popularity.desc', label: `1950's` },
+        { value: 'popularity.desc', label: `1960's` },
+        { value: 'popularity.desc', label: `1970's` },
+        { value: 'popularity.desc', label: `1980's` },
+        { value: 'popularity.desc', label: `1990's` },
+        { value: 'popularity.desc', label: `2000's` },
+        { value: 'popularity.desc', label: `2010's` },
+        { value: 'popularity.desc', label: `2020's` },
     ]
     return(
         <Select 
-        className="filter sortby"
+        className="filter filteryear"
         options={Options}
-        defaultValue={Options[0]}
         classNamePrefix='select'
         theme={(theme) => ({
             ...theme,
@@ -38,7 +43,7 @@ export default function SortBy(){
             valueContainer: (baseStyles) => ({
                 ...baseStyles,
                 display: 'flex',
-                padding: '4px 8px'
+                padding: '3px 8px'
             }),
             container: (baseStyles) => ({
                 ...baseStyles,
@@ -52,7 +57,12 @@ export default function SortBy(){
                 ...baseStyles,
                 paddingTop: '3px',
                 paddingBottom: '3px'
-            })
+            }),
+            valueContainer: (baseStyles) => ({
+                ...baseStyles,
+                display: 'flex',
+                padding: '4px 8px'
+            }),
         }}
         />
     )

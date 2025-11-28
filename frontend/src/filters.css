@@ -85,6 +85,14 @@
     grid-area: genre;
 }
 
+.movieRating{
+    margin: auto;
+}
+
+.movieRating > .rr--box{
+    background-color: var(--bg-acc2);
+}
+
 @media only screen and (max-width: 1100px){
     .searchContainer{
         grid-template-columns: 10% 90%;

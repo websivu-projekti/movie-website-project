@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@smastrom/react-rating": "^1.5.0",
     "bootstrap": "^5.3.8",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.10",

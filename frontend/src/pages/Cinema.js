@@ -5,6 +5,8 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
+import { Rating, Star } from '@smastrom/react-rating'
+import '@smastrom/react-rating/style.css'
 
 function Home() {
   const [movies, setMovies] = useState([])
@@ -26,6 +28,12 @@ function Home() {
     }
     fetchMovies()
   }, [])
+
+  const customRating = {
+    itemShapes: Star,
+    activeFillColor: '#a5e364',
+    inactiveFillColor: '#cdf0a8'
+  }
 
   return (
     <div className="container">
@@ -67,6 +75,14 @@ function Home() {
                   <div key={movie.id} class="movieCard">
                     <img src={`http://image.tmdb.org/t/p/w300/${movie.poster_path}`}/>
                     <p className="movieTitle"><a className="movieLink" href="">{movie.title}</a></p>
+                    <div className="movieTitle">{(movie.release_date.slice(0,4))}</div>
+                    <Rating 
+                      className="movieRating" 
+                      readOnly 
+                      style={{ maxWidth: 250 }} 
+                      value={(movie.vote_average / 2)}
+                      itemStyles={customRating}
+                    />
                   </div>
                 </SwiperSlide>
               ))}

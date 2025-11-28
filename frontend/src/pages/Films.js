@@ -5,6 +5,8 @@ import Header from '../components/header.jsx'
 import FiltersMenu from "../components/filtersmenu.jsx"
 import menuLogo from "../assets/menuicon.svg"
 import closeMenu from "../assets/closemenu.svg"
+import { Rating, Star } from '@smastrom/react-rating'
+import '@smastrom/react-rating/style.css'
 
 function Films(){
   const [movies, setMovies] = useState([])
@@ -36,6 +38,12 @@ function Films(){
     mobileMenu.current.style.transform = 'translate3d(-100vw, 0, 0)'
   }
 
+  const customRating = {
+    itemShapes: Star,
+    activeFillColor: '#a5e364',
+    inactiveFillColor: '#cdf0a8'
+  }
+
   return (
     <div className="container">
       <Header/>
@@ -60,6 +68,14 @@ function Films(){
             <div key={index} class="movieCard">
                 <img className="moviePoster" src={`http://image.tmdb.org/t/p/w300/${movie.poster_path}`}/>
                 <p className="movieTitle"><a className="movieLink" href="">{movie.title}</a></p>
+                <div className="movieTitle">{(movie.release_date.slice(0,4))}</div>
+                <Rating 
+                className="movieRating" 
+                readOnly 
+                style={{ maxWidth: 250 }} 
+                value={(movie.vote_average / 2)}
+                itemStyles={customRating}
+                />
             </div>
           ))}
         </div>

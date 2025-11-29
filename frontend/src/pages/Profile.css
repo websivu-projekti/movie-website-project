@@ -1,0 +1,106 @@
+
+.profileContainer {
+    width: 90%;
+    max-width: 1200px;
+    margin: 1rem auto;
+}
+
+.profileHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.profileInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profilePic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.editProfileBtn {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.profileListsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.sectionTitle {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.createListBtn, .myGroupsBtn {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.listsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.listCard {
+    background-color: #222;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.listImages {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 60px);
+    gap: 0.3rem;
+}
+
+.listImage.placeholder {
+    background-color: #555;
+    border-radius: 4px;
+}
+
+.listInfo {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.listName {
+    font-weight: bold;
+}
+
+.listCount {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.myGroupsBtn {
+    margin-top: 2rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}

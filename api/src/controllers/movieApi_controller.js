@@ -47,14 +47,14 @@ export async function getMovieDetails(req, res) {
     const data = await response.json()
 
 
-    // Fetch credits ja director
+    // Fetch credits ja sieltä tarkemmin director
     const creditsRes = await fetch(
       `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`
     )
 
     let director = "Unknown";
     if (creditsRes.ok) {
-      const credits = await creditsRes.json();
+      const credits = await creditsRes.json()
       const directorObj = credits.crew.find(c => c.job === "Director");
       if (directorObj) director = directorObj.name;
     }
@@ -67,13 +67,13 @@ export async function getMovieDetails(req, res) {
 
       let providers = [];
       if (providersRes.ok) {
-        const providerData = await providersRes.json();
+        const providerData = await providersRes.json()
         const regionData = providerData.results[region] || Object.values(providerData.results)[0];
 
       if (regionData) {
         const allProviders = [...(regionData.flatrate || []), ...(regionData.rent || []), ...(regionData.buy || [])];
 
-        //poistaa tuplat
+        //poistaa tupla providers
         const uniqueProvidersMap = {};
         allProviders.forEach(p => {
           if (!uniqueProvidersMap[p.provider_name]) {
@@ -88,6 +88,35 @@ export async function getMovieDetails(req, res) {
       }
     }
 
+
+    //fetch 3 most recent reviews
+    const reviewsRes = await fetch (
+     `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${apiKey}&language=en-US`
+    )
+
+    let reviews = []
+    if(reviewsRes.ok){
+      const reviewData = await reviewsRes.json()
+
+      const sorted = reviewData.results.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      )
+
+      //ottaa vain 3
+      reviews = sorted.slice(0,3).map(r => ({
+        username: r.author,
+        date: r.created_at.split("T")[0],
+        rating: r.author_details?.rating ?? null,
+        content: r.content,
+        avatar: 
+            r.author_details?.avatar_path
+            ? `https://image.tmdb.org/t/p/w45${r.author_details.avatar_path.replace("/", "")}`
+            : null
+      }))
+    }
+
+
+    //mitkä tiedot viedään frontendiin
     const movieDetails ={
       title: data.original_title,
       releaseYear: data.release_date?.split("-")[0] || "N/A",
@@ -96,7 +125,9 @@ export async function getMovieDetails(req, res) {
       rating: data.vote_average || "N/A",
       genres: data.genres?.map(g => g.name) || [],
       poster_path: data.poster_path,
-      providers
+      language: data.original_language,
+      providers,
+      reviews
     }
 
     res.json(movieDetails)
@@ -105,6 +136,9 @@ export async function getMovieDetails(req, res) {
     res.status(500).json({ error: "Error fetching movie" })
   }
 }
+
+
+
 
 
 /* WORK IN PROGRESS */

@@ -60,6 +60,14 @@ function MovieInfo(){
     ? `https://image.tmdb.org/t/p/w342${movie.poster_path}`
     : "/placeholder.jpg";
 
+    //muokkaa rating tähdiksi
+    function makeStars(rating) {
+    if (rating == null) return "★★★★★"; // default 
+    const stars = Math.round(rating / 2); // 0–10 → 0–5
+    return "★★★★★".slice(0, stars) + "☆☆☆☆☆".slice(0, 5 - stars);
+    } 
+
+
     return (
     <div className="container">
       <Header/>
@@ -96,7 +104,8 @@ function MovieInfo(){
             </div>
           </div>
           <div className ="movieRating">
-            Rating: {movie.rating || "N/A"}
+            Rating: {movie.rating} - {makeStars(movie.rating) || "N/A"}
+            
           </div>
       </div>
     </div>
@@ -104,6 +113,7 @@ function MovieInfo(){
 
         <div className ="providerContainer">
           <h4>Where to watch:</h4>
+          <div className="columnWrapped">
 
           {(!movie.providers ||  movie.providers.length === 0) && <p>No providers available</p>}
 
@@ -120,11 +130,57 @@ function MovieInfo(){
           </a>
             </div> 
           ))}
+          </div>
+
+          <div className = "addToListContainer">
+            <div className ="addListWrapped">
+
+            <select className="listSelect">
+            <option value="favorites">Favorites</option>
+            <option value="list2 ?">list2</option>
+            </select>
+
+             <button type="submit" className="addToListBtn">
+              Add To List
+            </button>
+          </div>
           </div>              
 
   </div>
+
   </div>
 
+          <div className = "reviewContainer">
+            <div className = "reviewWrapped">
+
+            {(!movie.reviews || movie.reviews.length === 0) && (
+            <p>No reviews available</p>
+            )}
+
+            {movie.reviews?.map((review,index) => (
+              <div key = {index} className ="reviewBox">
+               
+                <div className ="reviewHeader">
+                <img src={review.avatar || "https://via.placeholder.com"}
+                alt="Profile" className="pfp"
+                />
+       
+              <div className="reviewInfo">
+                <div className ="nameRow">
+                 <div className ="reviewName">{review.username}</div>
+                  <div className ="reviewDate">{review.date}</div>
+                </div>
+                  <div className ="stars">{makeStars(review.rating)}</div>
+              </div> 
+              </div>
+               
+               <p class="review-text">{review.content}</p>
+              </div>
+         ))}
+      </div>
+</div>
+</div>
+  
   )}
 
 export default MovieInfo

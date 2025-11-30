@@ -15,7 +15,7 @@ function Home() {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/popularfilms`)
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/popularFilms`)
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
         setMovies(data)

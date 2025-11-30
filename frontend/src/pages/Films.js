@@ -8,6 +8,14 @@ import closeMenu from "../assets/closemenu.svg"
 import { Rating, Star } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 
+import Genres from '../components/genres.jsx'
+import FilterRating from "../components/filterrating.jsx"
+import SortBy from "../components/sortby.jsx"
+import FilterLanguages from "../components/languages.jsx"
+import FilterYear from "../components/filteryear.jsx"
+import FilterProviders from "../components/filterprovider.jsx"
+import FilterContent from "../components/filtercontent.jsx"
+
 function Films(){
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
@@ -61,7 +69,31 @@ function Films(){
           </div>
         </div>
         <div className="filtersRow">
-          <FiltersMenu/>
+          <div className="mobileFiltersRow">
+                  Filters
+                  <a className="resetLink">Reset filters</a>
+                  {/* SORT BY */}
+                  <div className="filterTitle">Sort by:</div>
+                  <SortBy/>
+                  {/* GENRES */}
+                  <div className="filterTitle">Genres: </div>
+                  <Genres/>
+                  {/* LANGUAGES */}
+                  <div className="filterTitle">Language:</div>
+                  <FilterLanguages/>
+                  {/* RATING */}
+                  <div className="filterTitle">Rating:</div>
+                  <FilterRating/>
+                  {/* YEAR */}
+                  <div className="filterTitle">Year:</div>
+                  <FilterYear/>
+                  {/* PROVIDERS */}
+                  <div className="filterTitle">Providers:</div>
+                  <FilterProviders/>
+                  {/* CONTENT */}
+                  <div className="filterTitle">Content:</div>
+                  <FilterContent/>
+                  </div>
         </div>
         <div className="movieRow">
           {movies.map((movie, index) => (

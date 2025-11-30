@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
-import Select, { InputActionMeta } from 'react-select'
+import Select from 'react-select'
 
 export default function Genres() {
-    const [genres, setGenres] = useState([])
+    const [ genres, setGenres ] = useState([])
+    const [ chosenGen, setChosenGen ] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -21,9 +22,15 @@ export default function Genres() {
             fetchGenres()
     }, [])
 
-    const chooseLan = e => {
-      console.log(e.getOptionValue)
+    const chooseGenre = (gen) => {
+        setChosenGen(Array.isArray(gen) ? gen.map(x => x.value) : [])
+        console.log(chosenGen)
     }
+
+    const nextGen = () =>{
+        console.log(chosenGen)
+    }
+
     const genreOptions = genres.map((genre) => ({
         value: genre.id,
         label: genre.name
@@ -34,7 +41,8 @@ export default function Genres() {
         className="filter genre"
         classNamePrefix='select'
         isMulti
-        onInputChange={chooseLan}
+        onChange={chooseGenre}
+        onMenuClose={nextGen}
         options={genreOptions}
         theme={(theme) => ({
             ...theme,
@@ -73,7 +81,6 @@ export default function Genres() {
                 ...baseStyles,
                 top: 'auto'
             })
-        }}
-        />
+        }}/>
     )
 }

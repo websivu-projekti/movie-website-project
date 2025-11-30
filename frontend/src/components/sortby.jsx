@@ -1,7 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import Select from 'react-select'
 
+
 export default function SortBy(){
+    const [ sorting, setSorting ] = useState({})
+
     const Options = [
         { value: 'popularity.desc', label: 'Popularity' },
         { value: 'primary_release_date.desc', label: 'Newest first' },
@@ -11,10 +14,17 @@ export default function SortBy(){
         { value: 'vote_average.desc', label: 'Best rated first' },
         { value: 'vote_average.asc', label: 'Worst rated first' }
     ]
+
+    const chooseSort = (sort) => {
+        setSorting(sort)
+        console.log(sorting.value)
+    }
+
     return(
         <Select 
         className="filter sortby"
         options={Options}
+        onChange={chooseSort}
         defaultValue={Options[0]}
         classNamePrefix='select'
         theme={(theme) => ({

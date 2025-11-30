@@ -1,4 +1,12 @@
+import { Rating, Star } from '@smastrom/react-rating'
+import '@smastrom/react-rating/style.css'
+
 export default function FilterRating(){
+  const customRating = {
+      itemShapes: Star,
+      activeFillColor: '#a5e364',
+      inactiveFillColor: '#cdf0a8'
+  }
     return(
         <form className="filter rating">
             <label>
@@ -14,40 +22,75 @@ export default function FilterRating(){
               <input
                 type="radio"
                 name="rating"
-                value={"1/5 and up"}
-              />1/5 and up
+                value={"2"}
+              />
+              <Rating 
+                className="movieRating" 
+                readOnly 
+                style={{ maxWidth: 100, display: 'inline-flex' }} 
+                value={1}
+                itemStyles={customRating}
+              /> and up
             </label>
             <br/>
             <label>
               <input
                 type="radio"
                 name="rating"
-                value={"2/5 and up"}
-              />2/5 and up
+                value={"4"}
+              />
+              <Rating
+                className='movieRating'
+                readOnly
+                style={{ maxWidth: 100, display: 'inline-flex' }}
+                value={2}
+                itemStyles={customRating}
+                /> and up
             </label>
             <br/>
             <label>
               <input
                 type="radio"
                 name="rating"
-                value={"3/5 and up"}
-              />3/5 and up
+                value={"6"}
+              />
+              <Rating
+                className='movieRating'
+                readOnly
+                style={{ maxWidth: 100, display: 'inline-flex' }}
+                value={3}
+                itemStyles={customRating}
+              /> and up
             </label>
             <br/>
             <label>
               <input
                 type="radio"
                 name="rating"
-                value={"4/5 and up"}
-              />4/5 and up
+                value={"8"}
+              />
+              <Rating
+                className='movieRating'
+                readOnly
+                style={{ maxWidth: 100, display: 'inline-flex' }}
+                value={4}
+                itemStyles={customRating}
+              /> and up
             </label>
             <br/>
             <label>
               <input
                 type="radio"
                 name="rating"
-                value={"5/5"}
-              />5/5
+                value={"10"}
+              />
+              <Rating
+                className='movieRating'
+                readOnly
+                style={{ maxWidth: 100, display: 'inline-flex' }}
+                value={5}
+                itemStyles={customRating}
+              />
             </label>
             <br/>
           </form>

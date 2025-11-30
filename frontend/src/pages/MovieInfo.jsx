@@ -62,9 +62,9 @@ function MovieInfo(){
 
     //muokkaa rating tähdiksi
     function makeStars(rating) {
-    if (rating == null) return "★★★★★"; // default 
-    const stars = Math.round(rating / 2); // 0–10 → 0–5
-    return "★★★★★".slice(0, stars) + "☆☆☆☆☆".slice(0, 5 - stars);
+    if (rating == null) return "★★★★★" // default 
+    const stars = Math.round(rating / 2) // 0–10 → 0–5
+    return "★★★★★".slice(0, stars) + "☆☆☆☆☆".slice(0, 5 - stars)
     } 
 
 
@@ -104,7 +104,7 @@ function MovieInfo(){
             </div>
           </div>
           <div className ="movieRating">
-            Rating: {movie.rating} - {makeStars(movie.rating) || "N/A"}
+            Rating: {(movie.rating / 2).toFixed(1)} - {makeStars(movie.rating) || "N/A"}
             
           </div>
       </div>
@@ -151,18 +151,22 @@ function MovieInfo(){
   </div>
 
           <div className = "reviewContainer">
-            <div className = "reviewWrapped">
 
             {(!movie.reviews || movie.reviews.length === 0) && (
             <p>No reviews available</p>
             )}
 
+      <h3>Reviews</h3>
+        <div className="reviewsRowContainer">
+
+          <div className = "reviewsColumn">
             {movie.reviews?.map((review,index) => (
               <div key = {index} className ="reviewBox">
                
                 <div className ="reviewHeader">
                 <img src={review.avatar || "https://via.placeholder.com"}
-                alt="Profile" className="pfp"
+                alt="Profile" 
+                className="pfp"
                 />
        
               <div className="reviewInfo">
@@ -172,11 +176,33 @@ function MovieInfo(){
                 </div>
                   <div className ="stars">{makeStars(review.rating)}</div>
               </div> 
-              </div>
-               
+              </div>          
                <p class="review-text">{review.content}</p>
               </div>
          ))}
+    </div>
+
+         <div className = "myReviewContainer">
+
+            <div className ="myReviewRow">
+              <img src = "" alt = "Profile" className = "pfp"/>
+
+              <div className ="myReviewName">Logged user</div>
+              <div className ="myStars">★★★★★</div>
+            </div>
+
+              <div className="writeReviewRow">
+                <label>Review</label>
+                <textarea
+                  className="reviewTextarea"
+                  placeholder="Write your review here..."
+                />
+              </div>
+
+           <button className="publishBtn">Publish</button>
+
+         </div>
+
       </div>
 </div>
 </div>

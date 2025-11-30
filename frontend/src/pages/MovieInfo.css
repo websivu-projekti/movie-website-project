@@ -77,7 +77,8 @@ header {
     margin: auto;
 }
 
-.loginBtn, .registerBtn, .menuButton{ 
+.loginBtn, .registerBtn, .menuButton,
+.publishBtn, .addToListBtn, .listSelect{ 
     margin: 2px;
     padding: 0.5rem 1rem; 
     background-color: var(--bg-acc2);
@@ -88,11 +89,13 @@ header {
     text-decoration: none;
 }
 
-.loginBtn:hover, .registerBtn:hover, .menuButton:hover, .addToListBtn:hover, .listSelect:hover{
+.loginBtn:hover, .registerBtn:hover, .menuButton:hover, .addToListBtn:hover,
+.listSelect:hover, .publishBtn:hover{
     outline: solid var(--green-acc2) 2px;
 }
 
-.loginBtn:active, .registerBtn:active, .menuButton:active, .addToListBtn:active{
+.loginBtn:active, .registerBtn:active, .menuButton:active,
+.addToListBtn:active, .publishBtn:active{
     color: var(--text-col2);
     background-color: var(--green-acc1);
 }
@@ -245,17 +248,6 @@ header {
 }
 
 
-.addToListBtn, .listSelect{
-    margin: 2px;
-    padding: 0.5rem 1rem; 
-    background-color: var(--bg-acc2);
-    color: var(--text-col1);
-    border: none; 
-    border-radius: 4px; 
-    cursor: pointer;
-    text-decoration: none;
-}
-
 .addListWrapped{
   display: flex;
   flex-wrap: wrap;
@@ -269,10 +261,11 @@ header {
   /*border: 3px solid #ccc;*/
   margin-top: 10px;
   margin-bottom: 10px;
+
 }
 
-.reviewWrapped{
-  width: 550px;
+.reviewsColumn{
+  width: 50%;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -319,7 +312,7 @@ header {
 }
 
 .reviewName {
-    font-weight: 700;
+  font-weight: 700;
   font-size: 16px;
 }
 
@@ -337,6 +330,58 @@ header {
   margin-top: 10px;
   line-height: 1.5;
 }
+
+.reviewsRowContainer{
+  flex-direction: row;
+  display: flex; 
+  gap: 30px; 
+  align-items: flex-start;
+}
+
+
+
+.myReviewContainer{
+  width: 50%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.myReviewRow{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+}
+
+.myStars{
+  font-size: 22px;
+   margin-left: auto;
+}
+
+.writeReviewRow {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  gap: 5px;
+}
+
+.reviewTextarea {
+  width: 100%;
+  height: 140px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.publishBtn{
+  margin-right: auto;
+  margin-top: 14px;
+}
+
 
 
 /*@media only screen and (max-width: 740px) {

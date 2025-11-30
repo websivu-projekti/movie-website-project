@@ -95,9 +95,6 @@
 }
 
 @media only screen and (max-width: 740px) {
-  .container {
-    padding: 10px;
-  }
 
   .groupIcon {
     width: 40px;

@@ -69,12 +69,11 @@ export default function Profile() {
       <Header/>
       <h1>Profile</h1>
       {user && (
-        <div>
-          <p><strong>Username:</strong> {user.username}</p>
+        <>
           <p><strong>Email:</strong> {user.email}</p>
           <p><strong>User ID:</strong> {user.user_id}</p>
-        </div>
-      )}
+        
+      
       <button onClick={handleLogout} style={{marginTop: "20px"}}>Logout</button>
     
 
@@ -82,7 +81,7 @@ export default function Profile() {
                 <div className="profileHeader">
                     <div className="profileInfo">
                         <div className="profilePic">User</div>
-                        <span className="username">user123</span>
+                        <span className="username">{user.username}</span>
                     </div>
                     <button className="editProfileBtn" onClick={() => navigate("/editprofile")}>
                         Edit Profile
@@ -115,6 +114,8 @@ export default function Profile() {
                     My Groups
                 </button>
             </div>
+            </>
+          )}
     </div>
   )
 }

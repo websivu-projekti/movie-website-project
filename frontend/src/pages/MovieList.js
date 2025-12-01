@@ -46,7 +46,7 @@ function MovieList() {
         </div>
         <div className="movie-card">
           <div className="movie-image">Image 3</div>
-          <h2 className="movie-title">Movie title 3</h2>
+          <h2 className="movie-title"><p className="movieTitle"><a className="movieLink" href={`/movieinfo/603`}>Matrix</a></p></h2>
           <p className="movie-details">Year | Director name</p>
           <div className="movie-rating">
             <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>

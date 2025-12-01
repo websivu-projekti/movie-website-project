@@ -20,7 +20,7 @@ function Profile(){
   }
 
   const handleDeleteAccount = async () => {
-    if (window.confirm(`Haluatko varmasti poistaa käyttäjäsi, ${user.username}? Toiminto ei voi perua.`)) {
+    if (window.confirm(`Haluatko varmasti poistaa käyttäjäsi, ${user.username}? Toimintoa ei voi perua.`)) {
       try {
         const response = await fetch("http://localhost:3001/auth/account", {
           method: 'DELETE',

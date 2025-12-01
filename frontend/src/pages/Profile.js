@@ -112,14 +112,17 @@ function Profile(){
                     My Groups
                 </button>
             </div>
-            </>
-          )}
+            
       <button 
         onClick={handleDeleteAccount}
         style={{marginTop: '20px', marginLeft: '10px', backGroundColor: 'red', color: 'white' }}
       >
         Delete Account
       </button>
+      </>
+     )}
     </div>
   )
 }
+
+export default Profile

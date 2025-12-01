@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import "../loginsignup.css"
 import Header from '../components/header.jsx'
 
@@ -7,10 +7,41 @@ function SignUp() {
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log("Sign up submitted", { username, email, password })
+    setError("")
+    setLoading(true)
+
+    try {
+      const response = await fetch("http://localhost:3001/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email, password }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Registration failed")
+      }
+
+      // Save token to localStorage
+      localStorage.setItem("token", data.token)
+      localStorage.setItem("user", JSON.stringify(data.user))
+
+      // Redirect to profile or home
+      navigate("/profile")
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -18,6 +49,7 @@ function SignUp() {
       <Header/>
       <div className="loginContent">
         <h1 className="title">Sign Up</h1>
+        {error && <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>}
         <form className="loginForm" onSubmit={handleSubmit}>
           <div className="field">
             <label className="label">Username</label>
@@ -27,6 +59,7 @@ function SignUp() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="input"
+              required
             />
           </div>
           <div className="field">
@@ -37,6 +70,7 @@ function SignUp() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="input"
+              required
             />
           </div>
           <div className="field">
@@ -47,10 +81,12 @@ function SignUp() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="input"
+              required
+              minLength="6"
             />
           </div>
-          <button type="submit" className="button">
-            Sign Up
+          <button type="submit" className="button" disabled={loading}>
+            {loading ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
         <Link to="/login" className="link">

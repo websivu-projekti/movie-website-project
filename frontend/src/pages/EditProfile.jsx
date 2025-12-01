@@ -50,6 +50,9 @@ function EditProfile() {
                 <input type="checkbox" />
                 <label className="label">Show adult content</label>
               </div>
+              <button type="submit" className="saveSettings button">
+                Save Settings
+              </button>
             </form>
           <form className="manageUser" onSubmit={handleSubmit}>
             <div className="field usrnameField">

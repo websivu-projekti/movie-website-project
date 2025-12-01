@@ -30,6 +30,9 @@ function App() {
           <Route path="/editprofile" element={<EditProfile />} />
           <Route path="/mylists" element={<MovieList />} />
           <Route path="/mygroups" element={<MyGroups />} />
+          <Route path="/groupslist" element={<GroupsList/>}/>
+          <Route path="/groupdetail" element={<GroupDetail/>}/>
+          <Route path="/movieinfo/:movieId" element={<MovieInfo />} />
         </Routes>
       </Router>
     </AuthProvider>

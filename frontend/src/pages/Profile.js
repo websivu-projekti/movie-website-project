@@ -1,21 +1,82 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import Header from "../components/header.jsx"
-import "./Profile.css"
+import "../index.css"
+import './Profile.css'
+import Header from '../components/header.jsx'
 
 export default function Profile() {
-    const navigate = useNavigate()
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const navigate = useNavigate()
 
-    const lists = [
+  const lists = [
         { id: 1, name: "Placeholder List 1", count: 10 },
         { id: 2, name: "Placeholder List 2", count: 8 },
         { id: 3, name: "Placeholder List 3", count: 12 },
         { id: 4, name: "Placeholder List 4", count: 5 },
     ]
 
-    return (
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("token")
+      
+      if (!token) {
+        navigate("/login")
+        return
+      }
+
+      try {
+        const response = await fetch("http://localhost:3001/auth/profile", {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        })
+
+        const data = await response.json()
+
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to fetch profile")
+        }
+
+        setUser(data.user)
+      } catch (err) {
+        setError(err.message)
+        if (err.message.includes("token")) {
+          localStorage.removeItem("token")
+          localStorage.removeItem("user")
+          navigate("/login")
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProfile()
+  }, [navigate])
+
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    navigate("/login")
+  }
+
+  if (loading) return <div className="container"><Header/><p>Loading...</p></div>
+  if (error) return <div className="container"><Header/><p style={{color: "red"}}>{error}</p></div>
+
+  return (
+    <div className="container">
+      <Header/>
+      <h1>Profile</h1>
+      {user && (
         <div>
-            <Header />
+          <p><strong>Username:</strong> {user.username}</p>
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>User ID:</strong> {user.user_id}</p>
+        </div>
+      )}
+      <button onClick={handleLogout} style={{marginTop: "20px"}}>Logout</button>
+    
 
             <div className="profileContainer">
                 <div className="profileHeader">
@@ -54,6 +115,6 @@ export default function Profile() {
                     My Groups
                 </button>
             </div>
-        </div>
-    )
+    </div>
+  )
 }

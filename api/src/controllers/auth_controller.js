@@ -36,7 +36,7 @@ export async function register(req, res) {
 
         // Generoi JWT tokeni
         const token = jwt.sign(
-            { userId: newUser.user_id, email: newUser.email, username: newUser.username },
+            { userId: newUser.user_id, email: newUser.email },
             JWT_SECRET,
             { expiresIn: "24h" }
         )
@@ -72,7 +72,7 @@ export async function login(req, res) {
 
         // Generoi JWT tokeni
         const token = jwt.sign(
-            { userId: user.user_id, email: user.email, username: user.username },
+            { userId: user.user_id, email: user.email },
             JWT_SECRET,
             { expiresIn: "24h" }
         )
@@ -129,22 +129,21 @@ export async function deleteAccount(req, res) {
     try {
         const userId = req.user.userId
         const { username: confirmationUsername } = req.body
-        
-        // Vaadi käyttäjänimen kirjoittaminen poiston aikan
-        // !!! ei toimi vielä
+
+        // 1. Validate that confirmation username is provided
         if (!confirmationUsername) {
             return res.status(400).json({ error: "Username confirmation is required" })
         }
 
-        // Etsi databasesta
+        // 2. Fetch user details from the database
         const user = await getUserById(userId)
 
-        // vertaa nimiä
+        // 3. Compare the provided username with the one in the database
         if (user.username !== confirmationUsername) {
             return res.status(403).json({ error: "Username confirmation failed. Deletion not allowed." })
         }
 
-        // poista käyttäjä
+        // 4. If they match, proceed with deletion
         const deleted = await deleteUser(userId)
         
         return res.json({

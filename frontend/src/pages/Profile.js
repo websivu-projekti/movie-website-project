@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { useAuth } from "../context/AuthContext.js"
 import { useNavigate } from "react-router-dom"
 import "../index.css"
 import './Profile.css'
@@ -17,27 +16,20 @@ function Profile(){
     ]
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login')
-    }
-  }, [user, navigate])
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("token")
+      
+      if (!token) {
+        navigate("/login")
+        return
+      }
 
-  const handleLogout = () => {
-    logout()
-    navigate('/login')
-  }
-
-  const handleDeleteAccount = async () => {
-    if (window.confirm(`Haluatko varmasti poistaa käyttäjäsi, ${user.username}? Toimintoa ei voi perua.`)) {
       try {
-        const response = await fetch("http://localhost:3001/auth/account", {
-          method: 'DELETE',
+        const response = await fetch("http://localhost:3001/auth/profile", {
           headers: {
-            'Content-Type' : 'application/json',
-            'Authorization' : `Bearer ${user.token}`
+            "Authorization": `Bearer ${token}`,
           },
-          body: JSON.stringify({ username: user.username })
-        });
+        })
 
         const data = await response.json()
 
@@ -45,24 +37,30 @@ function Profile(){
           throw new Error(data.error || "Failed to fetch profile")
         }
 
-        alert('Käyttäjä poistettu onnistuneesti.')
-        logout()
-        navigate('/')
-
+        setUser(data.user)
       } catch (err) {
-        alert(`Error: ${error.message}`)
+        setError(err.message)
+        if (err.message.includes("token")) {
+          localStorage.removeItem("token")
+          localStorage.removeItem("user")
+          navigate("/login")
         }
+      } finally {
+        setLoading(false)
       }
+    }
+
+    fetchProfile()
+  }, [navigate])
+
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    navigate("/login")
   }
-  
-  if (!user) {
-    return (
-      <div className="container">
-        <Header />
-        <p>Loading...</p>
-      </div>
-    )
-  }
+
+  if (loading) return <div className="container"><Header/><p>Loading...</p></div>
+  if (error) return <div className="container"><Header/><p style={{color: "red"}}>{error}</p></div>
 
   return (
     <div className="container">

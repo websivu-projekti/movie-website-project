@@ -1,29 +1,35 @@
 import React, { useState, useEffect } from "react"
+import { useAuth } from "../context/AuthContext.js"
 import { useNavigate } from "react-router-dom"
 import "../index.css"
 import Header from '../components/header.jsx'
 
 function Profile(){
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
+  const { user, logout } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const token = localStorage.getItem("token")
-      
-      if (!token) {
-        navigate("/login")
-        return
-      }
+    if (!user) {
+      navigate('/login')
+    }
+  }, [user, navigate])
 
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm(`Haluatko varmasti poistaa käyttäjäsi, ${user.username}? Toiminto ei voi perua.`)) {
       try {
-        const response = await fetch("http://localhost:3001/auth/profile", {
+        const response = await fetch("http://localhost:3001/auth/account", {
+          method: 'DELETE',
           headers: {
-            "Authorization": `Bearer ${token}`,
+            'Content-Type' : 'application/json',
+            'Authorization' : `Bearer ${user.token}`
           },
-        })
+          body: JSON.stringify({ username: user.username })
+        });
 
         const data = await response.json()
 
@@ -31,43 +37,41 @@ function Profile(){
           throw new Error(data.error || "Failed to fetch profile")
         }
 
-        setUser(data.user)
+        alert('Käyttäjä poistettu onnistuneesti.')
+        logout()
+        navigate('/')
+
       } catch (err) {
-        setError(err.message)
-        if (err.message.includes("token")) {
-          localStorage.removeItem("token")
-          localStorage.removeItem("user")
-          navigate("/login")
+        alert(`Error: ${error.message}`)
         }
-      } finally {
-        setLoading(false)
       }
-    }
-
-    fetchProfile()
-  }, [navigate])
-
-  const handleLogout = () => {
-    localStorage.removeItem("token")
-    localStorage.removeItem("user")
-    navigate("/login")
   }
-
-  if (loading) return <div className="container"><Header/><p>Loading...</p></div>
-  if (error) return <div className="container"><Header/><p style={{color: "red"}}>{error}</p></div>
+  
+  if (!user) {
+    return (
+      <div className="container">
+        <Header />
+        <p>Loading...</p>
+      </div>
+    )
+  }
 
   return (
     <div className="container">
       <Header/>
       <h1>Profile</h1>
-      {user && (
         <div>
           <p><strong>Username:</strong> {user.username}</p>
           <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>User ID:</strong> {user.user_id}</p>
+          <p><strong>User ID:</strong> {user.userId}</p>
         </div>
-      )}
       <button onClick={handleLogout} style={{marginTop: "20px"}}>Logout</button>
+      <button 
+        onClick={handleDeleteAccount}
+        style={{marginTop: '20px', marginLeft: '10px', backGroundColor: 'red', color: 'white' }}
+      >
+        Delete Account
+      </button>
     </div>
   )
 }

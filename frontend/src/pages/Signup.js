@@ -1,9 +1,11 @@
 import React, { useState } from "react"
+import { useAuth } from "../context/AuthContext.js"
 import { Link, useNavigate } from "react-router-dom"
 import "../loginsignup.css"
 import Header from '../components/header.jsx'
 
 function SignUp() {
+  const { login } = useAuth()
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -31,9 +33,7 @@ function SignUp() {
         throw new Error(data.error || "Registration failed")
       }
 
-      // Save token to localStorage
-      localStorage.setItem("token", data.token)
-      localStorage.setItem("user", JSON.stringify(data.user))
+      login(data.token)
 
       // Redirect to profile or home
       navigate("/profile")

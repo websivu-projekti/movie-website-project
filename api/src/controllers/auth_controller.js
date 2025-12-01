@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { registerUser, loginUser, getUserById } from "../models/login_model.js"
+import { registerUser, loginUser, getUserById, deleteUser } from "../models/user_model.js"
 
 // JWT Salaus
 const JWT_SECRET = process.env.JWT_SECRET || "secret-key-for-development"
@@ -122,4 +122,40 @@ export function authenticateToken(req, res, next) {
         req.user = user
         next()
     })
+}
+
+// Poista oma käyttäjätili
+export async function deleteAccount(req, res) {
+    try {
+        const userId = req.user.userId
+        const { username: confirmationUsername } = req.body
+
+        // 1. Validate that confirmation username is provided
+        if (!confirmationUsername) {
+            return res.status(400).json({ error: "Username confirmation is required" })
+        }
+
+        // 2. Fetch user details from the database
+        const user = await getUserById(userId)
+
+        // 3. Compare the provided username with the one in the database
+        if (user.username !== confirmationUsername) {
+            return res.status(403).json({ error: "Username confirmation failed. Deletion not allowed." })
+        }
+
+        // 4. If they match, proceed with deletion
+        const deleted = await deleteUser(userId)
+        
+        return res.json({
+            message: "Account deleted successfully",
+            user: deleted
+        })
+
+    } catch (error) {
+        console.error("Delete account error:", error)
+        if (error.message === "User not found") {
+            return res.status(404).json({ error: error.message })
+        }
+        return res.status(500).json({ error: "Internal server error" })
+    }
 }

@@ -1,19 +1,22 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
-import Header from '../components/header.jsx'
-import "./MyGroups.css"
+import "./GroupsList.css" // ADDED: uusi CSS tiedosto, voit kopioida MyGroups.css tyylit tähän
+import Header from '../components/header.jsx' // ADDED: Header komponentti
 
-function MyGroups() {
+function GroupsList() {
   const navigate = useNavigate();
 
+  // ADDED: esimerkkiryhmät (kaikki ryhmät)
   const groups = [
     { id: 1, name: "Group 1", creator: "User 1" },
     { id: 2, name: "Group 2", creator: "User 2" },
-    { id: 3, name: "Group 3", creator: "User 3" }
+    { id: 3, name: "Group 3", creator: "User 3" },
+    { id: 4, name: "Group 4", creator: "User 4" },
+    { id: 5, name: "Group 5", creator: "User 5" }
   ];
 
   const handleGroupClick = (groupId) => {
-    navigate(`/groups/${groupId}`)
+    navigate(`/groups/${groupId}`) // vie yksittäisen ryhmän sivulle
   }
 
   return (
@@ -21,9 +24,9 @@ function MyGroups() {
       <Header />
 
       <div className="my-groups-container">
-        <h1 className="groups-title">My Groups</h1>
+        <h1 className="groups-title">All Groups</h1> {/* ADDED: otsikko yleiselle listalle */}
         <div className="groups-box">
-          {/* ryhmien cardit tänne */}
+          {/* ryhmien cardit voidaan lisätä tähän */}
         </div>
       </div>
 
@@ -40,7 +43,7 @@ function MyGroups() {
                   <div className="groupIcon" />
                   <span className="groupName">{group.name}</span>
                 </div>
-                <div className="groupMeta">List by: {group.creator}</div>
+                <div className="groupMeta">Created by: {group.creator}</div> {/* ADDED: teksti hieman muutettu */}
               </div>
 
               {index < groups.length - 1 && <div className="divider" />}
@@ -52,4 +55,4 @@ function MyGroups() {
   );
 }
 
-export default MyGroups
+export default GroupsList

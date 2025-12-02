@@ -3,17 +3,17 @@ export default function FilterContent(){
         <form className="filter rating">
             <label>
               <input
-              defaultChecked={true}
                 type="radio"
-                name="movie"
+                name="content"
                 value={"movie"}
+                defaultChecked={true}
               />Movies
             </label>
             <br/>
             <label>
               <input
                 type="radio"
-                name="tv"
+                name="content"
                 value={"tv"}
               />TV Series
             </label>

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react"
 import "../index.css"
 import "../filters.css"
 import Header from '../components/header.jsx'
-import FiltersMenu from "../components/filtersmenu.jsx"
 import menuLogo from "../assets/menuicon.svg"
 import closeMenu from "../assets/closemenu.svg"
 import { Rating, Star } from '@smastrom/react-rating'
@@ -17,13 +16,13 @@ import FilterProviders from "../components/filterprovider.jsx"
 import FilterContent from "../components/filtercontent.jsx"
 
 function Films(){
-  const [movies, setMovies] = useState([])
+  const [ discoverMovies, setDiscoverMovies ] = useState([])
   const [ sorting, setSorting ] = useState('popularity.desc')
   const [ chosenGen, setChosenGen ] = useState([])
   const [ chosenLan, setChosenLan ] = useState([])
-  const [ chosenRating, setChosenRating ] = useState()
+  const [ chosenRating, setChosenRating ] = useState(' ')
   const [ chosenYear, setChosenYear ] = useState()
-  const [ chosenContent, setChosenContent ] = useState()
+  const [ chosenContent, setChosenContent ] = useState('movie')
   const [ loading, setLoading ] = useState(true)
   const mobileMenu = useRef(null)
 
@@ -33,10 +32,10 @@ function Films(){
         const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discover`)
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
-        setMovies(data)
+        setDiscoverMovies(data)
       } catch (err) {
         console.error("Virhe haettaessa elokuvia:", err)
-        setMovies(["Movie 1", "Movie 2", "Movie 3", "Movie 4"]) // placeholder jos backend ei toimi
+        setDiscoverMovies(["Movie 1", "Movie 2", "Movie 3", "Movie 4"]) // placeholder jos backend ei toimi
       } finally {
         setLoading(false)
       }
@@ -50,6 +49,15 @@ function Films(){
 
   const closeMobileMenu = () => {
     mobileMenu.current.style.transform = 'translate3d(-100vw, 0, 0)'
+  }
+
+  const resetFilters = () => {
+    setSorting('popularity.desc')
+    setChosenGen([])
+    setChosenLan([])
+    setChosenRating(' ')
+    setChosenYear()
+    setChosenContent('movie')
   }
 
   const customRating = {
@@ -71,13 +79,37 @@ function Films(){
             <button className="filtermenuBtn" onClick={closeMobileMenu}>
               <img src={closeMenu}/>
             </button>
-            <FiltersMenu/>
-          </div>
+            <div className="mobileFiltersRow">
+                  Filters
+                  <a className="resetLink" onClick={resetFilters}>Reset filters</a>
+                  {/* SORT BY */}
+                  <div className="filterTitle">Sort by:</div>
+                  <SortBy sorting={sorting} setSorting={setSorting}/>
+                  {/* GENRES */}
+                  <div className="filterTitle">Genres: </div>
+                  <Genres chosenGen={chosenGen} setChosenGen={setChosenGen}/>
+                  {/* LANGUAGES */}
+                  <div className="filterTitle">Language:</div>
+                  <FilterLanguages chosenLan={chosenLan} setChosenLan={setChosenLan}/>
+                  {/* RATING */}
+                  <div className="filterTitle">Rating:</div>
+                  <FilterRating chosenRating={chosenRating} setChosenRating={setChosenRating}/>
+                  {/* YEAR */}
+                  <div className="filterTitle">Year:</div>
+                  <FilterYear chosenYear={chosenYear} setChosenYear={setChosenYear}/>
+                  {/* PROVIDERS */}
+                  <div className="filterTitle">Providers:</div>
+                  <FilterProviders/>
+                  {/* CONTENT */}
+                  <div className="filterTitle">Content:</div>
+                  <FilterContent chosenContent={chosenContent} setChosenContent={setChosenContent}/>
+                  </div>
+            </div>
         </div>
         <div className="filtersRow">
-          <div className="mobileFiltersRow">
+          <div className="filtersRow">
                   Filters
-                  <a className="resetLink">Reset filters</a>
+                  <a className="resetLink" onClick={resetFilters}>Reset filters</a>
                   {/* SORT BY */}
                   <div className="filterTitle">Sort by:</div>
                   <SortBy sorting={sorting} setSorting={setSorting}/>
@@ -102,7 +134,7 @@ function Films(){
                   </div>
         </div>
         <div className="movieRow">
-          {movies.map((movie, index) => (
+          {discoverMovies.map((movie, index) => (
             <div key={index} class="movieCard">
                 <img className="moviePoster" src={`http://image.tmdb.org/t/p/w300/${movie.poster_path}`}/>
                 <p className="movieTitle"><a className="movieLink" href={`/movieinfo/${movie.id}`}>{movie.title}</a></p>

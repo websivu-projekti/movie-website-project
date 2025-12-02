@@ -11,7 +11,7 @@ export default function FilterContent({chosenContent, setChosenContent}){
                 type="radio"
                 name="content"
                 value={"movie"}
-                defaultChecked={true}
+                checked={chosenContent === 'movie'}
                 onClick={chooseContent}
               />Movies
             </label>
@@ -21,6 +21,7 @@ export default function FilterContent({chosenContent, setChosenContent}){
                 type="radio"
                 name="content"
                 value={"tv"}
+                checked={chosenContent === 'tv'}
                 onClick={chooseContent}
               />TV Series
             </label>

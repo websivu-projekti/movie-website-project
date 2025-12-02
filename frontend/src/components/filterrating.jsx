@@ -19,6 +19,7 @@ export default function FilterRating({chosenRating, setChosenRating}){
                 type="radio"
                 name="rating"
                 value={" "}
+                checked={chosenRating === ' '}
                 onClick={chooseRating}
               />Any
             </label>
@@ -28,6 +29,7 @@ export default function FilterRating({chosenRating, setChosenRating}){
                 type="radio"
                 name="rating"
                 value={"2"}
+                checked={chosenRating === '2'}
                 onClick={chooseRating}
               />
               <Rating 
@@ -44,6 +46,7 @@ export default function FilterRating({chosenRating, setChosenRating}){
                 type="radio"
                 name="rating"
                 value={"4"}
+                checked={chosenRating === '4'}
                 onClick={chooseRating}
               />
               <Rating
@@ -60,6 +63,7 @@ export default function FilterRating({chosenRating, setChosenRating}){
                 type="radio"
                 name="rating"
                 value={"6"}
+                checked={chosenRating === '6'}
                 onClick={chooseRating}
               />
               <Rating
@@ -76,6 +80,7 @@ export default function FilterRating({chosenRating, setChosenRating}){
                 type="radio"
                 name="rating"
                 value={"8"}
+                checked={chosenRating === '8'}
                 onClick={chooseRating}
               />
               <Rating
@@ -92,6 +97,7 @@ export default function FilterRating({chosenRating, setChosenRating}){
                 type="radio"
                 name="rating"
                 value={"10"}
+                checked={chosenRating === '10'}
                 onClick={chooseRating}
               />
               <Rating

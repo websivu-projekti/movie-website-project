@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react"
 import Select from 'react-select'
 
-export default function Genres() {
+export default function Genres({chosenGen, setChosenGen}) {
     const [ genres, setGenres ] = useState([])
-    const [ chosenGen, setChosenGen ] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -27,10 +26,6 @@ export default function Genres() {
         console.log(chosenGen)
     }
 
-    const nextGen = () =>{
-        console.log(chosenGen)
-    }
-
     const genreOptions = genres.map((genre) => ({
         value: genre.id,
         label: genre.name
@@ -42,7 +37,6 @@ export default function Genres() {
         classNamePrefix='select'
         isMulti
         onChange={chooseGenre}
-        onMenuClose={nextGen}
         options={genreOptions}
         theme={(theme) => ({
             ...theme,

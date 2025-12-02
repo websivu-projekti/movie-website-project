@@ -1,7 +1,11 @@
 import { Rating, Star } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 
-export default function FilterRating(){
+export default function FilterRating({chosenRating, setChosenRating}){
+  const chooseRating = e => {
+    setChosenRating(e.target.value)
+    console.log(chosenRating)
+  }
   const customRating = {
       itemShapes: Star,
       activeFillColor: '#a5e364',
@@ -14,7 +18,8 @@ export default function FilterRating(){
                 defaultChecked={true}
                 type="radio"
                 name="rating"
-                value={"any"}
+                value={" "}
+                onClick={chooseRating}
               />Any
             </label>
             <br/>
@@ -23,6 +28,7 @@ export default function FilterRating(){
                 type="radio"
                 name="rating"
                 value={"2"}
+                onClick={chooseRating}
               />
               <Rating 
                 className="movieRating" 
@@ -38,6 +44,7 @@ export default function FilterRating(){
                 type="radio"
                 name="rating"
                 value={"4"}
+                onClick={chooseRating}
               />
               <Rating
                 className='movieRating'
@@ -53,6 +60,7 @@ export default function FilterRating(){
                 type="radio"
                 name="rating"
                 value={"6"}
+                onClick={chooseRating}
               />
               <Rating
                 className='movieRating'
@@ -68,6 +76,7 @@ export default function FilterRating(){
                 type="radio"
                 name="rating"
                 value={"8"}
+                onClick={chooseRating}
               />
               <Rating
                 className='movieRating'
@@ -83,6 +92,7 @@ export default function FilterRating(){
                 type="radio"
                 name="rating"
                 value={"10"}
+                onClick={chooseRating}
               />
               <Rating
                 className='movieRating'

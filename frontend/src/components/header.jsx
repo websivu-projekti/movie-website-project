@@ -12,7 +12,7 @@ export default function Header(){
     const sections = [
         { label: "Films", path: "/films" }, 
         { label: "Now in Cinemas", path: "/cinema" }, 
-        { label: "My groups", path: "/mygroups" }, 
+        { label: "Groups", path: "/groupslist" }, 
         { label: "Profile", path: "/profile" }
     ]
     return(

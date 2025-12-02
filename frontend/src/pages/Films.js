@@ -18,7 +18,13 @@ import FilterContent from "../components/filtercontent.jsx"
 
 function Films(){
   const [movies, setMovies] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [ sorting, setSorting ] = useState('popularity.desc')
+  const [ chosenGen, setChosenGen ] = useState([])
+  const [ chosenLan, setChosenLan ] = useState([])
+  const [ chosenRating, setChosenRating ] = useState()
+  const [ chosenYear, setChosenYear ] = useState()
+  const [ chosenContent, setChosenContent ] = useState()
+  const [ loading, setLoading ] = useState(true)
   const mobileMenu = useRef(null)
 
   useEffect(() => {
@@ -74,25 +80,25 @@ function Films(){
                   <a className="resetLink">Reset filters</a>
                   {/* SORT BY */}
                   <div className="filterTitle">Sort by:</div>
-                  <SortBy/>
+                  <SortBy sorting={sorting} setSorting={setSorting}/>
                   {/* GENRES */}
                   <div className="filterTitle">Genres: </div>
-                  <Genres/>
+                  <Genres chosenGen={chosenGen} setChosenGen={setChosenGen}/>
                   {/* LANGUAGES */}
                   <div className="filterTitle">Language:</div>
-                  <FilterLanguages/>
+                  <FilterLanguages chosenLan={chosenLan} setChosenLan={setChosenLan}/>
                   {/* RATING */}
                   <div className="filterTitle">Rating:</div>
-                  <FilterRating/>
+                  <FilterRating chosenRating={chosenRating} setChosenRating={setChosenRating}/>
                   {/* YEAR */}
                   <div className="filterTitle">Year:</div>
-                  <FilterYear/>
+                  <FilterYear chosenYear={chosenYear} setChosenYear={setChosenYear}/>
                   {/* PROVIDERS */}
                   <div className="filterTitle">Providers:</div>
                   <FilterProviders/>
                   {/* CONTENT */}
                   <div className="filterTitle">Content:</div>
-                  <FilterContent/>
+                  <FilterContent chosenContent={chosenContent} setChosenContent={setChosenContent}/>
                   </div>
         </div>
         <div className="movieRow">

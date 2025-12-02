@@ -210,8 +210,9 @@ export async function getMovieDetails(req, res) {
 export async function getMovieSearchresults(req, res){
   try {
     const apiKey = process.env.TMDB_API_KEY
+    const query = req.params.query
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}`
+      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`
     )
     const data = await response.json()
     res.json(data.results)

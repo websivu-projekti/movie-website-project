@@ -25,6 +25,7 @@ function Films(){
   const [ chosenContent, setChosenContent ] = useState('movie')
   const [ searchQuery, setSearchQuery ] = useState('')
   const [ loading, setLoading ] = useState(true)
+  const searchParams = '&sort_by=title.asc'
   const mobileMenu = useRef(null)
 
   useEffect(() => {

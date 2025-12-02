@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import searchIcon from "../assets/searchicon.svg"
 
@@ -16,8 +16,15 @@ export default function Header({searchQuery, setSearchQuery}){
         { label: "Profile", path: "/profile" }
     ]
 
-    const submitSearch = () =>{
-        
+    const submitSearch = async () =>{
+        try {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/moviesearch/${searchQuery}`)
+        if (!res.ok) throw new Error("Verkkovirhe")
+        const data = await res.json()
+        console.log(data)
+      } catch (err) {
+        console.error("Virhe haettaessa elokuvia:", err)
+      }
     }
 
     return(

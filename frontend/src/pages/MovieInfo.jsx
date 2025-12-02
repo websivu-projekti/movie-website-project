@@ -2,13 +2,21 @@ import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import "./MovieInfo.css"
 import Header from '../components/header.jsx'
+import { useAuth } from "../context/AuthContext.js"
+import { Rating, Star } from '@smastrom/react-rating'
+import '@smastrom/react-rating/style.css'
 
 
 function MovieInfo(){
   const {movieId} = useParams();
+  const {user} = useAuth()
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [myReviews, setMyReviews] = useState([]);
+  const [reviewContent, setReviewContent] = useState("");
+  const [rating, setRating] = useState(0)
 
 
   useEffect(() => {
@@ -67,6 +75,15 @@ function MovieInfo(){
     return "★★★★★".slice(0, stars) + "☆☆☆☆☆".slice(0, 5 - stars)
     } 
 
+    const customRating = {
+      itemShapes: Star,
+      activeFillColor: '#488a02ff',
+      inactiveFillColor: '#fafdf8ff',
+    }
+
+    //yhdistää kirjoitetut arvostelut muihin
+    const allReviews = [...myReviews, ...(movie.reviews || [])];
+
 
     return (
     <div className="container">
@@ -83,17 +100,11 @@ function MovieInfo(){
             <h3>{movie.title}</h3>
           </div>
 
-          <div className="movieYear">
-            <p>Release year: {movie.releaseYear}</p>
-          </div>
+          <div className="movieYear">Release year: {movie.releaseYear}</div>
 
-          <div className = "movieDirector">
-            <p>Director: {movie.director}</p>
-          </div>
+          <div className = "movieDirector">Director: {movie.director}</div>
 
-          <div className ="movieSynopsis">
-            <p>{movie.synopsis}</p>
-          </div>
+          <div className ="movieSynopsis">{movie.synopsis}</div>
 
           <div className = "movieGenres">
             <div className ="genreTitle"><p>Genres:</p></div>
@@ -150,7 +161,7 @@ function MovieInfo(){
 
   </div>
 
-          <div className = "reviewContainer">
+      <div className = "reviewContainer">
 
             {(!movie.reviews || movie.reviews.length === 0) && (
             <p>No reviews available</p>
@@ -160,7 +171,8 @@ function MovieInfo(){
         <div className="reviewsRowContainer">
 
           <div className = "reviewsColumn">
-            {movie.reviews?.map((review,index) => (
+            
+            {allReviews?.map((review,index) => (
               <div key = {index} className ="reviewBox">
                
                 <div className ="reviewHeader">
@@ -177,7 +189,7 @@ function MovieInfo(){
                   <div className ="stars">{makeStars(review.rating)}</div>
               </div> 
               </div>          
-               <p class="review-text">{review.content}</p>
+               <div class="reviewText">{review.content}</div>
               </div>
          ))}
     </div>
@@ -185,21 +197,54 @@ function MovieInfo(){
          <div className = "myReviewContainer">
 
             <div className ="myReviewRow">
-              <img src = "" alt = "Profile" className = "pfp"/>
+              <div className="profileAndName">
+                <img src = "" alt = "Profile" className = "pfp"/>
+                <div className ="myReviewName">{user.username}</div>
+              </div>
 
-              <div className ="myReviewName">Logged user</div>
-              <div className ="myStars">★★★★★</div>
+                    <Rating 
+                    className="reviewRating" 
+                    style={{ maxWidth: 140 }} 
+                    value={(rating)}
+                    onChange={setRating}
+                    itemStyles={customRating}
+                    isRequired
+                    />
+                    
             </div>
-
               <div className="writeReviewRow">
                 <label>Review</label>
                 <textarea
                   className="reviewTextarea"
                   placeholder="Write your review here..."
+                  value = {reviewContent}
+                  onChange={(e) => setReviewContent(e.target.value)}
                 />
               </div>
 
-           <button className="publishBtn">Publish</button>
+           <button className="publishBtn"
+           onClick={() => {
+            if(!reviewContent) return
+
+            if (!rating || rating === 0) {
+            alert("Please give a rating before publishing");
+            return;
+            }
+
+            const newReview = {
+              username: user.username,
+              date: new Date().toISOString().split("T")[0],
+              rating: rating * 2,
+              content: reviewContent,
+              avatar: user.avatar  || "https://via.placeholder.com"
+            }
+            setMyReviews([newReview, ...myReviews])
+
+            setReviewContent("")
+            setRating(0)
+
+           }}         
+           >Publish</button>
 
          </div>
 

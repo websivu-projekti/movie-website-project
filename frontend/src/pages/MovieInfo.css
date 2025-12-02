@@ -165,7 +165,7 @@ header {
 /*MOVIEINFO*/
 
 .imgContainer{
-  width: auto;
+  width: 342px;
   height: auto;
   display: flex;
   justify-content: center;
@@ -173,13 +173,23 @@ header {
   overflow: hidden;
   border-radius: 8px;
   border: 1px solid #c7c7c7;
+
+}
+
+.imgContainer img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
 }
 
 .movieContainer{
-  width: 450px;
+  width: 50%;
+  max-width: 700px;
   padding: 20px;
   border: 1px solid #c7c7c7;
   border-radius: 10px;
+  box-sizing: border-box;
 }
 
 .movieInfoWrapper{
@@ -187,8 +197,24 @@ header {
   flex-direction: row;
   align-items: flex-start;
   gap: 40px;
-  margin-top: 40px auto;
-  width: fit-content;
+  margin-top: 40px;
+  width: 100%;  
+  flex-wrap: wrap;
+
+  /*border: 3px solid #0c1ff5;*/
+}
+
+.movieYear{
+  margin-top: 8px;
+}
+
+.movieDirector{
+  margin-top: 8px;
+}
+
+.movieSynopsis{
+  margin-top: 8px;
+  line-height: 1.5;
 }
 
 .movieGenres{
@@ -197,12 +223,14 @@ header {
 
 .genreTitle{
   font-weight: bold;
+  margin-top: 8px;
 }
 
 .genresWrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 8px;
 }
 
 .genrePill {
@@ -215,22 +243,24 @@ header {
 }
 
 
-/*.movieInfoWrapper{
-    border-bottom: 2px solid #c7c7c7;
-    margin-bottom: 20px;
-}*/
+
+
 
 
 .providerContainer{
-  width: 250px;
+  width: 50%;
+  max-width: 250px;
   padding: 20px;
   border: 1px solid #c7c7c7;
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap; 
-  font-size: 14px; 
-  flex-direction: row;
-  align-items: center;
+
+  align-items: flex-start;
+  gap: 12px;
+  box-sizing: border-box;
+
+  /*margin-left: auto;*/
 }
 
 .columnWrapped{
@@ -245,11 +275,13 @@ header {
     border-radius: 10px;
     width: 32px;
     height: 32px;
+    object-fit: cover;
 }
 
 
 .addListWrapped{
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 14px;
@@ -258,10 +290,13 @@ header {
 
 
 .reviewContainer{
-  /*border: 3px solid #ccc;*/
+  /*border: 3px solid #e52c2c;*/
   margin-top: 10px;
   margin-bottom: 10px;
+}
 
+.reviewContainer h3{
+  margin-bottom: 10px;
 }
 
 .reviewsColumn{
@@ -312,7 +347,7 @@ header {
 }
 
 .reviewName {
-  font-weight: 700;
+  font-weight: bold;
   font-size: 16px;
 }
 
@@ -352,12 +387,20 @@ header {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 8px;
+  justify-content: space-between; 
+  gap: 10px;
+
 }
 
-.myStars{
-  font-size: 22px;
-   margin-left: auto;
+.profileAndName{
+  display: flex;
+  align-items: center; /* vertically center profile and name */
+  gap: 10px;
+}
+
+.myReviewName{
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .writeReviewRow {
@@ -365,6 +408,7 @@ header {
   flex-direction: column;
   margin-top: 20px;
   gap: 5px;
+
 }
 
 .reviewTextarea {
@@ -382,33 +426,4 @@ header {
   margin-top: 14px;
 }
 
-
-
-/*@media only screen and (max-width: 740px) {
-  .movieInfoWrapper{
-  flex-direction: row;
-  gap: 20px;
-  margin-top: 20px;
-  width: 100%;
-  }
-  .imgContainer {
-   width: 100%;
-   max-width: 320px;
-   margin: 0 auto;
-  }
-  .imgContainer img {
-    width: 100%;
-    height: auto;
-  }
-  .movieContainer,
-  .providerContainer{
-    width: 100%;
-    padding: 15px;
-  }
-  .genresWrapper{
-    gap: 6px;
-  }
-  .providerWrapped{
-    width: 100%;
-  }*/
   

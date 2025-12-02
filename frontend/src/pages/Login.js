@@ -9,6 +9,7 @@ function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [ searchQuery, setSearchQuery ] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -46,7 +47,7 @@ function Login() {
 
   return (
     <div className="container">
-      <Header/>
+      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
       <div className="loginContent">
         <h1 className="title">Log In</h1>
         {error && <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>}

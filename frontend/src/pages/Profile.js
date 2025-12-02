@@ -8,6 +8,7 @@ import Header from '../components/header.jsx'
 function Profile(){
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const [ searchQuery, setSearchQuery ] = useState('')
 
   const lists = [
         { id: 1, name: "Placeholder List 1", count: 10 },
@@ -59,7 +60,7 @@ function Profile(){
   if (!user) {
     return (
       <div className="container">
-        <Header />
+        <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
         <p>Loading...</p>
       </div>
     )
@@ -68,7 +69,7 @@ function Profile(){
 
   return (
     <div className="container">
-      <Header/>
+      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
       <h1>Profile</h1>
           <p><strong>Email:</strong> {user.email}</p>
           <p><strong>User ID:</strong> {user.user_id}</p>

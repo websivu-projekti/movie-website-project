@@ -1,11 +1,12 @@
-import React from "react"
+import React, { useState } from "react"
 import Header from '../components/header.jsx'
 import "./MovieList.css"
 
 function MovieList() {
+  const [ searchQuery, setSearchQuery ] = useState('')
   return (
     <div className="container">
-    <Header/>
+    <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
     <div className="movie-list-container">
       {/* Otsikko ja käyttäjän nimi */}
       <div className="list-header">

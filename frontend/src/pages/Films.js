@@ -23,6 +23,7 @@ function Films(){
   const [ chosenRating, setChosenRating ] = useState(' ')
   const [ chosenYear, setChosenYear ] = useState()
   const [ chosenContent, setChosenContent ] = useState('movie')
+  const [ searchQuery, setSearchQuery ] = useState('')
   const [ loading, setLoading ] = useState(true)
   const mobileMenu = useRef(null)
 
@@ -68,7 +69,7 @@ function Films(){
 
   return (
     <div className="container">
-      <Header/>
+      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
       <h2>Films</h2>
       <div className="searchContainer">
         <div className="filtersMenu">

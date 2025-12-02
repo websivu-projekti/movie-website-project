@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getMovies, getMovie, addMovie, updateMovie, deleteMovie} from "../controllers/movie_controller.js";
-import { getNowPlaying, getPopularFilms, getDiscover, getGenres, getLanguages, getMovieProviders, getTvProviders, getMovieDetails} from "../controllers/movieApi_controller.js";
+import { getNowPlaying, getPopularFilms, getDiscover, getGenres, getLanguages, getMovieProviders, getTvProviders, getMovieDetails, getMovieSearchresults} from "../controllers/movieApi_controller.js";
 
 const movieRouter = Router();
 
@@ -10,6 +10,7 @@ movieRouter.get("/popularFilms", getPopularFilms);
 
 movieRouter.get("/movieDetails/:movieId", getMovieDetails);
 // provider information is now included in /movieDetails/:movieId response
+movieRouter.get("/moviesearch/:query", getMovieSearchresults);
 
 movieRouter.get("/discover", getDiscover);
 movieRouter.get("/genres", getGenres);

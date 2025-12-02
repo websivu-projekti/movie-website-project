@@ -207,8 +207,16 @@ export async function getMovieDetails(req, res) {
   }
 }
 
-
-
-
-
-/* WORK IN PROGRESS */
+export async function getMovieSearchresults(req, res){
+  try {
+    const apiKey = process.env.TMDB_API_KEY
+    const response = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}`
+    )
+    const data = await response.json()
+    res.json(data.results)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: "Error fetching movies" })
+  }
+}

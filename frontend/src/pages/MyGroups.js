@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Header from '../components/header.jsx'
 import "./MyGroups.css"
 
 function MyGroups() {
   const navigate = useNavigate();
+  const [ searchQuery, setSearchQuery ] = useState('')
 
   const groups = [
     { id: 1, name: "Group 1", creator: "User 1" },
@@ -18,7 +19,7 @@ function MyGroups() {
 
   return (
     <div className="container">
-      <Header />
+      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
 
       <div className="my-groups-container">
         <h1 className="groups-title">My Groups</h1>

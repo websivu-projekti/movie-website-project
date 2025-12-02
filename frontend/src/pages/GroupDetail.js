@@ -9,6 +9,7 @@ const TMDB_API_KEY = process.env.TMDB_API_KEY
 function GroupDetail() {
   const { groupId } = useParams()
   const [movies, setMovies] = useState([])
+  const [ searchQuery, setSearchQuery ] = useState('')
   const members = [
     { name: "User 1", img: "" },
     { name: "User 2", img: "" },
@@ -110,7 +111,7 @@ function GroupDetail() {
 
   return (
     <div>
-      <Header />
+      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
 
       <div className="group-container">
         <div className="group-header">

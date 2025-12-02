@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
-import { use } from "react"
+import searchIcon from "../assets/searchicon.svg"
 
-export default function Header(){
+export default function Header({searchQuery, setSearchQuery}){
     const navigate = useNavigate()
     const { user, logout } = useAuth()
     const handleLogout = () => {
@@ -15,6 +15,11 @@ export default function Header(){
         { label: "Groups", path: "/groupslist" }, 
         { label: "Profile", path: "/profile" }
     ]
+
+    const submitSearch = () =>{
+        
+    }
+
     return(
         <>
             <header>
@@ -24,13 +29,20 @@ export default function Header(){
                         <button onClick={handleLogout} className="registerBtn">Log Out</button>
                     ) : (
                         <>
-                            <a href="/login" class="loginBtn">Log In</a>
-                            <a href="/signup" class="registerBtn">Register</a>
+                            <a href="/login" className="loginBtn">Log In</a>
+                            <a href="/signup" className="registerBtn">Register</a>
                         </>
                     )}
                 </div>
                 <div class="searchBox">
-                    <input type="text" placeholder="Search movies..." class="searchInput" />
+                        <input 
+                        type="text" 
+                        placeholder="Search movies..." 
+                        className="searchInput" 
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button className="searchBtn" onClick={submitSearch}><img src={searchIcon}/></button>
                 </div>
             </header>
             <div class="buttonBox">

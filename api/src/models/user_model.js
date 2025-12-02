@@ -77,3 +77,21 @@ export async function getUserById(userId) {
         throw error
     }
 }
+
+// Poista käyttäjä (ja kaskadoi liittyvät tiedot ON DELETE CASCADE)
+export async function deleteUser(userId) {
+    try {
+        const result = await pool.query(
+            'DELETE FROM "user" WHERE user_id = $1 RETURNING user_id, username, email',
+            [userId]
+        )
+
+        if (result.rows.length === 0) {
+            throw new Error("User not found")
+        }
+
+        return result.rows[0]
+    } catch (error) {
+        throw error
+    }
+}

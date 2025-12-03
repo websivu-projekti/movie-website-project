@@ -11,7 +11,7 @@ export default function FilterContent({chosenContent, setChosenContent}){
                 type="radio"
                 name="content"
                 value={"movie"}
-                checked={chosenContent === 'movie'}
+                checked={chosenContent === 'movies'}
                 onClick={chooseContent}
               />Movies
             </label>

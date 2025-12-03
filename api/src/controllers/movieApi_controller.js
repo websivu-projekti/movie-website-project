@@ -29,12 +29,27 @@ export async function getPopularFilms(req, res) {
   }
 }
 
-export async function getDiscover(req, res) {
+export async function getDiscoverMovies(req, res) {
   try {
     const apiKey = process.env.TMDB_API_KEY
     const params = req.params.params
     const response = await fetch(
       `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}${params}`
+    )
+    const data = await response.json()
+    res.json(data.results)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: "Error fetching movies" })
+  }
+}
+
+export async function getDiscoverTV(req, res) {
+  try {
+    const apiKey = process.env.TMDB_API_KEY
+    const params = req.params.params
+    const response = await fetch(
+      `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}${params}`
     )
     const data = await response.json()
     res.json(data.results)
@@ -75,8 +90,9 @@ export async function getLanguages(req, res) {
 export async function getMovieProviders(req, res) {
   try {
     const apiKey = process.env.TMDB_API_KEY
+    const region = "fi"
     const response = await fetch(
-      `https://api.themoviedb.org/3/watch/providers/movie?api_key=${apiKey}`
+      `https://api.themoviedb.org/3/watch/providers/movie?api_key=${apiKey}&watch_region=${region}`
     )
     const data = await response.json()
     res.json(data)

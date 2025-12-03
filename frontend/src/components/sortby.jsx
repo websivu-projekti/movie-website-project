@@ -11,7 +11,9 @@ export default function SortBy({sorting, setSorting}){
         { value: 'title.desc', label: 'Title A-Z' },
         { value: 'title.asc', label: 'Title Z-A' },
         { value: 'vote_average.desc', label: 'Best rated first' },
-        { value: 'vote_average.asc', label: 'Worst rated first' }
+        { value: 'vote_average.asc', label: 'Worst rated first' },
+        { value: 'vote_count.desc', label: 'Most ratings' },
+        { value: 'vote_count.asc', label: 'Least ratings' }
     ]
 
     const chooseSort = e => {

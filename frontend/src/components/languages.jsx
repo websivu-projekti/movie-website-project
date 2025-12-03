@@ -22,7 +22,7 @@ export default function FilterLanguages({chosenLan, setChosenLan}){
         }, [])
 
     const chooseLan = (lan) => {
-        setChosenLan(Array.isArray(lan) ? lan.map(x => x.value) : [])
+        setChosenLan(lan.value)
         console.log(chosenLan)
     }
 
@@ -35,7 +35,6 @@ export default function FilterLanguages({chosenLan, setChosenLan}){
         <Select 
         className="filter languages"
         classNamePrefix='select'
-        isMulti
         onChange={chooseLan}
         options={languageOptions}
         theme={(theme) => ({

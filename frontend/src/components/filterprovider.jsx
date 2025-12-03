@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import Select, { InputActionMeta } from 'react-select'
 
-export default function FilterProviders(){
-    const [providers, setProviders] = useState([])
+export default function FilterProviders({chosenProviders, setChosenProviders}){
+    const [ providers, setProviders ] = useState()
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -11,7 +11,7 @@ export default function FilterProviders(){
                     const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/movieproviders`)
                     if (!res.ok) throw new Error("Verkkovirhe")
                     const data = await res.json()
-                    setProviders(data)
+                    setProviders(data.results)
                   } catch (err) {
                     console.error("Virhe haettaessa sisällöntarjoajia:", err)
                   } finally {
@@ -21,10 +21,22 @@ export default function FilterProviders(){
                 fetchProviders()
         }, [])
 
+    const Options = providers?.map((provider) => ({
+        value: provider.provider_id,
+        label: provider.provider_name
+    }))
+
+    const chooseProvider = (prov) => {
+        setChosenProviders(prov.label)
+        console.log(chosenProviders)
+    }
+
     return(
-        <Select 
+        <Select
+        options={Options}
         className="filter genre"
         classNamePrefix='select'
+        onChange={chooseProvider}
         theme={(theme) => ({
             ...theme,
                 borderRadius: 0,
@@ -39,15 +51,9 @@ export default function FilterProviders(){
             },
         })}
         styles={{
-            multiValueLabel: (baseStyles) => ({
+            singleValue: (baseStyles) => ({
                 ...baseStyles,
-                color: '#0f0f0f',
-                backgroundColor: '#a5e364'
-            }),
-            multiValueRemove: (baseStyles) => ({
-                ...baseStyles,
-                color: '#0f0f0f',
-                backgroundColor: '#a5e364'
+                color: '#F5F5F5'
             }),
             valueContainer: (baseStyles) => ({
                 ...baseStyles,
@@ -61,6 +67,11 @@ export default function FilterProviders(){
             menu: (baseStyles) => ({
                 ...baseStyles,
                 top: 'auto'
+            }),
+            inputContainer: (baseStyles) => ({
+                ...baseStyles,
+                paddingTop: '3px',
+                paddingBottom: '3px'
             })
         }}
         />

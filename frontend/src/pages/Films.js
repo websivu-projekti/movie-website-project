@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react"
 import "../index.css"
 import "../filters.css"
 import Header from '../components/header.jsx'
+import Pagination from "../components/pagination.jsx"
 import menuLogo from "../assets/menuicon.svg"
 import closeMenu from "../assets/closemenu.svg"
 import { Rating, Star } from '@smastrom/react-rating'
@@ -19,10 +20,11 @@ function Films(){
   const [ discoverMovies, setDiscoverMovies ] = useState([])
   const [ sorting, setSorting ] = useState('popularity.desc')
   const [ chosenGen, setChosenGen ] = useState([])
-  const [ chosenLan, setChosenLan ] = useState([])
-  const [ chosenRating, setChosenRating ] = useState(' ')
+  const [ chosenLan, setChosenLan ] = useState('en')
+  const [ chosenRating, setChosenRating ] = useState('10')
   const [ chosenYear, setChosenYear ] = useState()
-  const [ chosenContent, setChosenContent ] = useState('movie')
+  const [ chosenContent, setChosenContent ] = useState('movies')
+  const [ chosenProviders, setChosenProviders ] = useState()
   const [ searchQuery, setSearchQuery ] = useState('')
   const [ loading, setLoading ] = useState(true)
   const [ currentPage, setCurrentPage ] = useState(1)
@@ -31,7 +33,7 @@ function Films(){
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discover/&page=${currentPage}`)
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discovermovies/&page=${currentPage}&sort_by=${sorting}&vote_average.lte=${chosenRating}&${chosenYear}&with_genres=${chosenGen}&with_original_language=${chosenLan}`)
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
         setDiscoverMovies(data)
@@ -43,7 +45,7 @@ function Films(){
       }
     }
     fetchMovies()
-  }, [currentPage])
+  }, [currentPage, sorting, chosenRating, chosenYear, chosenGen, chosenLan])
 
   const openMobileMenu = () => {
     mobileMenu.current.style.transform = 'translate3d(0vw, 0, 0)'
@@ -53,21 +55,13 @@ function Films(){
     mobileMenu.current.style.transform = 'translate3d(-100vw, 0, 0)'
   }
 
-  const nextPage = () => {
-    setCurrentPage(currentPage => currentPage + 1)
-  }
-
-  const prevPage = () => {
-    setCurrentPage(currentPage => currentPage - 1)
-  }
-
   const resetFilters = () => {
     setSorting('popularity.desc')
-    setChosenGen([])
-    setChosenLan([])
-    setChosenRating(' ')
+    setChosenGen([ ])
+    setChosenLan([ ])
+    setChosenRating('10')
     setChosenYear()
-    setChosenContent('movie')
+    setChosenContent('movies')
   }
 
   const customRating = {
@@ -138,13 +132,15 @@ function Films(){
                   <FilterYear chosenYear={chosenYear} setChosenYear={setChosenYear}/>
                   {/* PROVIDERS */}
                   <div className="filterTitle">Providers:</div>
-                  <FilterProviders/>
+                  <FilterProviders chosenProviders={chosenProviders} setChosenProviders={setChosenProviders}/>
                   {/* CONTENT */}
                   <div className="filterTitle">Content:</div>
                   <FilterContent chosenContent={chosenContent} setChosenContent={setChosenContent}/>
                   </div>
         </div>
-        <div className="movieRow">
+        {loading
+          ? <p>Loading movies...</p>
+        :<div className="movieRow">
           {discoverMovies.map((movie, index) => (
             <div key={index} class="movieCard">
                 <img className="moviePoster" src={`http://image.tmdb.org/t/p/w300/${movie.poster_path}`}/>
@@ -160,14 +156,9 @@ function Films(){
             </div>
           ))}
         </div>
-        <div className="pagination">
-            <button className="paginationBtn" onClick={prevPage}>Prev</button>
-            <button 
-            className="paginationBtn"
-            onClick={nextPage}
-            >Next
-            </button>
-        </div>      
+        }
+        
+        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage}/>
       </div> 
     </div>
   )

@@ -15,17 +15,6 @@ export default function FilterRating({chosenRating, setChosenRating}){
         <form className="filter rating">
             <label>
               <input
-                defaultChecked={true}
-                type="radio"
-                name="rating"
-                value={" "}
-                checked={chosenRating === ' '}
-                onClick={chooseRating}
-              />Any
-            </label>
-            <br/>
-            <label>
-              <input
                 type="radio"
                 name="rating"
                 value={"2"}
@@ -38,7 +27,7 @@ export default function FilterRating({chosenRating, setChosenRating}){
                 style={{ maxWidth: 100, display: 'inline-flex' }} 
                 value={1}
                 itemStyles={customRating}
-              /> and up
+              /> and down
             </label>
             <br/>
             <label>
@@ -55,7 +44,7 @@ export default function FilterRating({chosenRating, setChosenRating}){
                 style={{ maxWidth: 100, display: 'inline-flex' }}
                 value={2}
                 itemStyles={customRating}
-                /> and up
+                /> and down
             </label>
             <br/>
             <label>
@@ -72,7 +61,7 @@ export default function FilterRating({chosenRating, setChosenRating}){
                 style={{ maxWidth: 100, display: 'inline-flex' }}
                 value={3}
                 itemStyles={customRating}
-              /> and up
+              /> and down
             </label>
             <br/>
             <label>
@@ -89,7 +78,7 @@ export default function FilterRating({chosenRating, setChosenRating}){
                 style={{ maxWidth: 100, display: 'inline-flex' }}
                 value={4}
                 itemStyles={customRating}
-              /> and up
+              /> and down
             </label>
             <br/>
             <label>

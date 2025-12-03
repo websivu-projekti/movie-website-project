@@ -42,7 +42,21 @@ function MovieInfo(){
         setLoading(false)
       }
     }
-      fetchMovie()
+
+    async function fetchReviews(){
+      try{
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/reviews/${movieId}`)
+        if (res.ok) {
+          const data = await res.json();
+          setMyReviews(data);
+        }
+      } catch(err){
+        console.error("Error fetching reviews:", err)
+      }
+    }
+
+    fetchMovie()
+    fetchReviews()
     }, [movieId])
 
 
@@ -176,7 +190,7 @@ function MovieInfo(){
               <div key = {index} className ="reviewBox">
                
                 <div className ="reviewHeader">
-                <img src={review.avatar || "https://via.placeholder.com"}
+                <img src={review.avatar || "https://placehold.co/100x100"}
                 alt="Profile" 
                 className="pfp"
                 />
@@ -199,7 +213,7 @@ function MovieInfo(){
             <div className ="myReviewRow">
               <div className="profileAndName">
                 <img src = "" alt = "Profile" className = "pfp"/>
-                <div className ="myReviewName">{user.username}</div>
+                <div className ="myReviewName">{user ? user.username : "Not logged in"}</div>
               </div>
 
                     <Rating 
@@ -209,6 +223,7 @@ function MovieInfo(){
                     onChange={setRating}
                     itemStyles={customRating}
                     isRequired
+                    isDisabled={!user}
                     />
                     
             </div>
@@ -216,14 +231,16 @@ function MovieInfo(){
                 <label>Review</label>
                 <textarea
                   className="reviewTextarea"
-                  placeholder="Write your review here..."
+                  placeholder={user ? "Write your review here..." : "Please log in to write a review"}
                   value = {reviewContent}
                   onChange={(e) => setReviewContent(e.target.value)}
+                  disabled={!user}
                 />
               </div>
 
+           {user && (
            <button className="publishBtn"
-           onClick={() => {
+           onClick={async () => {
             if(!reviewContent) return
 
             if (!rating || rating === 0) {
@@ -231,20 +248,72 @@ function MovieInfo(){
             return;
             }
 
-            const newReview = {
-              username: user.username,
-              date: new Date().toISOString().split("T")[0],
-              rating: rating * 2,
-              content: reviewContent,
-              avatar: user.avatar  || "https://via.placeholder.com"
-            }
-            setMyReviews([newReview, ...myReviews])
+            try {
+              //okei rehellisesti tästä eteenpäin mä en oikeen ymmärrä mitä tapahtuu mut se toimii
+              // First, ensure the movie exists in the content table
+              const ensureMovieRes = await fetch(`${process.env.REACT_APP_API_URL}/movies`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  content_id: movieId,
+                  title: movie.title,
+                  release_year: movie.releaseYear,
+                  genre: movie.genres?.[0] || "Unknown",
+                  description: movie.synopsis,
+                  poster_url: movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : null,
+                  content_type: "movie"
+                })
+              });
+              
+              // Save review to database (convert 0-5 star rating to 1-10 scale)
+              const ratingValue = Math.max(1, Math.round(rating * 2));
+              
+              const requestBody = {
+                user_id: user.userId,
+                content_id: movieId,
+                review_text: reviewContent,
+                rating: ratingValue
+              };
+              
+              console.log("Sending review:", requestBody);
+              console.log("User object:", user);
+              
+              const res = await fetch(`${process.env.REACT_APP_API_URL}/reviews`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBody)
+              })
 
-            setReviewContent("")
-            setRating(0)
+              if (!res.ok) {
+                const errorData = await res.json().catch(() => null);
+              }
+
+              const savedReview = await res.json();
+
+              // Add to local state
+              const newReview = {
+                username: user.username,
+                date: new Date().toISOString().split("T")[0],
+                rating: rating * 2,
+                content: reviewContent,
+                avatar: user.avatar || "https://placehold.co/100x100"
+              }
+              setMyReviews([newReview, ...myReviews])
+
+              setReviewContent("")
+              setRating(0)
+            } catch (err) {
+              console.error("Error saving review:", err);
+              alert("Failed to save review");
+            }
 
            }}         
            >Publish</button>
+           )}
 
          </div>
 

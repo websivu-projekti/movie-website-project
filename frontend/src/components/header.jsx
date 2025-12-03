@@ -21,7 +21,7 @@ export default function Header({searchQuery, setSearchQuery}){
         const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/moviesearch/${searchQuery}`)
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
-        console.log(data)
+        navigate("/films")
       } catch (err) {
         console.error("Virhe haettaessa elokuvia:", err)
       }

@@ -12,7 +12,7 @@ movieRouter.get("/movieDetails/:movieId", getMovieDetails);
 // provider information is now included in /movieDetails/:movieId response
 movieRouter.get("/moviesearch/:query", getMovieSearchresults);
 
-movieRouter.get("/discover", getDiscover);
+movieRouter.get("/discover/:params", getDiscover);
 movieRouter.get("/genres", getGenres);
 movieRouter.get("/languages", getLanguages);
 movieRouter.get("/movieproviders", getMovieProviders);

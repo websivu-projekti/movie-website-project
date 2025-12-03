@@ -25,13 +25,13 @@ function Films(){
   const [ chosenContent, setChosenContent ] = useState('movie')
   const [ searchQuery, setSearchQuery ] = useState('')
   const [ loading, setLoading ] = useState(true)
-  const searchParams = '&sort_by=title.asc'
+  const [ currentPage, setCurrentPage ] = useState(1)
   const mobileMenu = useRef(null)
 
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discover`)
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discover/&page=${currentPage}`)
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
         setDiscoverMovies(data)
@@ -43,7 +43,7 @@ function Films(){
       }
     }
     fetchMovies()
-  }, [])
+  }, [currentPage])
 
   const openMobileMenu = () => {
     mobileMenu.current.style.transform = 'translate3d(0vw, 0, 0)'
@@ -51,6 +51,14 @@ function Films(){
 
   const closeMobileMenu = () => {
     mobileMenu.current.style.transform = 'translate3d(-100vw, 0, 0)'
+  }
+
+  const nextPage = () => {
+    setCurrentPage(currentPage => currentPage + 1)
+  }
+
+  const prevPage = () => {
+    setCurrentPage(currentPage => currentPage - 1)
   }
 
   const resetFilters = () => {
@@ -64,7 +72,7 @@ function Films(){
 
   const customRating = {
     itemShapes: Star,
-    activeFillColor: '#a5e364',
+    activeFillColor: '#90e339',
     inactiveFillColor: '#cdf0a8'
   }
 
@@ -73,6 +81,7 @@ function Films(){
       <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
       <h2>Films</h2>
       <div className="searchContainer">
+        
         <div className="filtersMenu">
           <button className="filtermenuBtn" onClick={openMobileMenu}>
             <img src={menuLogo}/>
@@ -151,8 +160,15 @@ function Films(){
             </div>
           ))}
         </div>
-      </div>
-      
+        <div className="pagination">
+            <button className="paginationBtn" onClick={prevPage}>Prev</button>
+            <button 
+            className="paginationBtn"
+            onClick={nextPage}
+            >Next
+            </button>
+        </div>      
+      </div> 
     </div>
   )
 }

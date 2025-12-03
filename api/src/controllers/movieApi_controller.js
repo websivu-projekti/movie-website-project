@@ -32,8 +32,9 @@ export async function getPopularFilms(req, res) {
 export async function getDiscover(req, res) {
   try {
     const apiKey = process.env.TMDB_API_KEY
+    const params = req.params.params
     const response = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}`
+      `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}${params}`
     )
     const data = await response.json()
     res.json(data.results)

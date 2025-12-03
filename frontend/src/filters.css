@@ -4,6 +4,7 @@
     grid-template-rows: auto;
     grid-template-areas: 
         'filter results'
+        'filter pagination'
     ;
 }
 
@@ -95,6 +96,27 @@
 
 .rr--group{
     position: inherit;
+}
+
+.pagination{
+    grid-area: pagination;
+    padding: 20px;
+    margin: auto;
+}
+
+.paginationBtn{
+    margin: 2px;
+    padding: 0.5rem 1rem; 
+    background-color: #90e339;
+    color: var(--text-col2);
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.moviePoster{
+    width: 300px;
 }
 
 @media only screen and (max-width: 1100px){

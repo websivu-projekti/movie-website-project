@@ -18,7 +18,7 @@ export default function Header({searchQuery, setSearchQuery}){
 
     const submitSearch = async () =>{
         try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/moviesearch/${searchQuery}`)
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/moviesearch/${searchQuery}`)
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
         console.log(data)

@@ -105,6 +105,9 @@
 
 .pagination{
     grid-area: pagination;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     padding: 20px;
     margin: auto;
 }
@@ -117,6 +120,18 @@
     border: none; 
     border-radius: 4px; 
     cursor: pointer;
+    text-decoration: none;
+}
+
+.paginationBtnDisabled{
+    opacity: 0.7;
+    cursor: not-allowed;
+    margin: 2px;
+    padding: 0.5rem 1rem; 
+    background-color: #90e339;
+    color: var(--text-col2);
+    border: none; 
+    border-radius: 4px;
     text-decoration: none;
 }
 

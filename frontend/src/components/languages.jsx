@@ -32,7 +32,8 @@ export default function FilterLanguages({chosenLan, setChosenLan}){
     }))
 
     return(
-        <Select 
+        <Select
+        defaultValue={'en'}
         className="filter languages"
         classNamePrefix='select'
         onChange={chooseLan}
@@ -51,15 +52,9 @@ export default function FilterLanguages({chosenLan, setChosenLan}){
             },
         })}
         styles={{
-            multiValueLabel: (baseStyles) => ({
+            singleValue: (baseStyles) => ({
                 ...baseStyles,
-                color: '#0f0f0f',
-                backgroundColor: '#a5e364'
-            }),
-            multiValueRemove: (baseStyles) => ({
-                ...baseStyles,
-                color: '#0f0f0f',
-                backgroundColor: '#a5e364'
+                color: '#F5F5F5'
             }),
             valueContainer: (baseStyles) => ({
                 ...baseStyles,

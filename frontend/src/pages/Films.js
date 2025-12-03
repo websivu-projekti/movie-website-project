@@ -28,7 +28,10 @@ function Films(){
   const [ searchQuery, setSearchQuery ] = useState('')
   const [ loading, setLoading ] = useState(true)
   const [ currentPage, setCurrentPage ] = useState(1)
+  const [ render, setRender ] = useState(true)
   const mobileMenu = useRef(null)
+
+  
 
   useEffect(() => {
     async function fetchMovies() {
@@ -57,11 +60,13 @@ function Films(){
 
   const resetFilters = () => {
     setSorting('popularity.desc')
-    setChosenGen([ ])
-    setChosenLan([ ])
+    setChosenGen([])
+    setChosenLan('en')
     setChosenRating('10')
     setChosenYear()
     setChosenContent('movies')
+    setCurrentPage(1)
+    setRender(!render) 
   }
 
   const customRating = {
@@ -84,7 +89,7 @@ function Films(){
             <button className="filtermenuBtn" onClick={closeMobileMenu}>
               <img src={closeMenu}/>
             </button>
-            <div className="mobileFiltersRow">
+            <div className="mobileFiltersRow" key={render}>
                   Filters
                   <a className="resetLink" onClick={resetFilters}>Reset filters</a>
                   {/* SORT BY */}
@@ -112,7 +117,7 @@ function Films(){
             </div>
         </div>
         <div className="filtersRow">
-          <div className="filtersRow">
+          <div className="filtersRow" key={render}>
                   Filters
                   <a className="resetLink" onClick={resetFilters}>Reset filters</a>
                   {/* SORT BY */}

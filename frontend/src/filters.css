@@ -82,6 +82,11 @@
     float: right;
 }
 
+.resetLink:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .genre{
     grid-area: genre;
 }

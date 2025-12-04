@@ -14,10 +14,10 @@ import SortBy from "../components/sortby.jsx"
 import FilterLanguages from "../components/languages.jsx"
 import FilterYear from "../components/filteryear.jsx"
 import FilterProviders from "../components/filterprovider.jsx"
-import FilterContent from "../components/filtercontent.jsx"
 
 function Films(){
   const [ discoverMovies, setDiscoverMovies ] = useState([])
+  const [ discoverTv, setDiscoverTv ] = useState([])
   const [ sorting, setSorting ] = useState('popularity.desc')
   const [ chosenGen, setChosenGen ] = useState([])
   const [ chosenLan, setChosenLan ] = useState('en')
@@ -29,6 +29,10 @@ function Films(){
   const [ loading, setLoading ] = useState(true)
   const [ currentPage, setCurrentPage ] = useState(1)
   const [ render, setRender ] = useState(true)
+  const [ showContentMovies, setShowContentMovies ] = useState(true)
+  const [ showContentTv, setShowContentTv ] = useState(false)
+  const [ movieActive, setMovieActive ] = useState('active')
+  const [ tvActive, setTvActive ] = useState('inactive')
   const mobileMenu = useRef(null)
 
   
@@ -50,6 +54,23 @@ function Films(){
     fetchMovies()
   }, [currentPage, sorting, chosenRating, chosenYear, chosenGen, chosenLan])
 
+  useEffect(() =>{
+    async function fetchSeries() {
+      try {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discovertv/&page=${currentPage}&sort_by=${sorting}`)
+        if (!res.ok) throw new Error("Verkkovirhe")
+        const data = await res.json()
+        setDiscoverTv(data)
+      } catch (err) {
+        console.error("Virhe haettaessa sarjoja:", err)
+        setDiscoverTv(["Series 1", "Series 2", "Series 3", "Series 4"]) // placeholder jos backend ei toimi
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchSeries()
+  }, [currentPage, sorting])
+
   const openMobileMenu = () => {
     mobileMenu.current.style.transform = 'translate3d(0vw, 0, 0)'
   }
@@ -67,6 +88,18 @@ function Films(){
     setChosenContent('movies')
     setCurrentPage(1)
     setRender(!render) 
+  }
+
+  const showContent = () => {
+    setShowContentMovies(showContentMovies => !showContentMovies)
+    setShowContentTv(showContentTv => !showContentTv)
+    if(showContentTv === false){
+      setMovieActive('inactive')
+      setTvActive('active')
+    } else if (showContentTv === true) {
+      setMovieActive('active')
+      setTvActive('inactive')
+    }
   }
 
   const customRating = {
@@ -110,9 +143,6 @@ function Films(){
                   {/* PROVIDERS */}
                   <div className="filterTitle">Providers:</div>
                   <FilterProviders/>
-                  {/* CONTENT */}
-                  <div className="filterTitle">Content:</div>
-                  <FilterContent chosenContent={chosenContent} setChosenContent={setChosenContent}/>
                   </div>
             </div>
         </div>
@@ -138,14 +168,31 @@ function Films(){
                   {/* PROVIDERS */}
                   <div className="filterTitle">Providers:</div>
                   <FilterProviders chosenProviders={chosenProviders} setChosenProviders={setChosenProviders}/>
-                  {/* CONTENT */}
-                  <div className="filterTitle">Content:</div>
-                  <FilterContent chosenContent={chosenContent} setChosenContent={setChosenContent}/>
-                  </div>
+              </div>
+        </div>
+        <div className="browseTab">
+            <button 
+            className={`tabBtn movie ${movieActive}`}
+            value={'movies'}
+            onClick={showContent}
+            disabled={showContentMovies === true}
+            >Movies
+            </button>
+            <button 
+            className={`tabBtn tv ${tvActive}`}
+            value={'tv'}
+            onClick={showContent}
+            disabled={showContentTv === true}
+            >TV Series
+            </button>
         </div>
         {loading
-          ? <p>Loading movies...</p>
-        :<div className="movieRow">
+          ? <p>Loading content...</p>
+        :<>
+        {showContentMovies &&
+        
+        <div className="movieRow browseMovies">
+          
           {discoverMovies.map((movie, index) => (
             <div key={index} class="movieCard">
                 <img className="moviePoster" src={`http://image.tmdb.org/t/p/w300/${movie.poster_path}`}/>
@@ -159,8 +206,32 @@ function Films(){
                 itemStyles={customRating}
                 />
             </div>
+            
           ))}
         </div>
+        }
+        {showContentTv &&
+        <>
+        <div className="movieRow browseTv">
+          {discoverTv.map((series, index) => (
+            <div key={index} class="movieCard">
+                <img className="moviePoster" src={`http://image.tmdb.org/t/p/w300/${series.poster_path}`}/>
+                <p className="movieTitle"><a className="movieLink" href={`/movieinfo/${series.id}`}>{series.name}</a></p>
+                <div className="movieTitle">{(series.first_air_date.slice(0,4))}</div>
+                <Rating 
+                className="movieRating" 
+                readOnly 
+                style={{ maxWidth: 250 }} 
+                value={(series.vote_average / 2)}
+                itemStyles={customRating}
+                />
+            </div>
+            
+          ))}
+        </div>
+        </>
+        }
+        </>
         }
         
         <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage}/>

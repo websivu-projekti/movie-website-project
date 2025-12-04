@@ -3,6 +3,7 @@
     grid-template-columns: 20% 80%;
     grid-template-rows: auto;
     grid-template-areas: 
+        'filter tabs'
         'filter results'
         'filter pagination'
     ;
@@ -47,6 +48,41 @@
 
 .movieRow{
     grid-area: results;
+}
+
+.browseMovies{
+    background-color: var(--bg-acc3);
+    padding: 20px;
+    margin-left: 10px;
+    border-radius: 0px 50px 50px 50px;
+}
+
+.browseTv{
+    background-color: var(--bg-acc3);
+    padding: 20px;
+    margin-left: 10px;
+    border-radius: 0px 50px 50px 50px;
+}
+
+.browseTab{
+    grid-area: tabs;
+    height: fit-content;
+    padding: 0px 10px 0px 10px;
+}
+
+.tabBtn{
+    padding: 10px;
+    border-style: none;
+    border: 0px;
+    border-radius: 8px 8px 0px 0px;
+    font-size: 1.25em;
+}
+.active{
+    background-color: var(--bg-acc3);
+}
+
+.inactive{
+    background-color: var(--bg-acc2);
 }
 
 .mobileMenu{

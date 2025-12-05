@@ -190,7 +190,7 @@ function MovieInfo(){
               <div key = {index} className ="reviewBox">
                
                 <div className ="reviewHeader">
-                <img src={review.avatar || "https://placehold.co/100x100"}
+                <img src={review.avatar || "https://i.imgur.com/MVFmDAe.jpeg"}
                 alt="Profile" 
                 className="pfp"
                 />
@@ -212,7 +212,7 @@ function MovieInfo(){
 
             <div className ="myReviewRow">
               <div className="profileAndName">
-                <img src = "" alt = "Profile" className = "pfp"/>
+                   <img src={user?.avatar || user?.pfp_url || "https://i.imgur.com/MVFmDAe.jpeg"} alt="Profile" className="pfp"/>
                 <div className ="myReviewName">{user ? user.username : "Not logged in"}</div>
               </div>
 
@@ -300,7 +300,7 @@ function MovieInfo(){
                 date: new Date().toISOString().split("T")[0],
                 rating: rating * 2,
                 content: reviewContent,
-                avatar: user.avatar || "https://placehold.co/100x100"
+                avatar: user.avatar || "https://i.imgur.com/MVFmDAe.jpeg"
               }
               setMyReviews([newReview, ...myReviews])
 

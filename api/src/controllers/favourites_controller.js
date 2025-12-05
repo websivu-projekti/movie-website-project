@@ -1,7 +1,7 @@
 import { getUserFavourites, addFavourite, removeFavourite, isFavourited } from "../models/favourites_model"
 
 // Get users favourites movies
-export async function getFavorites(req, res) {
+export async function getFavourites(req, res) {
     try {
         const userId = req.user.userId
         const favourites = await getUserFavourites(userId)
@@ -16,7 +16,7 @@ export async function getFavorites(req, res) {
 }
 
 // Add Movies to favouritelist
-export async function addToFavorites(req, res) {
+export async function addToFavourites(req, res) {
     try {
         const userId = req.user.userId
         const { contentId } = req.body
@@ -42,7 +42,7 @@ export async function addToFavorites(req, res) {
     }
 }
 
-export async function removeFromFavorites(req, res) {
+export async function removeFromFavourites(req, res) {
     try {
         const userId = req.user.userId
         const { contentId } = req.body
@@ -67,7 +67,7 @@ export async function removeFromFavorites(req, res) {
     }
 }
 
-export async function checkFavorite(req, res) {
+export async function checkFavourite(req, res) {
     try {
         const userId = req.user.userId
         const { contentId } = req.query

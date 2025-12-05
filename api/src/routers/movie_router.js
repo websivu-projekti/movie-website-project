@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getMovies, getMovie, addMovie, updateMovie, deleteMovie} from "../controllers/movie_controller.js";
+import { getMovies, getMovie, addMovie, updateMovie, deleteMovie, saveMovieFromTMDB} from "../controllers/movie_controller.js";
 import { getNowPlaying, getPopularFilms, getDiscover, getGenres, getLanguages, getMovieProviders, getTvProviders, getMovieDetails} from "../controllers/movieApi_controller.js";
 
 const movieRouter = Router();
@@ -21,6 +21,8 @@ movieRouter.get("/:id", getMovie);
 movieRouter.post("/", addMovie);
 movieRouter.put("/:id", updateMovie);
 movieRouter.delete("/:id", deleteMovie);
+
+movieRouter.post("/saveFromTMDB", saveMovieFromTMDB)
 
 
 

@@ -97,7 +97,7 @@ function Profile(){
         body: JSON.stringify({ contentId })
       })
       if (response.ok) {
-        setFavourites(favourites.filter(fav => fav.contentId !== contentId))
+        setFavourites(favourites.filter(fav => fav.content_id !== contentId))
       } else {
         const data = await response.json()
         alert(`Error: ${data.error}`)
@@ -168,7 +168,7 @@ function Profile(){
                           <span className="listName">{movie.title}</span>
                           <span className="listCount">{movie.release_year || "N/A"}</span>
                           <button
-                            onClick={() => handleRemoveFavourite(movie.contentId)}
+                            onClick={() => handleRemoveFavourite(movie.content_id)}
                             style={{marginTop: "10px", backgroundColor: "red", color: "white", padding: "5px 10px", border: "none", cursor: "pointer"}}
                           >
                             Remove from favourites

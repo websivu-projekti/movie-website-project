@@ -57,25 +57,30 @@ export async function deleteMovie(req, res, next) {
 export async function saveMovieFromTMDB(req, res, next) {
   try {
     const { tmdbId, title, releaseYear, genre, description, posterUrl, contentType } = req.body
+    
+    console.log('Saving movie with tmdbId:', tmdbId)
 
     const existing = await pool.query(
-      "SELECT * FROM content WHERE title = $1 AND release_year = $2",
-      [title, releaseYear]
+      "SELECT * FROM content WHERE tmdb_id = $1",
+      [tmdbId]
     )
 
     if (existing.rows.length > 0) {
+      console.log('Movie already exists:', existing.rows[0])
       return res.json(existing.rows[0])
     }
 
     const result = await pool.query(
-      `INSERT INTO content (title, release_year, genre, description, poster_url, content_type)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      `INSERT INTO content (tmdb_id, title, release_year, genre, description, poster_url, content_type)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *`,
-      [title, releaseYear, genre, description, posterUrl, contentType || 'movie']
+      [tmdbId, title, releaseYear, genre, description, posterUrl, contentType || 'movie']
     )
 
+    console.log('Saved new movie:', result.rows[0])
     res.json(result.rows[0])
   } catch (err) {
+    console.error('saveMovieFromTMDB error:', err)
     next(err)
   }
 }

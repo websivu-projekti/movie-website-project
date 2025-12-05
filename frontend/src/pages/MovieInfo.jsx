@@ -50,14 +50,17 @@ function MovieInfo(){
 
     const checkIfFavourited = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/favourites/check?contentId=${movieId}`, {
+        console.log('Checking if favourited with tmdbId:', movieId)
+        const response = await fetch(`http://localhost:3001/favourites/check?tmdbId=${movieId}`, {
           headers: {
             'Authorization': `Bearer ${user.token}`
           }
         })
         const data = await response.json()
+        console.log('Check favourite response:', data)
         if (response.ok) {
           setIsFavourited(data.isFavourited)
+          console.log('Set isFavourited to:', data.isFavourited)
         }
       } catch (err) {
         console.error("Error checking favourite status:", err)
@@ -78,7 +81,7 @@ function MovieInfo(){
             'Content-Type' : 'application/json',
           },
           body: JSON.stringify({
-            tdmbId: movieId,
+            tmdbId: movieId,
             title: movie.title,
             releaseYear: movie.releaseYear,
             genre: movie.genres?.[0] || 'Unknown',
@@ -88,8 +91,20 @@ function MovieInfo(){
           })
         })
 
+        if (!saveResponse.ok) {
+          const errorText = await saveResponse.text()
+          throw new Error(`Failed to save movie: ${errorText}`)
+        }
+
         const saveData = await saveResponse.json()
-        const contentId = saveData.content_id || movieId
+        
+        if (!saveData.content_id) {
+          console.error('saveData:', saveData)
+          throw new Error("No content_id returned from saveFromTMDB")
+        }
+        
+        console.log('Saving to favourites with content_id:', saveData.content_id)
+        const contentId = saveData.content_id
 
         const response = await fetch("http://localhost:3001/favourites/add", {
           method: 'POST',
@@ -126,7 +141,7 @@ function MovieInfo(){
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${user.token}`
           },
-          body: JSON.stringify({ contentId : movieId })
+          body: JSON.stringify({ tmdbId: movieId })
         })
 
         if (response.ok) {

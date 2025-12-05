@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getMovies, getMovie, addMovie, updateMovie, deleteMovie} from "../controllers/movie_controller.js";
-import { getNowPlaying, getPopularFilms, getDiscoverMovies, getDiscoverTV, getGenres, getLanguages, getMovieProviders, getTvProviders, getMovieDetails, getMovieSearchresults} from "../controllers/movieApi_controller.js";
+import { getNowPlaying, getPopularFilms, getDiscoverMovies, getDiscoverTV, getGenres, getLanguages, getMovieProviders, getTvProviders, getMovieDetails, getMovieSearchresults, getSeriesGenres } from "../controllers/movieApi_controller.js";
 
 const movieRouter = Router();
 
@@ -15,6 +15,7 @@ movieRouter.get("/moviesearch/:query", getMovieSearchresults);
 movieRouter.get("/discovermovies/:params", getDiscoverMovies);
 movieRouter.get("/discovertv/:params", getDiscoverTV);
 movieRouter.get("/genres", getGenres);
+movieRouter.get("/seriesgenres", getSeriesGenres);
 movieRouter.get("/languages", getLanguages);
 movieRouter.get("/movieproviders", getMovieProviders);
 movieRouter.get("/tvproviders", getTvProviders);

@@ -11,19 +11,24 @@ import '@smastrom/react-rating/style.css'
 import Genres from '../components/genres.jsx'
 import FilterRating from "../components/filterrating.jsx"
 import SortBy from "../components/sortby.jsx"
+import SeriesSortBy from "../components/seriessortby.jsx"
 import FilterLanguages from "../components/languages.jsx"
 import FilterYear from "../components/filteryear.jsx"
+import FilterSeriesYear from "../components/seriesyear.jsx"
 import FilterProviders from "../components/filterprovider.jsx"
+import SeriesGenres from "../components/seriesgenres.jsx"
 
 function Films(){
   const [ discoverMovies, setDiscoverMovies ] = useState([])
   const [ discoverTv, setDiscoverTv ] = useState([])
   const [ sorting, setSorting ] = useState('popularity.desc')
+  const [ sortingSeries, setSortingSeries ] = useState('popularity.desc')
   const [ chosenGen, setChosenGen ] = useState([])
+  const [ chosenSeriesGen, setChosenSeriesGen ] = useState([])
   const [ chosenLan, setChosenLan ] = useState('en')
   const [ chosenRating, setChosenRating ] = useState('10')
   const [ chosenYear, setChosenYear ] = useState()
-  const [ chosenContent, setChosenContent ] = useState('movies')
+  const [ chosenSeriesYear, setChosenSeriesYear ] = useState()
   const [ chosenProviders, setChosenProviders ] = useState()
   const [ searchQuery, setSearchQuery ] = useState('')
   const [ loading, setLoading ] = useState(true)
@@ -57,7 +62,7 @@ function Films(){
   useEffect(() =>{
     async function fetchSeries() {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discovertv/&page=${currentPage}&sort_by=${sorting}`)
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discovertv/&page=${currentPage}&sort_by=${sortingSeries}&with_original_language=${chosenLan}&vote_average.lte=${chosenRating}&with_genres=${chosenSeriesGen}&${chosenSeriesYear}`)
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
         setDiscoverTv(data)
@@ -69,7 +74,7 @@ function Films(){
       }
     }
     fetchSeries()
-  }, [currentPage, sorting])
+  }, [currentPage, sortingSeries, chosenRating, chosenLan, chosenSeriesGen, chosenSeriesYear])
 
   const openMobileMenu = () => {
     mobileMenu.current.style.transform = 'translate3d(0vw, 0, 0)'
@@ -82,10 +87,11 @@ function Films(){
   const resetFilters = () => {
     setSorting('popularity.desc')
     setChosenGen([])
+    setChosenSeriesGen([])
     setChosenLan('en')
     setChosenRating('10')
     setChosenYear()
-    setChosenContent('movies')
+    setChosenSeriesYear()
     setCurrentPage(1)
     setRender(!render) 
   }
@@ -147,8 +153,9 @@ function Films(){
             </div>
         </div>
         <div className="filtersRow">
-          <div className="filtersRow" key={render}>
-                  Filters
+          {showContentMovies &&
+            <div className="filtersRow" key={render}>
+                  Filters (movie)
                   <a className="resetLink" onClick={resetFilters}>Reset filters</a>
                   {/* SORT BY */}
                   <div className="filterTitle">Sort by:</div>
@@ -169,6 +176,31 @@ function Films(){
                   <div className="filterTitle">Providers:</div>
                   <FilterProviders chosenProviders={chosenProviders} setChosenProviders={setChosenProviders}/>
               </div>
+              }
+            {showContentTv &&
+              <div className="filtersRow" key={render}>
+                  Filters (series)
+                  <a className="resetLink" onClick={resetFilters}>Reset filters</a>
+                  {/* SORT BY */}
+                  <div className="filterTitle">Sort by:</div>
+                  <SeriesSortBy sortingSeries={sortingSeries} setSortingSeries={setSortingSeries}/>
+                  {/* GENRES */}
+                  <div className="filterTitle">Genres: </div>
+                  <SeriesGenres chosenSeriesGen={chosenSeriesGen} setChosenSeriesGen={setChosenSeriesGen}/>
+                  {/* LANGUAGES */}
+                  <div className="filterTitle">Language:</div>
+                  <FilterLanguages chosenLan={chosenLan} setChosenLan={setChosenLan}/>
+                  {/* RATING */}
+                  <div className="filterTitle">Rating:</div>
+                  <FilterRating chosenRating={chosenRating} setChosenRating={setChosenRating}/>
+                  {/* YEAR */}
+                  <div className="filterTitle">Year:</div>
+                  <FilterSeriesYear chosenSeriesYear={chosenSeriesYear} setChosenSeriesYear={setChosenSeriesYear}/>
+                  {/* PROVIDERS */}
+                  <div className="filterTitle">Providers:</div>
+                  <FilterProviders chosenProviders={chosenProviders} setChosenProviders={setChosenProviders}/>
+              </div>
+              }
         </div>
         <div className="browseTab">
             <button 

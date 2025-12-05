@@ -238,3 +238,17 @@ export async function getMovieSearchresults(req, res){
     res.status(500).json({ error: "Error fetching movies" })
   }
 }
+
+export async function getSeriesGenres(req, res) {
+  try {
+    const apiKey = process.env.TMDB_API_KEY
+    const response = await fetch(
+      `https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}&language=en`
+    )
+    const data = await response.json()
+    res.json(data.genres)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: "Error fetching genres" })
+  }
+}

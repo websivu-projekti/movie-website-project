@@ -1,4 +1,4 @@
-import pool from "..database.js"
+import pool from "../database.js"
 
 // Get favourites list
 export async function getUserFavourites(userId) {

@@ -25,6 +25,22 @@ export const AuthProvider = ({ children }) => {
         }
     }, [])
 
+    const fetchUserData = async (token) => {
+        try {
+            const response = await fetch("http://localhost:3001/auth/profile", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            const data = await response.json()
+            if (response.ok) {
+                setUser({ ...data.user, token})
+            }
+        } catch (error) {
+            console.error("Failed to fetch user data", error)
+        }
+    }
+
     const login = (token) => {
         localStorage.setItem('token', token)
         const decodedUser = jwtDecode(token)

@@ -1,4 +1,4 @@
-import { getUserFavourites, addFavourite, removeFavourite, isFavourited } from "../models/favourites_model"
+import { getUserFavourites, addFavourite, removeFavourite, isFavourited } from "../models/favourites_model.js"
 
 // Get users favourites movies
 export async function getFavourites(req, res) {
@@ -7,7 +7,7 @@ export async function getFavourites(req, res) {
         const favourites = await getUserFavourites(userId)
 
         res.json({
-            favourties: favourites
+            favourites: favourites
         })
     } catch (error) {
         console.error("Get favourites error:", error)

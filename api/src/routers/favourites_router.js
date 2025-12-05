@@ -1,6 +1,6 @@
-import { router } from "express"
-import { getFavourites, addToFavourites, removeFromFavourites, checkFavourite } from "../controllers/favourites_controller"
-import { authenticateToken } from "../controllers/auth_controller"
+import { Router } from "express"
+import { getFavourites, addToFavourites, removeFromFavourites, checkFavourite } from "../controllers/favourites_controller.js"
+import { authenticateToken } from "../controllers/auth_controller.js"
 
 const favouritesRouter = Router()
 

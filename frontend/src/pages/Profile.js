@@ -93,7 +93,7 @@ function Profile(){
                   onClick={() => navigate("/profile/favouritelist")}
                   style={{marginTop: "20px", marginBottom: "20px", padding: "10px 20px", backgroundColor: "#585cd5", color: "white", border: "none", cursor: "pointer", borderRadius: "5px", fontSize: "16px"}}
                 >
-                  View My Favourite Movies
+                  My Favourite Movies
                 </button>
 
                 <div className="profileListsHeader">

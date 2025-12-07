@@ -31,7 +31,7 @@ function Home() {
 
   const customRating = {
       itemShapes: Star,
-      activeFillColor: '#a5e364',
+      activeFillColor: '#90e339',
       inactiveFillColor: '#cdf0a8'
     }
 

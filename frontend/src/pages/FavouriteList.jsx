@@ -90,12 +90,12 @@ function FavouriteList() {
             ) : favourites.length === 0 ? (
                 <p>No movies added to favourites</p>
             ) : (
-                <div className="listsGrid">
+                <div className="movieRow">
                     {favourites.map(movie => (
-                        <div key={movie.content_id} className="listCard">
+                        <div key={movie.content_id} className="movieCard">
                             <div className="moviePoster">
                                 {movie.poster_url ? (
-                                    <img src={movie.poster_url} alt={movie.title} style={{width: "100%", height: "100%", objectFit: "cover"}} />
+                                    <img src={movie.poster_url} alt={movie.title} style={{width: "100%", objectFit: "cover"}} />
                                 ) : (
                                     <div style={{width: "100%", height: "200px", backgroundColor: "ccc", display: "flex", alignItems: "center", justifyContent: "center"}}>
                                         No Image
@@ -103,11 +103,11 @@ function FavouriteList() {
                                 )}
                             </div>
                             <div className="listInfo">
-                                <span className="listName">{movie.title}</span>
-                                <span className="listCount">{movie.release_year || "N/A"}</span>
+                                <div className="movieTitle">{movie.title}</div>
+                                <div className="movieTitle">{movie.release_year || "N/A"}</div>
                                 <button
                                     onClick={() => handleRemoveFavourite(movie.content_id)}
-                                    style={{marginTop: "10px", backgroundColor: "red", color: "white", padding: "5px 10px", border: "none", cursor: "pointer"}}
+                                    style={{paddingTop: "10px", backgroundColor: "red", color: "white", padding: "5px 10px", border: "none", cursor: "pointer"}}
                                 >
                                     Remove
                                 </button>

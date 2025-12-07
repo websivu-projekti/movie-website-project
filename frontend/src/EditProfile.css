@@ -37,7 +37,7 @@
   text-align: left;
 }
 
-.pfp {
+.editPfp {
   width: 250px;
   height: 250px;
   object-fit: cover;
@@ -63,6 +63,7 @@
 .accessibility {
   display: grid;
   gap: 10px;
+  padding-top: 10px;
   width: fit-content;
   grid-area: acc;
 }
@@ -104,6 +105,11 @@
   padding: 5px;
   font-size: 1rem;
   width: 100px;
+}
+
+.settingsLabel {
+  padding: 5px;
+  font-size: 1rem;
 }
 
 .input {

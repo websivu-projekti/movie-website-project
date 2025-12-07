@@ -188,7 +188,7 @@ function MovieInfo(){
     if (!movie) {
       return (
         <div className ="container">
-          <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+          <Header/>
           <p>{error || "Movie not found"}</p>
         </div>
       )
@@ -208,7 +208,7 @@ function MovieInfo(){
 
     const customRating = {
       itemShapes: Star,
-      activeFillColor: '#488a02ff',
+      activeFillColor: '#90e339',
       inactiveFillColor: '#fafdf8ff',
     }
 

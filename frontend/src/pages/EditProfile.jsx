@@ -19,7 +19,7 @@ function SignUp() {
       <div className="content">
           <h1 className="editTitle">Edit Profile</h1>
           <div className="imageContainer">
-            <img src="" alt="Profile picture" className="pfp"></img>
+            <img src="" alt="Profile picture" className="editPfp"></img>
           </div>
             <button type="submit" className="changePfp button">
               Change Profile Picture
@@ -30,19 +30,19 @@ function SignUp() {
               </h4>
               <div className="field">
                 <input type="checkbox" />
-                <label className="label">Dyslexia friendly font</label>
+                <label className="settingsLabel">Dyslexia friendly font</label>
               </div>
               <div className="field">
                 <input type="checkbox" />
-                <label className="label">Text-to-Speech</label>
+                <label className="settingsLabel">Text-to-Speech</label>
               </div>
               <div className="field">
                 <input type="checkbox" />
-                <label className="label">Autoplay content</label>
+                <label className="settingsLabel">Autoplay content</label>
               </div>
               <div className="field">
                 <input type="checkbox" />
-                <label className="label">Show adult content</label>
+                <label className="settingsLabel">Show adult content</label>
               </div>
             </form>
           <form className="manageUser" onSubmit={handleSubmit}>

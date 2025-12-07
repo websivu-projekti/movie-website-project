@@ -71,13 +71,6 @@ function Profile(){
     <div className="container">
       <Header/>
       <h1>Profile</h1>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>User ID:</strong> {user.user_id}</p>
-        
-      
-      <button onClick={handleLogout} style={{marginTop: "20px"}}>Logout</button>
-    
-
             <div className="profileContainer">
                 <div className="profileHeader">
                     <div className="profileInfo">

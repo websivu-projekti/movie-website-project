@@ -76,7 +76,7 @@ function SearchResults(){
     <div className="container">
       <Header/>
       <h2>Search results for: {searchQuery}</h2>
-      <div className="searchContainer">
+      <div className="resultsContainer">
         <div className="browseTab">
             <button 
             className={`tabBtn movie ${movieActive}`}

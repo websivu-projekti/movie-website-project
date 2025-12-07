@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom"
 import { useAuth } from "../context/AuthContext.js";
 import "./MovieInfo.css"
 import Header from '../components/header.jsx'
-
+import { Rating, Star } from '@smastrom/react-rating'
+import '@smastrom/react-rating/style.css'
 
 
 function MovieInfo(){
@@ -14,6 +15,9 @@ function MovieInfo(){
   const [error, setError] = useState(null);
   const [isFavourited, setIsFavourited] = useState(false)
   const [favouriteLoading, setFavouriteLoading] = useState(false)
+  const [myReviews, setMyReviews] = useState([]);
+  const [reviewContent, setReviewContent] = useState("");
+  const [rating, setRating] = useState(0)
 
 
   useEffect(() => {
@@ -39,7 +43,21 @@ function MovieInfo(){
         setLoading(false)
       }
     }
-      fetchMovie()
+
+    async function fetchReviews(){
+      try{
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/reviews/${movieId}`)
+        if (res.ok) {
+          const data = await res.json();
+          setMyReviews(data);
+        }
+      } catch(err){
+        console.error("Error fetching reviews:", err)
+      }
+    }
+
+    fetchMovie()
+    fetchReviews()
     }, [movieId])
 
     useEffect(() => {
@@ -188,6 +206,15 @@ function MovieInfo(){
     return "★★★★★".slice(0, stars) + "☆☆☆☆☆".slice(0, 5 - stars)
     } 
 
+    const customRating = {
+      itemShapes: Star,
+      activeFillColor: '#488a02ff',
+      inactiveFillColor: '#fafdf8ff',
+    }
+
+    //yhdistää kirjoitetut arvostelut muihin
+    const allReviews = [...myReviews, ...(movie.reviews || [])];
+
 
     return (
     <div className="container">
@@ -204,17 +231,11 @@ function MovieInfo(){
             <h3>{movie.title}</h3>
           </div>
 
-          <div className="movieYear">
-            <p>Release year: {movie.releaseYear}</p>
-          </div>
+          <div className="movieYear">Release year: {movie.releaseYear}</div>
 
-          <div className = "movieDirector">
-            <p>Director: {movie.director}</p>
-          </div>
+          <div className = "movieDirector">Director: {movie.director}</div>
 
-          <div className ="movieSynopsis">
-            <p>{movie.synopsis}</p>
-          </div>
+          <div className ="movieSynopsis">{movie.synopsis}</div>
 
           <div className = "movieGenres">
             <div className ="genreTitle"><p>Genres:</p></div>
@@ -293,7 +314,7 @@ function MovieInfo(){
 
   </div>
 
-          <div className = "reviewContainer">
+      <div className = "reviewContainer">
 
             {(!movie.reviews || movie.reviews.length === 0) && (
             <p>No reviews available</p>
@@ -303,11 +324,12 @@ function MovieInfo(){
         <div className="reviewsRowContainer">
 
           <div className = "reviewsColumn">
-            {movie.reviews?.map((review,index) => (
+            
+            {allReviews?.map((review,index) => (
               <div key = {index} className ="reviewBox">
                
                 <div className ="reviewHeader">
-                <img src={review.avatar || "https://via.placeholder.com"}
+                <img src={review.avatar || "https://i.imgur.com/MVFmDAe.jpeg"}
                 alt="Profile" 
                 className="pfp"
                 />
@@ -320,7 +342,7 @@ function MovieInfo(){
                   <div className ="stars">{makeStars(review.rating)}</div>
               </div> 
               </div>          
-               <p class="review-text">{review.content}</p>
+               <div class="reviewText">{review.content}</div>
               </div>
          ))}
     </div>
@@ -328,21 +350,109 @@ function MovieInfo(){
          <div className = "myReviewContainer">
 
             <div className ="myReviewRow">
-              <img src = "" alt = "Profile" className = "pfp"/>
+              <div className="profileAndName">
+                   <img src={user?.avatar || user?.pfp_url || "https://i.imgur.com/MVFmDAe.jpeg"} alt="Profile" className="pfp"/>
+                <div className ="myReviewName">{user ? user.username : "Not logged in"}</div>
+              </div>
 
-              <div className ="myReviewName">Logged user</div>
-              <div className ="myStars">★★★★★</div>
+                    <Rating 
+                    className="reviewRating" 
+                    style={{ maxWidth: 140 }} 
+                    value={(rating)}
+                    onChange={setRating}
+                    itemStyles={customRating}
+                    isRequired
+                    isDisabled={!user}
+                    />
+                    
             </div>
-
               <div className="writeReviewRow">
                 <label>Review</label>
                 <textarea
                   className="reviewTextarea"
-                  placeholder="Write your review here..."
+                  placeholder={user ? "Write your review here..." : "Please log in to write a review"}
+                  value = {reviewContent}
+                  onChange={(e) => setReviewContent(e.target.value)}
+                  disabled={!user}
                 />
               </div>
 
-           <button className="publishBtn">Publish</button>
+           {user && (
+           <button className="publishBtn"
+           onClick={async () => {
+            if(!reviewContent) return
+
+            if (!rating || rating === 0) {
+            alert("Please give a rating before publishing");
+            return;
+            }
+
+            try {
+              //okei rehellisesti tästä eteenpäin mä en oikeen ymmärrä mitä tapahtuu mut se toimii
+              // First, ensure the movie exists in the content table
+              const ensureMovieRes = await fetch(`${process.env.REACT_APP_API_URL}/movies`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  content_id: movieId,
+                  title: movie.title,
+                  release_year: movie.releaseYear,
+                  genre: movie.genres?.[0] || "Unknown",
+                  description: movie.synopsis,
+                  poster_url: movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : null,
+                  content_type: "movie"
+                })
+              });
+              
+              // Save review to database (convert 0-5 star rating to 1-10 scale)
+              const ratingValue = Math.max(1, Math.round(rating * 2));
+              
+              const requestBody = {
+                user_id: user.userId,
+                content_id: movieId,
+                review_text: reviewContent,
+                rating: ratingValue
+              };
+              
+              console.log("Sending review:", requestBody);
+              console.log("User object:", user);
+              
+              const res = await fetch(`${process.env.REACT_APP_API_URL}/reviews`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBody)
+              })
+
+              if (!res.ok) {
+                const errorData = await res.json().catch(() => null);
+              }
+
+              const savedReview = await res.json();
+
+              // Add to local state
+              const newReview = {
+                username: user.username,
+                date: new Date().toISOString().split("T")[0],
+                rating: rating * 2,
+                content: reviewContent,
+                avatar: user.avatar || "https://i.imgur.com/MVFmDAe.jpeg"
+              }
+              setMyReviews([newReview, ...myReviews])
+
+              setReviewContent("")
+              setRating(0)
+            } catch (err) {
+              console.error("Error saving review:", err);
+              alert("Failed to save review");
+            }
+
+           }}         
+           >Publish</button>
+           )}
 
          </div>
 

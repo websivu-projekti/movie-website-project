@@ -13,9 +13,13 @@ export async function getOne(id) {
 // Näiden poistaminen/muuttaminen rikkoo jtn
 // Apuva
 
-export async function addOne(book) {
-  const result = await pool.query("INSERT INTO content (content_id, title,release_year,genre,description, poster_url, content_type) VALUES($1,$2,$3,$4,$5,$6,$7)", [content.content_id, content.title,content.release_year,content.genre,content.description,content.poster_url,content.content_type]);
-  return result.rows;
+//tää oli ennen kans book, mut nyt on movie/content. piti laittaa, jotta reviews saa myös toimimaan
+export async function addOne(contentData) {
+  const result = await pool.query(
+    "INSERT INTO content (content_id, title, release_year, genre, description, poster_url, content_type) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *", 
+    [contentData.content_id, contentData.title, contentData.release_year, contentData.genre, contentData.description, contentData.poster_url, contentData.content_type]
+  );
+  return result.rows[0];
 }
 
 export async function updateOne(id,book) {

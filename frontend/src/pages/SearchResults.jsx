@@ -10,7 +10,7 @@ import '@smastrom/react-rating/style.css'
 function SearchResults(){
   const [ searchMovies, setSearchMovies ] = useState([])
   const [ searchTv, setSearchTv ] = useState([])
-  const searchQuery = window.localStorage.getItem('Search_Query')
+  const searchQuery = localStorage.getItem('Search_Query')
   const [ loading, setLoading ] = useState(true)
   const [ currentPage, setCurrentPage ] = useState(1)
   const [ showContentMovies, setShowContentMovies ] = useState(true)
@@ -26,7 +26,6 @@ function SearchResults(){
         const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/moviesearch/&page=${currentPage}&query=${searchQuery}`)
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
-        console.log(searchQuery)
         setSearchMovies(data)
       } catch (err) {
         console.error("Virhe haettaessa elokuvia:", err)

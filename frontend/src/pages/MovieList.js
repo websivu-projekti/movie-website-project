@@ -3,10 +3,9 @@ import Header from '../components/header.jsx'
 import "./MovieList.css"
 
 function MovieList() {
-  const [ searchQuery, setSearchQuery ] = useState('')
   return (
     <div className="container">
-    <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+    <Header/>
     <div className="movie-list-container">
       {/* Otsikko ja käyttäjän nimi */}
       <div className="list-header">

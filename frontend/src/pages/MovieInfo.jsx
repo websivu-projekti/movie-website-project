@@ -8,7 +8,6 @@ function MovieInfo(){
   const {movieId} = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [ searchQuery, setSearchQuery ] = useState('')
   const [error, setError] = useState(null);
 
 
@@ -71,7 +70,7 @@ function MovieInfo(){
 
     return (
     <div className="container">
-      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+      <Header/>
 
       <div className ="movieInfoWrapper">
       <div className = "imgContainer">

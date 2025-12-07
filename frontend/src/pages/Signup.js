@@ -46,7 +46,7 @@ function SignUp() {
 
   return (
     <div className="container">
-      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+      <Header/>
       <div className="loginContent">
         <h1 className="title">Sign Up</h1>
         {error && <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>}

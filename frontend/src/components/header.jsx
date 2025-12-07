@@ -1,9 +1,11 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 import { useAuth } from "../context/AuthContext"
 import searchIcon from "../assets/searchicon.svg"
 
-export default function Header({searchQuery, setSearchQuery}){
+export default function Header(){
     const navigate = useNavigate()
+    const [ searchQuery, setSearchQuery ] = useState('')
     const { user, logout } = useAuth()
     const handleLogout = () => {
         logout()
@@ -16,12 +18,13 @@ export default function Header({searchQuery, setSearchQuery}){
         { label: "Profile", path: "/profile" }
     ]
 
-    const submitSearch = async () =>{
+    const submitSearch = () =>{
         try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/moviesearch/${searchQuery}`)
-        if (!res.ok) throw new Error("Verkkovirhe")
-        const data = await res.json()
-        navigate("/films")
+            localStorage.setItem('Search_Query', JSON.stringify(searchQuery))
+            const data = localStorage.getItem('Search_Query')
+            if (data !== null) setSearchQuery(JSON.parse(data))
+            console.log(searchQuery)
+            navigate(`/searchresults/${searchQuery}`)
       } catch (err) {
         console.error("Virhe haettaessa elokuvia:", err)
       }
@@ -45,7 +48,7 @@ export default function Header({searchQuery, setSearchQuery}){
                         <input 
                         type="text" 
                         placeholder="Search movies..." 
-                        className="searchInput" 
+                        className="searchInput"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         />

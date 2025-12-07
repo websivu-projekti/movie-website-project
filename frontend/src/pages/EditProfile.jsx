@@ -6,7 +6,6 @@ import Header from '../components/header.jsx'
 function SignUp() {
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
-  const [ searchQuery, setSearchQuery ] = useState('')
   const [password, setPassword] = useState("")
 
   const handleSubmit = (e) => {
@@ -16,7 +15,7 @@ function SignUp() {
 
   return (
     <div className="container">
-      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+      <Header/>
       <div className="content">
           <h1 className="editTitle">Edit Profile</h1>
           <div className="imageContainer">

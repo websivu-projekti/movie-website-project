@@ -5,7 +5,6 @@ import Header from '../components/header.jsx' // ADDED: Header komponentti
 
 function GroupsList() {
   const navigate = useNavigate();
-  const [ searchQuery, setSearchQuery ] = useState('')
 
   // ADDED: esimerkkiryhmät (kaikki ryhmät)
   const groups = [
@@ -22,7 +21,7 @@ function GroupsList() {
 
   return (
     <div className="container">
-      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+      <Header/>
 
       <div className="my-groups-container">
         <h1 className="groups-title">All Groups</h1> {/* ADDED: otsikko yleiselle listalle */}

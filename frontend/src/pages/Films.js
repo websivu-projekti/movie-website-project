@@ -30,7 +30,6 @@ function Films(){
   const [ chosenYear, setChosenYear ] = useState()
   const [ chosenSeriesYear, setChosenSeriesYear ] = useState()
   const [ chosenProviders, setChosenProviders ] = useState()
-  const [ searchQuery, setSearchQuery ] = useState('')
   const [ loading, setLoading ] = useState(true)
   const [ currentPage, setCurrentPage ] = useState(1)
   const [ render, setRender ] = useState(true)
@@ -116,7 +115,7 @@ function Films(){
 
   return (
     <div className="container">
-      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+      <Header/>
       <h2>Films</h2>
       <div className="searchContainer">
         

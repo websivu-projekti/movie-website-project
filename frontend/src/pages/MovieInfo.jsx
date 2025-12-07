@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { useAuth } from "../context/AuthContext.js";
 import "./MovieInfo.css"
 import Header from '../components/header.jsx'
 
 
+
 function MovieInfo(){
   const {movieId} = useParams();
+  const { user } = useAuth()
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isFavourited, setIsFavourited] = useState(false)
+  const [favouriteLoading, setFavouriteLoading] = useState(false)
 
 
   useEffect(() => {
@@ -36,6 +41,122 @@ function MovieInfo(){
     }
       fetchMovie()
     }, [movieId])
+
+    useEffect(() => {
+      if (user && user.token && movieId) {
+        checkIfFavourited()
+      }
+    }, [user, movieId])
+
+    const checkIfFavourited = async () => {
+      try {
+        console.log('Checking if favourited with tmdbId:', movieId)
+        const response = await fetch(`http://localhost:3001/favourites/check?tmdbId=${movieId}`, {
+          headers: {
+            'Authorization': `Bearer ${user.token}`
+          }
+        })
+        const data = await response.json()
+        console.log('Check favourite response:', data)
+        if (response.ok) {
+          setIsFavourited(data.isFavourited)
+          console.log('Set isFavourited to:', data.isFavourited)
+        }
+      } catch (err) {
+        console.error("Error checking favourite status:", err)
+      }
+    }
+
+    const handleAddToFavorites = async () => {
+      if (!user) {
+        alert("Kirjaudu sisään lisätäksesi elokuvia suosikkeihin")
+        return
+      }
+
+      setFavouriteLoading(true)
+      try {
+        const saveResponse = await fetch(`http://localhost:3001/movies/saveFromTMDB`, {
+          method: 'POST',
+          headers: {
+            'Content-Type' : 'application/json',
+          },
+          body: JSON.stringify({
+            tmdbId: movieId,
+            title: movie.title,
+            releaseYear: movie.releaseYear,
+            genre: movie.genres?.[0] || 'Unknown',
+            description: movie.synopsis,
+            posterUrl: movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : null,
+            contentType: 'movie'
+          })
+        })
+
+        if (!saveResponse.ok) {
+          const errorText = await saveResponse.text()
+          throw new Error(`Failed to save movie: ${errorText}`)
+        }
+
+        const saveData = await saveResponse.json()
+        
+        if (!saveData.content_id) {
+          console.error('saveData:', saveData)
+          throw new Error("No content_id returned from saveFromTMDB")
+        }
+        
+        console.log('Saving to favourites with content_id:', saveData.content_id)
+        const contentId = saveData.content_id
+
+        const response = await fetch("http://localhost:3001/favourites/add", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+          },
+          body: JSON.stringify({ contentId })
+        })
+
+        const data = await response.json()
+
+        if (response.ok) {
+          alert("Elokuva lisätty suosikkeihin!")
+          setIsFavourited(true)
+        } else {
+          alert(data.error || "Virhe lisättäessä elokuvaa suosikkeihin")
+        }
+      } catch (err) {
+        alert(`Error: ${err.message}`)
+      } finally {
+        setFavouriteLoading(false)
+      }
+    }
+
+    const handleRemoveFromFavorites = async () => {
+      if (!user) return
+
+      setFavouriteLoading(true)
+      try {
+        const response = await fetch("http://localhost:3001/favourites/remove", {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+          },
+          body: JSON.stringify({ tmdbId: movieId })
+        })
+
+        if (response.ok) {
+          alert("Elokuva poistettu suosikeista!")
+          setIsFavourited(false)
+        } else {
+          const data = await response.json()
+          alert(data.error || "Virhe poistaessa elokuvaa suosikeista")
+        }
+      } catch (err) {
+        alert(`Error: ${err.message}`)
+      } finally {
+        setFavouriteLoading(false)
+      }
+    }
 
 
     if(loading){
@@ -134,6 +255,28 @@ function MovieInfo(){
 
           <div className = "addToListContainer">
             <div className ="addListWrapped">
+              {user ? (
+                isFavourited ? (
+                  <button
+                  onClick={handleRemoveFromFavorites}
+                  className="addToListBtn"
+                  disabled={favouriteLoading}
+                  style={{backgroundColor: '#ff4444'}}
+                  >
+                    {favouriteLoading ? 'Removing...' : 'Remove from Favourites'}
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleAddToFavorites}
+                    className="addToListBtn"
+                    disabled={favouriteLoading}
+                  >
+                    {favouriteLoading ? 'Adding...' : 'Add to Favourites'}
+                  </button>
+                )
+              ) : (
+                <p>Login to add to favourites</p>
+              )}
 
             <select className="listSelect">
             <option value="favorites">Favorites</option>

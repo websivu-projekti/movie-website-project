@@ -28,6 +28,7 @@ function Profile(){
     navigate('/login')
   }
 
+
   const handleDeleteAccount = async () => {
     if (window.confirm(`Haluatko varmasti poistaa käyttäjäsi, ${user.username}? Toimintoa ei voi perua.`)) {
       try {
@@ -55,7 +56,7 @@ function Profile(){
         }
       }
   }
-  
+
   if (!user) {
     return (
       <div className="container">
@@ -87,6 +88,13 @@ function Profile(){
                         Edit Profile
                     </button>
                 </div>
+
+                <button 
+                  onClick={() => navigate("/profile/favouritelist")}
+                  style={{marginTop: "20px", marginBottom: "20px", padding: "10px 20px", backgroundColor: "#585cd5", color: "white", border: "none", cursor: "pointer", borderRadius: "5px", fontSize: "16px"}}
+                >
+                  My Favourite Movies
+                </button>
 
                 <div className="profileListsHeader">
                     <span className="sectionTitle">Username's Lists</span>

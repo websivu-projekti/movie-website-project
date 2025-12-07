@@ -14,6 +14,7 @@ CREATE TABLE "user" (
 Eli entinen movie INT ja series INT on nyt content*/
 CREATE TABLE content (
   content_id SERIAL PRIMARY KEY,
+  tmdb_id VARCHAR(20) UNIQUE,
   title VARCHAR(100) NOT NULL,
   release_year INT,
   genre VARCHAR(50),

@@ -8,25 +8,39 @@ import Header from '../components/header.jsx'
 function Profile(){
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const [favourites, setFavourites] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
 
-  const lists = [
-        { id: 1, name: "Placeholder List 1", count: 10 },
-        { id: 2, name: "Placeholder List 2", count: 8 },
-        { id: 3, name: "Placeholder List 3", count: 12 },
-        { id: 4, name: "Placeholder List 4", count: 5 },
-    ]
-
- 
   useEffect(() => {
     if (!user) {
       navigate('/login')
     }
   }, [user, navigate])
 
-  const handleLogout = () => {
-    logout()
-    navigate('/login')
-  }
+  useEffect(() =>{
+    fetchFavourites()
+  }, [])
+
+  const fetchFavourites = async () => {
+        try {
+            const response = await fetch("http://localhost:3001/favourites/", {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const data = await response.json()
+            if (response.ok) {
+                setFavourites(data.favourites)
+            } else {
+                setError(data.error || "Failed to fetch favourite movies")
+            }
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
 
 
   const handleDeleteAccount = async () => {
@@ -77,43 +91,51 @@ function Profile(){
                         <div className="profilePic">User</div>
                         <span className="username">{user.username}</span>
                     </div>
-                    <button className="editProfileBtn" onClick={() => navigate("/editprofile")}>
+                    <button className="pfNavBtn" onClick={() => navigate("/editprofile")}>
                         Edit Profile
                     </button>
                 </div>
-
-                <button 
-                  onClick={() => navigate("/profile/favouritelist")}
-                  style={{marginTop: "20px", marginBottom: "20px", padding: "10px 20px", backgroundColor: "#585cd5", color: "white", border: "none", cursor: "pointer", borderRadius: "5px", fontSize: "16px"}}
-                >
-                  My Favourite Movies
-                </button>
-
-                <div className="profileListsHeader">
-                    <span className="sectionTitle">Username's Lists</span>
-                    <button className="createListBtn">Create List</button>
-                </div>
-
-                <div className="listsGrid">
-                    {lists.map(list => (
-                        <div key={list.id} className="listCard">
-                            <div className="listImages">
-                                <div className="listImage placeholder"></div>
-                                <div className="listImage placeholder"></div>
-                                <div className="listImage placeholder"></div>
-                                <div className="listImage placeholder"></div>
-                            </div>
+                <div className="favouritesContainer">
+                    <h2>{user.username}'s Favourite Movies</h2>
+                    {loading ? (
+                      <p>Loading favourites...</p>
+                    ) : error ? (
+                      <p>{error}</p>
+                    ) : favourites.length === 0 ? (
+                      <p>This user doesn't have any favourites yet!</p>
+                    ) : (
+                      <div className="pfMovieRow">
+                        {favourites.slice(0,3).map(movie => (
+                          <div key={movie.content_id} className="movieCard">
+                            {movie.poster_url ? (
+                              <img src={movie.poster_url} alt={movie.title} className="pfMoviePoster"/>
+                            ) : (
+                              <div className="noPoster">
+                                No Image
+                              </div>
+                            )}
                             <div className="listInfo">
-                                <span className="listName">{list.name}</span>
-                                <span className="listCount">{list.count} films</span>
+                              <div className="movieTitle">{movie.title}</div>
+                              <div className="movieTitle">{movie.release_year || "N/A"}</div>
                             </div>
-                        </div>
-                    ))}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <button 
+                      onClick={() => navigate("/profile/favouritelist")}
+                      className="pfNavBtn"
+                    >
+                      Favourites List
+                    </button>
                 </div>
-
-                <button className="myGroupsBtn" onClick={() => navigate("/mygroups")}>
-                    My Groups
-                </button>
+                
+                <div className="pfGroupsContainer">
+                  <h2>{user.username}'s Groups</h2>
+                  <button className="pfNavBtn" onClick={() => navigate("/mygroups")}>
+                      My Groups
+                  </button>
+                </div>
             </div>
             
       <button 

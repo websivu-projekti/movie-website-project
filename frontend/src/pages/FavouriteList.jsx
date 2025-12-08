@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../context/AuthContext.js"
 import { useNavigate } from "react-router-dom"
-import "../index.js"
-import "./Profile.js"
+import "../index.css"
+import "./Profile.css"
 import Header from "../components/header.jsx"
 
 function FavouriteList() {
@@ -79,8 +79,8 @@ function FavouriteList() {
             <Header/>
             <h1>My Favourite Movies</h1>
 
-            <button onClick={() => navigate("/profile")} style={{marginBottom: "20px"}}>
-                Profile Page
+            <button onClick={() => navigate("/profile")} className="pfNavBtn">
+                Go Back
             </button>
 
             {loading ? (
@@ -90,7 +90,7 @@ function FavouriteList() {
             ) : favourites.length === 0 ? (
                 <p>No movies added to favourites</p>
             ) : (
-                <div className="movieRow">
+                <div className="favouritesMovieRow">
                     {favourites.map(movie => (
                         <div key={movie.content_id} className="movieCard">
                             <div className="moviePoster">

@@ -11,16 +11,16 @@ export default function Header(){
     return(
         <>
             <header>
-                <a href="/" class="pageTitle">🎬 Clipper</a>
-                <div class="loginBar">
-                    <a href="/login" class="loginBtn">Log In</a>
-                    <a href="/signup" class="registerBtn">Register</a>
+                <a href="/" className="pageTitle">🎬 Clipper</a>
+                <div className="loginBar">
+                    <a href="/login" className="loginBtn">Log In</a>
+                    <a href="/signup" className="registerBtn">Register</a>
                 </div>
-                <div class="searchBox">
-                    <input type="text" placeholder="Search movies..." class="searchInput" />
+                <div className="searchBox">
+                    <input type="text" placeholder="Search movies..." className="searchInput" />
                 </div>
             </header>
-            <div class="buttonBox">
+            <div className="buttonBox">
                 {sections.map(section => (
                     <button
                         key={section.label}

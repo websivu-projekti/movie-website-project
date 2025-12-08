@@ -97,7 +97,7 @@ function Films(){
         </div>
         <div className="movieRow">
           {movies.map((movie, index) => (
-            <div key={index} class="movieCard">
+            <div key={index} className="movieCard">
                 <img className="moviePoster" src={`http://image.tmdb.org/t/p/w300/${movie.poster_path}`}/>
                 <p className="movieTitle"><a className="movieLink" href="">{movie.title}</a></p>
                 <div className="movieTitle">{(movie.release_date.slice(0,4))}</div>

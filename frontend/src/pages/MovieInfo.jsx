@@ -177,7 +177,7 @@ function MovieInfo(){
                   <div className ="stars">{makeStars(review.rating)}</div>
               </div> 
               </div>          
-               <p class="review-text">{review.content}</p>
+               <p className="review-text">{review.content}</p>
               </div>
          ))}
     </div>

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { registerUser, loginUser, getUserById, deleteUser } from "../models/user_model.js"
+import { registerUser, loginUser, getUserById, deleteUser, changeUserPassword } from "../models/user_model.js"
 
 // JWT Salaus
 const JWT_SECRET = process.env.JWT_SECRET || "secret-key-for-development"
@@ -157,5 +157,35 @@ export async function deleteAccount(req, res) {
             return res.status(404).json({ error: error.message })
         }
         return res.status(500).json({ error: "Internal server error" })
+    }
+}
+
+// Salasanan vaihto
+export async function changePassword(req, res) {
+    try {
+        const userId = req.user.userId
+        const { currentPassword, newPassword } = req.body;
+
+        if (!currentPassword || !newPassword) {
+            return res.status(400).json({ error: "Current and new passwords are required" });
+        }   
+    
+
+    const updated = await changeUserPassword(userId, newPassword, currentPassword);
+
+    return res.json({
+        message: "Password changed successfully",
+        user: updated
+    });
+
+    } catch (error) {
+        console.error("Change password error:", error);
+        if (error.message === "Current password is incorrect") {
+            return res.status(403).json({ error: error.message });
+        }
+        if (error.message === "User not found") {
+            return res.status(404).json({ error: error.message });
+        }
+        return res.status(500).json({ error: "Internal server error" });
     }
 }

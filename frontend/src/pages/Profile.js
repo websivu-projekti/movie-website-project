@@ -96,7 +96,7 @@ function Profile(){
                     </button>
                 </div>
                 <div className="favouritesContainer">
-                    <h2>{user.username}'s Favourite Movies</h2>
+                    <h2>{user.username}'s Favourite Movies and Series</h2>
                     {loading ? (
                       <p>Loading favourites...</p>
                     ) : error ? (

@@ -123,7 +123,7 @@ function SearchResults(){
           {searchTv.map((series, index) => (
             <div key={index} class="movieCard">
                 <img className="moviePoster" src={`http://image.tmdb.org/t/p/w300/${series.poster_path}`}/>
-                <p className="movieTitle"><a className="movieLink" href={`/movieinfo/${series.id}`}>{series.name}</a></p>
+                <p className="movieTitle"><a className="movieLink" href={`/seriesinfo/${series.id}`}>{series.name}</a></p>
                 <div className="movieTitle">{(series.first_air_date.slice(0,4))}</div>
                 <Rating 
                 className="movieRating" 

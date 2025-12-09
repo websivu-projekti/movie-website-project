@@ -115,7 +115,7 @@ function GroupDetail() {
       <div className="group-container">
         <div className="group-header">
           <h1 className="group-title">
-             {`Group ${groupId}` || "Group List Name"} // näyttää valitun ryhmän
+             {`Group ${groupId}` || "Group List Name"}
           </h1>
           <div className="group-info-row">
             <span className="group-info-text">{moviesSeriesCount}</span>

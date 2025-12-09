@@ -13,6 +13,7 @@ import Films from "./pages/Films"
 import GroupsList from "./pages/GroupsList"
 import GroupDetail from "./pages/GroupDetail"
 import MovieInfo from "./pages/MovieInfo"
+import SeriesInfo from "./pages/SeriesInfo"
 import FavouriteList from "./pages/FavouriteList"
 import SearchResults from "./pages/SearchResults"
 
@@ -33,8 +34,9 @@ function App() {
           <Route path="/mylist" element={<MovieList />} />
           <Route path="/mygroups" element={<MyGroups />} />
           <Route path="/groupslist" element={<GroupsList/>}/>
-          <Route path="/groupdetail" element={<GroupDetail/>}/>
+          <Route path="/groupdetail/:groupid" element={<GroupDetail/>}/>
           <Route path="/movieinfo/:movieId" element={<MovieInfo />} />
+          <Route path="/seriesinfo/:seriesId" element={<SeriesInfo />} />
           <Route path="/profile/favouritelist" element={<FavouriteList />} />
           <Route path="/searchresults/:query" element={<SearchResults/>}/>
         </Routes>

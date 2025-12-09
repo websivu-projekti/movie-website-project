@@ -69,7 +69,7 @@ function MovieInfo(){
     const checkIfFavourited = async () => {
       try {
         console.log('Checking if favourited with tmdbId:', movieId)
-        const response = await fetch(`http://localhost:3001/favourites/check?tmdbId=${movieId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/check?tmdbId=${movieId}`, {
           headers: {
             'Authorization': `Bearer ${user.token}`
           }
@@ -93,7 +93,7 @@ function MovieInfo(){
 
       setFavouriteLoading(true)
       try {
-        const saveResponse = await fetch(`http://localhost:3001/movies/saveFromTMDB`, {
+        const saveResponse = await fetch(`${process.env.REACT_APP_API_URL}/movies/saveFromTMDB`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json',
@@ -124,7 +124,7 @@ function MovieInfo(){
         console.log('Saving to favourites with content_id:', saveData.content_id)
         const contentId = saveData.content_id
 
-        const response = await fetch("http://localhost:3001/favourites/add", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/add`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ function MovieInfo(){
 
       setFavouriteLoading(true)
       try {
-        const response = await fetch("http://localhost:3001/favourites/remove", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/remove`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

@@ -27,7 +27,7 @@ services:
     env_file:
       - .env
     ports:
-      - echo "FRONTEND_PORT=3000" >> .env
+      - "3000:3000"
 
 volumes:
   pgdata:

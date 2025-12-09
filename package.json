@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "@smastrom/react-rating": "^1.5.0",
+    "jwt-decode": "^4.0.0",
+    "react-select": "^5.10.2",
     "swiper": "^12.0.3"
   }
 }

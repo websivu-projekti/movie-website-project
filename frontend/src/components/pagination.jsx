@@ -1,13 +1,20 @@
-import React, { useState } from "react"
-export default function Pagination({currentPage, setCurrentPage}){
-    const [ className, setClassName ] = useState('paginationBtnDisabled')
-    const [ disabled, setDisabled ] = useState(true)
+import React, { useEffect, useState } from "react"
+export default function Pagination({currentPage, setCurrentPage, movieResultsLength, tvResultsLength}){
+    const [ prevClassName, setPrevClassName ] = useState('paginationBtnDisabled')
+    const [ nextClassName, setNextClassName ] = useState('paginationBtn')
+    const [ disabled, setDisabled ] = useState(false)
     const [ lastPage, setLastPage ] = useState(0)
+
+    useEffect(() => {
+        if(movieResultsLength < 20 || tvResultsLength < 20){
+            setNextClassName('paginationBtnDisabled')
+            setDisabled(true)
+        }
+    }, [movieResultsLength, tvResultsLength])
 
     const nextPage = () => {
         if(currentPage >= 1){
-            setClassName('paginationBtn')
-            setDisabled(false)
+            setPrevClassName('paginationBtn')
         }
         setCurrentPage(currentPage => currentPage + 1)
         setLastPage(lastPage => lastPage + 1 )
@@ -15,7 +22,7 @@ export default function Pagination({currentPage, setCurrentPage}){
 
     const prevPage = () => {
         if(lastPage === 1){
-            setClassName('paginationBtnDisabled')
+            setPrevClassName('paginationBtnDisabled')
         }
         setCurrentPage(currentPage => currentPage - 1)
         setLastPage(lastPage => lastPage - 1)
@@ -24,7 +31,7 @@ export default function Pagination({currentPage, setCurrentPage}){
     return(
         <div className="pagination">
             <button 
-            className={className}
+            className={prevClassName}
             onClick={prevPage}
             disabled={lastPage === 0}
             >
@@ -32,8 +39,9 @@ export default function Pagination({currentPage, setCurrentPage}){
             </button>
             <div>Page {currentPage}</div>
             <button 
-            className='paginationBtn'
+            className={nextClassName}
             onClick={nextPage}
+            disabled={disabled}
             >
               Next
             </button>

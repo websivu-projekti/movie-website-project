@@ -9,6 +9,8 @@ import '@smastrom/react-rating/style.css'
 
 function SearchResults(){
   const [ searchMovies, setSearchMovies ] = useState([])
+  const [ movieResultsLength, setMovieResultsLength ] = useState()
+  const [ tvResultsLength, setTvResultsLength ] = useState()
   const [ searchTv, setSearchTv ] = useState([])
   const searchQuery = localStorage.getItem('Search_Query')
   const [ loading, setLoading ] = useState(true)
@@ -27,6 +29,7 @@ function SearchResults(){
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
         setSearchMovies(data)
+        setMovieResultsLength(data.length)
       } catch (err) {
         console.error("Virhe haettaessa elokuvia:", err)
         setSearchMovies(["Movie 1", "Movie 2", "Movie 3", "Movie 4"]) // placeholder jos backend ei toimi
@@ -44,6 +47,7 @@ function SearchResults(){
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
         setSearchTv(data)
+        setTvResultsLength(data.length)
       } catch (err) {
         console.error("Virhe haettaessa sarjoja:", err)
         setSearchTv(["Series 1", "Series 2", "Series 3", "Series 4"]) // placeholder jos backend ei toimi
@@ -57,6 +61,8 @@ function SearchResults(){
   const showContent = () => {
     setShowContentMovies(showContentMovies => !showContentMovies)
     setShowContentTv(showContentTv => !showContentTv)
+    console.log(tvResultsLength)
+    console.log(movieResultsLength)
     if(showContentTv === false){
       setMovieActive('inactive')
       setTvActive('active')
@@ -141,7 +147,7 @@ function SearchResults(){
         </>
         }
         
-        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} movieResultsLength={movieResultsLength} tvResultsLength={tvResultsLength}/>
       </div> 
     </div>
   )

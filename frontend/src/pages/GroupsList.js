@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext.js";
 import "./GroupsList.css" // ADDED: uusi CSS tiedosto, voit kopioida MyGroups.css tyylit tähän
 import Header from '../components/header.jsx' // ADDED: Header komponentti
 import pf1 from "../assets/icons/pf1.png"
@@ -15,7 +16,11 @@ import closeMenu from "../assets/closemenu.svg"
 
 function GroupsList() {
   const navigate = useNavigate();
+  const { user } = useAuth()
   const [ showCreateGroup, setShowCreateGroup ] = useState(false)
+  const [ newGroupName, setNewGroupName ] = useState("")
+  const [ newGroupIcon, setNewGroupIcon ] = useState("")
+  
 
   // ADDED: esimerkkiryhmät (kaikki ryhmät)
   const groups = [
@@ -27,7 +32,7 @@ function GroupsList() {
   ];
 
   const handleGroupClick = (groupId) => {
-    navigate(`/groups/${groupId}`) // vie yksittäisen ryhmän sivulle
+    navigate(`/groupdetail/${groupId}`) // vie yksittäisen ryhmän sivulle
   }
 
   const openCreateGroup = () => {
@@ -37,6 +42,11 @@ function GroupsList() {
     setShowCreateGroup(!showCreateGroup)
   }
 
+  const handleSubmit = () => {
+    console.log(newGroupName)
+    console.log(newGroupIcon)
+  }
+
   return (
     <div className="container">
       <Header/>
@@ -44,7 +54,7 @@ function GroupsList() {
       <div className="my-groups-container">
         <div className="topContainer">
           <h1 className="groups-title">All Groups</h1> {/* ADDED: otsikko yleiselle listalle */}
-          <button className="createBtn" onClick={openCreateGroup}>Create Group</button>
+          {user && <button className="createBtn" onClick={openCreateGroup}>Create Group</button>}
         </div>
         
         <div className="groups-box">
@@ -58,23 +68,130 @@ function GroupsList() {
             <button className="closeCreateGroup" onClick={closeCreateGroup}>
                 <img src={closeMenu}/>
             </button>
-              <form className="createGroupForm">
+              <form className="createGroupForm" onSubmit={handleSubmit}>
                 <label className="createGroupLabel nameLabel">Group Name: 
-                <input className="createGroupInput nameInput" type="text" placeholder="Enter group name..."></input>
+                  <input 
+                  className="createGroupInput nameInput" 
+                  type="text" 
+                  placeholder="Enter group name..."
+                  value={newGroupName}
+                  onChange={(e) => {
+                    setNewGroupName(e.target.value)
+                  }}
+                  required
+                  />
                 </label>
                 <label className="createGroupLabel iconLabel">Choose an icon: </label>
                 <div className="groupIconGrid">
-                  <img className="createGroupIcon" src={pf1}/>
-                  <img className="createGroupIcon" src={pf2}/>
-                  <img className="createGroupIcon" src={pf3}/>
-                  <img className="createGroupIcon" src={pf4}/>
-                  <img className="createGroupIcon" src={pf5}/>
-                  <img className="createGroupIcon" src={pf6}/>
-                  <img className="createGroupIcon" src={pf7}/>
-                  <img className="createGroupIcon" src={pf8}/>
-                  <img className="createGroupIcon" src={pf9}/>
+                  <label className="groupIconLabel">
+                    <input type="radio" 
+                    className="groupIconRadio" 
+                    name="groupIcon"
+                    value="pf1"
+                    onChange={(e) => {
+                      setNewGroupIcon(e.target.value)
+                    }}
+                    />
+                    <img className="createGroupIcon" src={pf1} alt="Icon option 1, dog with green background"/>
+                  </label>
+                  <label className="groupIconLabel">
+                    <input 
+                    type="radio" 
+                    className="groupIconRadio" 
+                    name="groupIcon"
+                    value="pf2"
+                    onChange={(e) => {
+                      setNewGroupIcon(e.target.value)
+                    }}
+                    />
+                    <img className="createGroupIcon" src={pf2} alt="Icon option 2, dog with yellow background"/>
+                  </label>
+                  <label className="groupIconLabel">
+                    <input 
+                    type="radio" 
+                    className="groupIconRadio" 
+                    name="groupIcon"
+                    value="pf3"
+                    onChange={(e) => {
+                      setNewGroupIcon(e.target.value)
+                    }}
+                    />
+                    <img className="createGroupIcon" src={pf3} alt="Icon option 3, bunny with blue background"/>
+                  </label>
+                  <label className="groupIconLabel">
+                    <input 
+                    type="radio" 
+                    className="groupIconRadio" 
+                    name="groupIcon"
+                    value="pf4"
+                    onChange={(e) => {
+                      setNewGroupIcon(e.target.value)
+                    }}
+                    />
+                    <img className="createGroupIcon" src={pf4} alt="Icon option 4, fish with violet background"/>
+                  </label>
+                  <label className="groupIconLabel">
+                    <input 
+                    type="radio" 
+                    className="groupIconRadio" 
+                    name="groupIcon"
+                    value="pf5"
+                    onChange={(e) => {
+                      setNewGroupIcon(e.target.value)
+                    }}
+                    />
+                    <img className="createGroupIcon" src={pf5} alt="Icon option 5, fish with pink background"/>
+                  </label>
+                  <label className="groupIconLabel">
+                    <input 
+                    type="radio" 
+                    className="groupIconRadio" 
+                    name="groupIcon"
+                    value="pf6"
+                    onChange={(e) => {
+                      setNewGroupIcon(e.target.value)
+                    }}
+                    />
+                    <img className="createGroupIcon" src={pf6} alt="Icon option 6, seagull with orange background"/>
+                  </label>
+                  <label className="groupIconLabel">
+                    <input 
+                    type="radio" 
+                    className="groupIconRadio" 
+                    name="groupIcon"
+                    value="pf7"
+                    onChange={(e) => {
+                      setNewGroupIcon(e.target.value)
+                    }}
+                    />
+                    <img className="createGroupIcon" src={pf7} alt="Icon option 7, cat with yellow background"/>
+                  </label>
+                  <label className="groupIconLabel">
+                    <input 
+                    type="radio" 
+                    className="groupIconRadio" 
+                    name="groupIcon"
+                    value="pf8"
+                    onChange={(e) => {
+                      setNewGroupIcon(e.target.value)
+                    }}
+                    />
+                    <img className="createGroupIcon" src={pf8} alt="Icon option 8, catfish with blue background"/>
+                  </label>
+                  <label className="groupIconLabel">
+                    <input 
+                    type="radio" 
+                    className="groupIconRadio" 
+                    name="groupIcon"
+                    value="pf9"
+                    onChange={(e) => {
+                      setNewGroupIcon(e.target.value)
+                    }}
+                    />
+                    <img className="createGroupIcon" src={pf9} alt="Icon option 9, sharkhorse with pink background"/>
+                  </label>  
                 </div>
-                <button className="createGroupBtn">Create Group!</button>
+                <button type="submit" className="createGroupBtn">Create Group!</button>
               </form>
             </div>
         </div>

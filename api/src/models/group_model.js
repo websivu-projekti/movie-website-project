@@ -1,7 +1,19 @@
 import pool from '../database.js'
 
+// hakee ryhmän
+export async function getAll(){
+    try{
+        const findGroups = await pool.query(
+            'SELECT * FROM "group"'
+        )
+        return findGroups.rows
+    }catch(error){
+        throw error
+    }
+}
+
 // luo ryhmän
-export async function createNewGroup(groupname){
+export async function createNewGroup(groupname, groupiconurl){
     try{
         // onko ryhmännimi jo käytössä
         const groupExists = await pool.query(
@@ -14,13 +26,26 @@ export async function createNewGroup(groupname){
         }
 
         const createdGroup = await pool.query(
-            'INSERT INTO "group" (group_name) VALUES ($1) RETURNING group_id, group_name',
-            [groupname]
+            'INSERT INTO "group" (group_name, groupicon_url) VALUES ($1, $2) RETURNING group_id, group_name, groupicon_url',
+            [groupname, groupiconurl]
         )
-
         return createdGroup.rows[0]
     }
     catch(error){
+        throw error
+    }
+}
+
+// yhdistää ryhmän ja käyttäjän 
+export async function combineUserGroup(userId, groupId, isOwner){
+    try{
+        const userGroupCombined = await pool.query(
+            'INSERT INTO user_group (user_id, group_id, isOwner) VALUES ($1, $2, $3) RETURNING *',
+            [userId, groupId, isOwner]
+        )
+
+        return userGroupCombined.rows[0]
+    }catch(error){
         throw error
     }
 }

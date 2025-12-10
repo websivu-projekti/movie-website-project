@@ -18,8 +18,8 @@ function GroupsList() {
   const navigate = useNavigate();
   const { user } = useAuth()
   const [ showCreateGroup, setShowCreateGroup ] = useState(false)
-  const [ newGroupName, setNewGroupName ] = useState("")
-  const [ newGroupIcon, setNewGroupIcon ] = useState("")
+  const [ group_name, setNewGroupName ] = useState("")
+  const [ groupicon_url, setNewGroupIcon ] = useState("")
   
 
   // ADDED: esimerkkiryhmät (kaikki ryhmät)
@@ -42,9 +42,29 @@ function GroupsList() {
     setShowCreateGroup(!showCreateGroup)
   }
 
-  const handleSubmit = () => {
-    console.log(newGroupName)
-    console.log(newGroupIcon)
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+    console.log(group_name)
+    console.log(groupicon_url)
+
+    try {
+      const response = await fetch("http://localhost:3001/groups/newgroup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ group_name, groupicon_url })
+      })
+
+      const data = await response.json()
+
+      if(!response.ok){
+        throw new Error(data.error || "An error occurred while creating a group")
+      }
+    }catch(err){
+      console.log(err)
+    }
+
   }
 
   return (
@@ -74,7 +94,7 @@ function GroupsList() {
                   className="createGroupInput nameInput" 
                   type="text" 
                   placeholder="Enter group name..."
-                  value={newGroupName}
+                  value={group_name}
                   onChange={(e) => {
                     setNewGroupName(e.target.value)
                   }}

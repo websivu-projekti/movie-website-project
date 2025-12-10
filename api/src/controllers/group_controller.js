@@ -1,14 +1,14 @@
-import { createNewGroup } from "../models/group_model.js"
+import { createNewGroup, combineUserGroup, getAll } from "../models/group_model.js"
 
 export async function createGroup(req, res){
     try{
-        const { group_name } = req.body
+        const { group_name, groupicon_url } = req.body
 
         if(!group_name){
             return res.status(400).json({ error: "A group name is required" })
         }
 
-        const newGroup = await createNewGroup(group_name)
+        const newGroup = await createNewGroup(group_name, groupicon_url)
 
         res.status(201).json({
             message: "Group created successfully",
@@ -20,5 +20,14 @@ export async function createGroup(req, res){
             return res.status(409).json({ error: error.message })
         }
         res.status(500).json({ error: "Internal server error" })
+    }
+}
+
+export async function getAllGroups(req, res, next){
+    try{
+        const userGroups = await getAll()
+        res.json(userGroups)
+    } catch (err){
+        next(err)
     }
 }

@@ -252,7 +252,9 @@ function GroupsList() {
                 style={{ cursor: 'pointer' }}
               >
                 <div className="groupLeft">
-                  <div className="groupIcon" />
+                  <div className="groupIcon" >
+                    <img src={group.groupicon_url}/>
+                  </div>
                   <span className="groupName">{group.group_name}</span>
                 </div>
                 <div className="groupMeta">Created by: juhani78</div> {/* ADDED: teksti hieman muutettu */}

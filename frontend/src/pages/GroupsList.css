@@ -48,22 +48,166 @@ font-size: 14px;
 color: #ccc;
 }
 
+.topContainer{
+  display: grid;
+  grid-template-columns: 80% 20%;
+}
+
+.createBtn{
+    padding: 0.5rem 1rem; 
+    margin: auto 0px auto auto;
+    background-color: var(--blue-acc1);
+    color: var(--text-col1);
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer;
+    text-decoration: none;
+    max-width: fit-content;
+}
+
+.createBtn:hover{
+    background-color: #4347b3;
+    text-decoration: underline;
+}
+
+.createBtn:active{
+    transform: scale(90%);
+}
+
+.createGroup{
+  width: 50vw;
+  height: fit-content;
+  padding: 20px;
+  background-color: var(--bg-acc2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: absolute;
+  border-radius: 10px;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    'title close'
+    'groupform nots'
+  ;
+}
+
+.createGroupTitle{
+  background-color: var(--bg-acc2);
+  grid-area: title;
+}
+
+.closeCreateGroup{
+  background-color: var(--bg-acc2);
+  border: none;
+  grid-area: close;
+  margin-left: auto;
+}
+
+.closeCreateGroup > img{
+  background-color: var(--bg-acc2);
+  border: none;
+  width: 32px;
+}
+
+.createGroupForm{
+  padding: 10px;
+  gap: 10px;
+  display: grid;
+  background-color: var(--bg-acc2);
+}
+
+.createGroupLabel{
+  font-size: 1.25rem;
+  background-color: var(--bg-acc2);
+}
+
+.createGroupInput{
+  font-size: 1rem;
+  color: #000;
+  background-color: #e0e0e0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.groupIconGrid{
+  display: grid;
+  width: fit-content;
+  background-color: var(--bg-acc3);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  grid-template-columns: fit-content(252px) fit-content(252px) fit-content(252px);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.createGroupIcon{
+  width: 128px;
+  margin: 10px;
+  border: 2px var(--bg-acc1) solid;
+  border-radius: 8px;
+  background-color: var(--bg-acc3);
+}
+
+.createGroupIcon:hover{
+  border: var(--green-acc1) 2px solid;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: scale(110%);
+}
+
+.createGroupBtn{
+  padding: 0.5rem 1rem; 
+  margin-top: 10px;
+  background-color: var(--bg-acc1);
+  color: var(--text-col1);
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer;
+  text-decoration: none;
+  max-width: fit-content;
+  margin-right: auto;
+}
+
+.createGroupBtn:hover{
+    outline: solid var(--green-acc2) 2px;
+    text-decoration: underline;
+}
+
+.createGroupBtn:active{
+  color: var(--text-col2);
+  background-color: var(--green-acc1);
+}
+
+@media only screen and (max-width: 1100px) {
+  .createGroup{
+    width: fit-content;
+  }
+
+  .createGroupIcon{
+    width: 80px;
+  }
+}
+
 @media only screen and (max-width: 740px) {
-.container {
-padding: 10px;
-}
+  .container {
+    padding: 10px;
+  }
 
-.groupIcon {
-width: 40px;
-height: 40px;
-font-size: 10px;
-}
+  .groupIcon {
+    width: 40px;
+    height: 40px;
+    font-size: 10px;
+  }
 
-.groupName {
-font-size: 16px;
-}
+  .groupName {
+    font-size: 16px;
+    }
 
-.groupOwner {
-font-size: 12px;
-}
+  .groupOwner {
+    font-size: 12px;
+  }
 }

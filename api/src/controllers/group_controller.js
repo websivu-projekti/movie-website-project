@@ -1,4 +1,4 @@
-import { createNewGroup, combineUserGroup, getAll } from "../models/group_model.js"
+import { createNewGroup, combineUserGroup, getAll, getOne, deleteGroup } from "../models/group_model.js"
 
 export async function createGroup(req, res){
     try{
@@ -29,5 +29,45 @@ export async function getAllGroups(req, res, next){
         res.json(userGroups)
     } catch (err){
         next(err)
+    }
+}
+
+export async function getOneGroup(req, res, next){
+    try{
+        const { group_id } = req.body
+
+        const foundGroup = await getOne(group_id)
+        
+        if(!foundGroup){
+            return res.status(404).json({ error: "Group not found" })
+        }
+
+        res.json({
+            message: "Group found",
+            group: foundGroup
+        })
+    } catch(err){
+        console.error("Get group error: ", err)
+        res.status(500).json({ err: "Failed to find group by id" })
+    }
+}
+
+export async function deleteOneGroup(req, res, next){
+    try{
+        const { group_id } = req.body
+
+        const deletedGroup = await deleteGroup(group_id)
+
+        if(!deletedGroup){
+            return res.status(404).json({ error: "Group not found" })
+        }
+
+        res.json({
+            message: "Group deleted",
+            group: deletedGroup
+        })
+    }catch(err){
+        console.error("Delete group error: ", err)
+        res.status(500).json({ err: "Failed to delete group" })
     }
 }

@@ -13,6 +13,7 @@ import pf7 from "../assets/icons/pf7.png"
 import pf8 from "../assets/icons/pf8.png"
 import pf9 from "../assets/icons/pf9.png"
 import closeMenu from "../assets/closemenu.svg"
+import { useEffect } from "react";
 
 function GroupsList() {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ function GroupsList() {
   const [ showCreateGroup, setShowCreateGroup ] = useState(false)
   const [ group_name, setNewGroupName ] = useState("")
   const [ groupicon_url, setNewGroupIcon ] = useState("")
+  const [ foundGroups, setGroups ] = useState([])
+  const [ error, setError ] = useState(null)
   
 
   // ADDED: esimerkkiryhmät (kaikki ryhmät)
@@ -30,6 +33,29 @@ function GroupsList() {
     { id: 4, name: "Group 4", creator: "User 4" },
     { id: 5, name: "Group 5", creator: "User 5" }
   ];
+
+  useEffect(() => {
+    async function fetchGroups(){
+      try{
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/groups/all`)
+        if(!res.ok){
+          if(res.status === 404){
+            setError("Movie not found")
+          } else {
+            const text = await res.text()
+            setError(`Error fetching movie: ${res.status} ${text}`)
+          }
+          return
+        }
+
+        const data = await res.json()
+        setGroups(data)
+      }catch(err){
+        console.error(err)
+      }
+    }
+    fetchGroups()
+  }, [])
 
   const handleGroupClick = (groupId) => {
     navigate(`/groupdetail/${groupId}`) // vie yksittäisen ryhmän sivulle
@@ -218,18 +244,18 @@ function GroupsList() {
         }
       <main className="groupsWrapper">
         <div className="groupsBox">
-          {groups.map((group, index) => (
-            <React.Fragment key={group.id}>
+          {foundGroups.map((group, index) => (
+            <React.Fragment key={group.group_id}>
               <div
                 className="groupItem"
-                onClick={() => handleGroupClick(group.id)}
+                onClick={() => handleGroupClick(group.group_id)}
                 style={{ cursor: 'pointer' }}
               >
                 <div className="groupLeft">
                   <div className="groupIcon" />
-                  <span className="groupName">{group.name}</span>
+                  <span className="groupName">{group.group_name}</span>
                 </div>
-                <div className="groupMeta">Created by: {group.creator}</div> {/* ADDED: teksti hieman muutettu */}
+                <div className="groupMeta">Created by: juhani78</div> {/* ADDED: teksti hieman muutettu */}
               </div>
 
               {index < groups.length - 1 && <div className="divider" />}

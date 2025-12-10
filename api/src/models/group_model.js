@@ -1,6 +1,6 @@
 import pool from '../database.js'
 
-// hakee ryhmän
+// hakee ryhmät (kaikki)
 export async function getAll(){
     try{
         const findGroups = await pool.query(
@@ -8,6 +8,24 @@ export async function getAll(){
         )
         return findGroups.rows
     }catch(error){
+        throw error
+    }
+}
+
+// hakee ryhmän (yksi)
+export async function getOne(groupId){
+    try{
+        const result = await pool.query(
+            'SELECT group_id, group_name, groupicon_url FROM "group" where group_id = $1',
+            [groupId]
+        )
+
+        if(result.rows.length === 0){
+            throw new Error("Group not found")
+        }
+        
+        return result.rows[0]
+    } catch (error) {
         throw error
     }
 }
@@ -36,7 +54,7 @@ export async function createNewGroup(groupname, groupiconurl){
     }
 }
 
-// yhdistää ryhmän ja käyttäjän 
+// yhdistää ryhmän ja käyttäjän
 export async function combineUserGroup(userId, groupId, isOwner){
     try{
         const userGroupCombined = await pool.query(
@@ -46,6 +64,23 @@ export async function combineUserGroup(userId, groupId, isOwner){
 
         return userGroupCombined.rows[0]
     }catch(error){
+        throw error
+    }
+}
+
+export async function deleteGroup(groupId){
+    try{
+        const result = await pool.query(
+            'DELETE FROM "group" WHERE group_id = $1 RETURNING group_id, group_name',
+            [groupId]
+        )
+
+        if(result.rows.length === 0){
+            throw new Error("Group not found")
+        }
+
+        return result.rows[0]
+    } catch(error){
         throw error
     }
 }

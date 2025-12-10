@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react"
 import Select from 'react-select'
 
-export default function FilterProviders({chosenProviders, setChosenProviders}){
+export default function SeriesProviders({chosenSeriesProviders, setChosenSeriesProviders}){
     const [ providers, setProviders ] = useState()
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
             async function fetchProviders() {
                   try {
-                    const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/movieproviders`)
+                    const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/tvproviders`)
                     if (!res.ok) throw new Error("Verkkovirhe")
                     const data = await res.json()
                     setProviders(data.results)
@@ -27,8 +27,8 @@ export default function FilterProviders({chosenProviders, setChosenProviders}){
     }))
 
     const chooseProvider = (prov) => {
-        setChosenProviders("&watch_region=FI&with_watch_providers=" + prov.value)
-        console.log(chosenProviders)
+        setChosenSeriesProviders("&watch_region=FI&with_watch_providers=" + prov.value)
+        console.log(chosenSeriesProviders)
     }
 
     return(

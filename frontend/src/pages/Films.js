@@ -16,6 +16,7 @@ import FilterLanguages from "../components/languages.jsx"
 import FilterYear from "../components/filteryear.jsx"
 import FilterSeriesYear from "../components/seriesyear.jsx"
 import FilterProviders from "../components/filterprovider.jsx"
+import SeriesProviders from "../components/seriesproviders.jsx"
 import SeriesGenres from "../components/seriesgenres.jsx"
 
 function Films(){
@@ -29,7 +30,8 @@ function Films(){
   const [ chosenRating, setChosenRating ] = useState('10')
   const [ chosenYear, setChosenYear ] = useState()
   const [ chosenSeriesYear, setChosenSeriesYear ] = useState()
-  const [ chosenProviders, setChosenProviders ] = useState()
+  const [ chosenProviders, setChosenProviders ] = useState("&with_watch_providers=")
+  const [ chosenSeriesProviders, setChosenSeriesProviders ] = useState("&with_watch_providers=")
   const [ loading, setLoading ] = useState(true)
   const [ currentPage, setCurrentPage ] = useState(1)
   const [ render, setRender ] = useState(true)
@@ -44,7 +46,7 @@ function Films(){
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discovermovies/&page=${currentPage}&sort_by=${sorting}&vote_average.lte=${chosenRating}&${chosenYear}&with_genres=${chosenGen}&with_original_language=${chosenLan}`)
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discovermovies/&page=${currentPage}&sort_by=${sorting}&vote_average.lte=${chosenRating}&${chosenYear}&with_genres=${chosenGen}&with_original_language=${chosenLan}${chosenProviders}`)
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
         setDiscoverMovies(data)
@@ -56,12 +58,12 @@ function Films(){
       }
     }
     fetchMovies()
-  }, [currentPage, sorting, chosenRating, chosenYear, chosenGen, chosenLan])
+  }, [currentPage, sorting, chosenRating, chosenYear, chosenGen, chosenLan, chosenProviders])
 
   useEffect(() =>{
     async function fetchSeries() {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discovertv/&page=${currentPage}&sort_by=${sortingSeries}&with_original_language=${chosenLan}&vote_average.lte=${chosenRating}&with_genres=${chosenSeriesGen}&${chosenSeriesYear}`)
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/movies/discovertv/&page=${currentPage}&sort_by=${sortingSeries}&with_original_language=${chosenLan}&vote_average.lte=${chosenRating}&with_genres=${chosenSeriesGen}&${chosenSeriesYear}${chosenSeriesProviders}`)
         if (!res.ok) throw new Error("Verkkovirhe")
         const data = await res.json()
         setDiscoverTv(data)
@@ -73,7 +75,7 @@ function Films(){
       }
     }
     fetchSeries()
-  }, [currentPage, sortingSeries, chosenRating, chosenLan, chosenSeriesGen, chosenSeriesYear])
+  }, [currentPage, sortingSeries, chosenRating, chosenLan, chosenSeriesGen, chosenSeriesYear, chosenSeriesProviders])
 
   const openMobileMenu = () => {
     mobileMenu.current.style.transform = 'translate3d(0vw, 0, 0)'
@@ -127,8 +129,9 @@ function Films(){
             <button className="filtermenuBtn" onClick={closeMobileMenu}>
               <img src={closeMenu}/>
             </button>
+            {showContentMovies &&
             <div className="mobileFiltersRow" key={render}>
-                  Filters
+                  Filters (movie)
                   <a className="resetLink" onClick={resetFilters}>Reset filters</a>
                   {/* SORT BY */}
                   <div className="filterTitle">Sort by:</div>
@@ -147,8 +150,33 @@ function Films(){
                   <FilterYear chosenYear={chosenYear} setChosenYear={setChosenYear}/>
                   {/* PROVIDERS */}
                   <div className="filterTitle">Providers:</div>
-                  <FilterProviders/>
-                  </div>
+                  <FilterProviders chosenProviders={chosenProviders} setChosenProviders={setChosenProviders}/>
+              </div>
+              }
+            {showContentTv &&
+              <div className="mobileFiltersRow" key={render}>
+                  Filters (series)
+                  <a className="resetLink" onClick={resetFilters}>Reset filters</a>
+                  {/* SORT BY */}
+                  <div className="filterTitle">Sort by:</div>
+                  <SeriesSortBy sortingSeries={sortingSeries} setSortingSeries={setSortingSeries}/>
+                  {/* GENRES */}
+                  <div className="filterTitle">Genres: </div>
+                  <SeriesGenres chosenSeriesGen={chosenSeriesGen} setChosenSeriesGen={setChosenSeriesGen}/>
+                  {/* LANGUAGES */}
+                  <div className="filterTitle">Language:</div>
+                  <FilterLanguages chosenLan={chosenLan} setChosenLan={setChosenLan}/>
+                  {/* RATING */}
+                  <div className="filterTitle">Rating:</div>
+                  <FilterRating chosenRating={chosenRating} setChosenRating={setChosenRating}/>
+                  {/* YEAR */}
+                  <div className="filterTitle">Year:</div>
+                  <FilterSeriesYear chosenSeriesYear={chosenSeriesYear} setChosenSeriesYear={setChosenSeriesYear}/>
+                  {/* PROVIDERS */}
+                  <div className="filterTitle">Providers:</div>
+                  <SeriesProviders chosenSeriesProviders={chosenSeriesProviders} setChosenSeriesProviders={setChosenSeriesProviders}/>
+              </div>
+              }
             </div>
         </div>
         <div className="filtersRow">
@@ -197,7 +225,7 @@ function Films(){
                   <FilterSeriesYear chosenSeriesYear={chosenSeriesYear} setChosenSeriesYear={setChosenSeriesYear}/>
                   {/* PROVIDERS */}
                   <div className="filterTitle">Providers:</div>
-                  <FilterProviders chosenProviders={chosenProviders} setChosenProviders={setChosenProviders}/>
+                  <SeriesProviders chosenSeriesProviders={chosenSeriesProviders} setChosenSeriesProviders={setChosenSeriesProviders}/>
               </div>
               }
         </div>

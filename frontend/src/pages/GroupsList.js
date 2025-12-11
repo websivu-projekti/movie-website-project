@@ -78,6 +78,7 @@ function GroupsList() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${user.token}`
         },
         body: JSON.stringify({ group_name, groupicon_url })
       })

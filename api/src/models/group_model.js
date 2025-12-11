@@ -12,6 +12,17 @@ export async function getAll(){
     }
 }
 
+export async function getAllGroupUsers(){
+    try{
+        const findGroupOwners = await pool.query(
+            'SELECT * FROM user_group'
+        )
+        return findGroupOwners.rows
+    }catch(error){
+        throw error
+    }
+}
+
 // hakee ryhmän (yksi)
 export async function getOne(groupId){
     try{
@@ -58,7 +69,7 @@ export async function createNewGroup(groupname, groupiconurl){
 export async function combineUserGroup(userId, groupId, isOwner){
     try{
         const userGroupCombined = await pool.query(
-            'INSERT INTO user_group (user_id, group_id, isOwner) VALUES ($1, $2, $3) RETURNING *',
+            'INSERT INTO user_group (user_id, group_id, is_owner) VALUES ($1, $2, $3) RETURNING *',
             [userId, groupId, isOwner]
         )
 

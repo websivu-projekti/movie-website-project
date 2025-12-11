@@ -1,18 +1,21 @@
-import { createNewGroup, combineUserGroup, getAll, getOne, deleteGroup } from "../models/group_model.js"
+import { createNewGroup, combineUserGroup, getAll, getOne, deleteGroup, getAllGroupUsers } from "../models/group_model.js"
 
 export async function createGroup(req, res){
     try{
         const { group_name, groupicon_url } = req.body
+        const userId = req.user.userId
 
         if(!group_name){
             return res.status(400).json({ error: "A group name is required" })
         }
 
         const newGroup = await createNewGroup(group_name, groupicon_url)
+        const newGroupOwner = await combineUserGroup(userId, newGroup.group_id, true)
 
         res.status(201).json({
             message: "Group created successfully",
-            group: newGroup
+            group: newGroup,
+            groupOwner: newGroupOwner
         })
     } catch (error){
         console.error("Error occurred while creating a group: ", error)
@@ -26,6 +29,15 @@ export async function createGroup(req, res){
 export async function getAllGroups(req, res, next){
     try{
         const userGroups = await getAll()
+        res.json(userGroups)
+    } catch (err){
+        next(err)
+    }
+}
+
+export async function getAllGroupUsr(req, res, next){
+    try{
+        const userGroups = await getAllGroupUsers()
         res.json(userGroups)
     } catch (err){
         next(err)

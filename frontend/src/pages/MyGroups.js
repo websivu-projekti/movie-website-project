@@ -1,16 +1,42 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext.js";
 import Header from '../components/header.jsx'
 import "./MyGroups.css"
+import { useEffect } from "react";
 
 function MyGroups() {
   const navigate = useNavigate();
+  const { user } = useAuth()
+  const [ myGroups, setMyGroups ] = useState([])
+  const [ groupOwner, setGroupOwner ] = useState("")
+  const [error, setError] = useState("")
 
-  const groups = [
-    { id: 1, name: "Group 1", creator: "User 1" },
-    { id: 2, name: "Group 2", creator: "User 2" },
-    { id: 3, name: "Group 3", creator: "User 3" }
-  ];
+  useEffect(() => {
+    if (user){
+      fetchOwnedGroups()
+    }
+  }, [user])
+
+  const fetchOwnedGroups = async () => {
+    try{
+      const response = await fetch(`http://localhost:3001/groups/myowngroups/${user}`, {
+        headers: {
+          'Content-Type' : 'application/json',
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
+      const data = await response.json()
+      if(response.ok){
+        setMyGroups(data.ownedGroups)
+        setGroupOwner(data.groupOwner)
+      } else {
+        setError(data.error || "Failed to fetch user's groups")
+      }
+    }catch(err){
+      setError(err.message)
+    }
+  }
 
   const handleGroupClick = (groupId) => {
     navigate(`/groupdetail/${groupId}`)
@@ -29,21 +55,21 @@ function MyGroups() {
 
       <main className="groupsWrapper">
         <div className="groupsBox">
-          {groups.map((group, index) => (
-            <React.Fragment key={group.id}>
+          {myGroups.map((group, index) => (
+            <React.Fragment key={group.group_id}>
               <div
                 className="groupItem"
-                onClick={() => handleGroupClick(group.id)}
+                onClick={() => handleGroupClick(group.group_id)}
                 style={{ cursor: 'pointer' }}
               >
                 <div className="groupLeft">
                   <div className="groupIcon" />
-                  <span className="groupName">{group.name}</span>
+                  <span className="groupName">{group.group_name}</span>
                 </div>
-                <div className="groupMeta">List by: {group.creator}</div>
+                <div>List by: {groupOwner[0].username}</div>
               </div>
 
-              {index < groups.length - 1 && <div className="divider" />}
+              {index < myGroups.length - 1 && <div className="divider" />}
             </React.Fragment>
           ))}
         </div>

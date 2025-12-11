@@ -12,12 +12,48 @@ export async function getAll(){
     }
 }
 
-export async function getAllGroupUsers(){
+// hakee kaikkien ryhmänomistajien käyttjänimet
+export async function getAllOwners(){
+    try{
+        const getAllGroupOwners = await pool.query(
+            `SELECT u.username FROM user_group g
+            JOIN "user" u ON g.user_id = u.user_id
+            WHERE is_owner = true`
+        )
+        return getAllGroupOwners.rows
+    }catch(error){
+        throw error
+    }
+}
+
+// hakee yhden ryhmänomistajan käyttäjänimen
+export async function getGroupOwnerName(userId){
     try{
         const findGroupOwners = await pool.query(
-            'SELECT * FROM user_group'
+            `SELECT u.username FROM user_group g 
+            JOIN "user" u ON g.user_id = u.user_id
+            WHERE is_owner = true AND u.user_id = $1`
+            ,[userId]
         )
         return findGroupOwners.rows
+    }catch(error){
+        throw error
+    }
+}
+
+
+
+// hakee käyttäjän omistamat ryhmät
+export async function getUserGroups(userId){
+    try{
+        const findOwnedGroups = await pool.query(
+            `SELECT u.user_id, g.* FROM user_group u 
+            JOIN "group" g ON u.group_id = g.group_id
+            WHERE u.user_id = $1 AND is_owner = true`,
+            [userId]
+        )
+
+        return findOwnedGroups.rows
     }catch(error){
         throw error
     }

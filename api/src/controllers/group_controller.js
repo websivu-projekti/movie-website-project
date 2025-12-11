@@ -1,4 +1,4 @@
-import { createNewGroup, combineUserGroup, getAll, getOne, deleteGroup, getAllGroupUsers } from "../models/group_model.js"
+import { createNewGroup, combineUserGroup, getAll, getOne, deleteGroup, getGroupOwnerName, getUserGroups, getAllOwners } from "../models/group_model.js"
 
 export async function createGroup(req, res){
     try{
@@ -29,18 +29,41 @@ export async function createGroup(req, res){
 export async function getAllGroups(req, res, next){
     try{
         const userGroups = await getAll()
-        res.json(userGroups)
+        const ownerNames = await getAllOwners()
+        res.json({
+            userGroups: userGroups,
+            ownerNames: ownerNames
+        })
     } catch (err){
         next(err)
     }
 }
 
-export async function getAllGroupUsr(req, res, next){
+export async function getOwnerName(req, res, next) {
     try{
-        const userGroups = await getAllGroupUsers()
-        res.json(userGroups)
-    } catch (err){
+        const userId = req.user.userId
+        const ownerGroups = await getGroupOwnerName(userId)
+        res.json(ownerGroups)
+    } catch(err){
         next(err)
+    }
+}
+
+export async function getUserOwnedGroups(req, res, next){
+    try{
+        const userId = req.user.userId
+
+        const ownedGroups = await getUserGroups(userId)
+
+        const groupOwner = await getGroupOwnerName(userId)
+
+        res.json({
+            ownedGroups: ownedGroups,
+            groupOwner: groupOwner
+        })
+    } catch(err) {
+        console.error("Error occurred while finding owned groups: ", err)
+        res.status(500).json({ error: "Failed to find owned groups"})
     }
 }
 

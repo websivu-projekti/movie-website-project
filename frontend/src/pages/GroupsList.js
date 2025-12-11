@@ -22,17 +22,8 @@ function GroupsList() {
   const [ group_name, setNewGroupName ] = useState("")
   const [ groupicon_url, setNewGroupIcon ] = useState("")
   const [ foundGroups, setGroups ] = useState([])
+  const [ groupOwnerNames, setGroupOwnerNames ] = useState([])
   const [ error, setError ] = useState(null)
-  
-
-  // ADDED: esimerkkiryhmät (kaikki ryhmät)
-  const groups = [
-    { id: 1, name: "Group 1", creator: "User 1" },
-    { id: 2, name: "Group 2", creator: "User 2" },
-    { id: 3, name: "Group 3", creator: "User 3" },
-    { id: 4, name: "Group 4", creator: "User 4" },
-    { id: 5, name: "Group 5", creator: "User 5" }
-  ];
 
   useEffect(() => {
     async function fetchGroups(){
@@ -49,7 +40,8 @@ function GroupsList() {
         }
 
         const data = await res.json()
-        setGroups(data)
+        setGroups(data.userGroups)
+        setGroupOwnerNames(data.ownerNames)
       }catch(err){
         console.error(err)
       }
@@ -258,10 +250,10 @@ function GroupsList() {
                   </div>
                   <span className="groupName">{group.group_name}</span>
                 </div>
-                <div className="groupMeta">Created by: juhani78</div> {/* ADDED: teksti hieman muutettu */}
+                <div className="groupMeta">Created by: {groupOwnerNames[index].username}</div> {/* ADDED: teksti hieman muutettu */}
               </div>
 
-              {index < groups.length - 1 && <div className="divider" />}
+              {index < foundGroups.length - 1 && <div className="divider" />}
             </React.Fragment>
           ))}
         </div>

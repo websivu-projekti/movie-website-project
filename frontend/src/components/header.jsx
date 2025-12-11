@@ -33,8 +33,8 @@ export default function Header(){
     return(
         <>
             <header>
-                <a href="/" class="pageTitle">🎬 Clipper</a>
-                <div class="loginBar">
+                <a href="/" className="pageTitle">🎬 Clipper</a>
+                <div className="loginBar">
                     {user ? (
                         <button onClick={handleLogout} className="registerBtn">Log Out</button>
                     ) : (
@@ -44,7 +44,7 @@ export default function Header(){
                         </>
                     )}
                 </div>
-                <div class="searchBox">
+                <div className="searchBox">
                         <input 
                         type="text" 
                         placeholder="Search movies..." 
@@ -55,7 +55,7 @@ export default function Header(){
                         <button className="searchBtn" onClick={submitSearch}><img src={searchIcon}/></button>
                 </div>
             </header>
-            <div class="buttonBox">
+            <div className="buttonBox">
                 {sections.map(section => (
                     <button
                         key={section.label}

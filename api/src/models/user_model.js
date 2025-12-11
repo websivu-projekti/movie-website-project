@@ -95,3 +95,41 @@ export async function deleteUser(userId) {
         throw error
     }
 }
+
+export async function getUserByPassword(userId) {
+    const result = await pool.query(
+        'SELECT password FROM "user" WHERE user_id = $1',
+        [userId]
+    );
+
+    if (result.rows.length === 0) {
+        throw new Error("User not found");
+    }
+
+    return result.rows[0];
+}
+
+// Salasanan vaihto
+export async function changeUserPassword(userId, newPassword, currentPassword) {
+    try {
+        const user = await getUserByPassword(userId)
+
+        const isValidPassword = await bcrypt.compare(currentPassword, user.password)
+
+        if (!isValidPassword) {
+            throw new Error("Current password is incorrect")
+        }
+
+        const saltRounds = 10
+        const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds)
+
+        const result = await pool.query(
+            'UPDATE "user" SET password = $1 WHERE user_id = $2 RETURNING user_id, username, email',
+            [hashedNewPassword, userId]
+        )
+
+        return result.rows[0]
+    } catch (error) {
+        throw error
+    }
+}

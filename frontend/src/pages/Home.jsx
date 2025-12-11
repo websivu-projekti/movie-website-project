@@ -36,7 +36,7 @@ function Home() {
     }
 
   return (
-    <div class="container">
+    <div className="container">
      <Header/>
       <h2 className="title">Popular movies</h2>
       {loading
@@ -72,7 +72,7 @@ function Home() {
             >
               {movies.map((movie, index) => (
                 <SwiperSlide key={index}>
-                  <div key={movie.id} class="movieCard">
+                  <div key={movie.id} className="movieCard">
                     <img src={`http://image.tmdb.org/t/p/w300/${movie.poster_path}`}/>
                     <p className="movieTitle"><a className="movieLink" href={`/movieinfo/${movie.id}`}>{movie.title}</a></p>
                     <div className="movieTitle">{(movie.release_date.slice(0,4))}</div>

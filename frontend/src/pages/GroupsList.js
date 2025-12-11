@@ -51,6 +51,7 @@ function GroupsList() {
 
   const handleGroupClick = (groupId) => {
     navigate(`/groupdetail/${groupId}`) // vie yksittäisen ryhmän sivulle
+    console.log(groupId)
   }
 
   const openCreateGroup = () => {
@@ -246,7 +247,7 @@ function GroupsList() {
               >
                 <div className="groupLeft">
                   <div className="groupIcon" >
-                    <img src={group.groupicon_url}/>
+                    <img className="groupIcon" src={require(`../assets/icons/${group.groupicon_url}.png`)}/>
                   </div>
                   <span className="groupName">{group.group_name}</span>
                 </div>

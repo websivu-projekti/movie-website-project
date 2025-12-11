@@ -63,7 +63,9 @@ function MyGroups() {
                 style={{ cursor: 'pointer' }}
               >
                 <div className="groupLeft">
-                  <div className="groupIcon" />
+                  <div className="groupIcon" >
+                    <img className="groupIcon" src={require(`../assets/icons/${group.groupicon_url}.png`)}/>
+                  </div>
                   <span className="groupName">{group.group_name}</span>
                 </div>
                 <div>List by: {groupOwner[0].username}</div>

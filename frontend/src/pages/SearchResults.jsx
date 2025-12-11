@@ -101,7 +101,7 @@ function SearchResults(){
         <div className="movieRow browseMovies">
           
           {searchMovies.map((movie, index) => (
-            <div key={index} class="movieCard">
+            <div key={index} className="movieCard">
                 <img className="moviePoster" src={`http://image.tmdb.org/t/p/w300/${movie.poster_path}`}/>
                 <p className="movieTitle"><a className="movieLink" href={`/movieinfo/${movie.id}`}>{movie.title}</a></p>
                 <div className="movieTitle">{(movie.release_date.slice(0,4))}</div>
@@ -121,7 +121,7 @@ function SearchResults(){
         <>
         <div className="movieRow browseTv">
           {searchTv.map((series, index) => (
-            <div key={index} class="movieCard">
+            <div key={index} className="movieCard">
                 <img className="moviePoster" src={`http://image.tmdb.org/t/p/w300/${series.poster_path}`}/>
                 <p className="movieTitle"><a className="movieLink" href={`/movieinfo/${series.id}`}>{series.name}</a></p>
                 <div className="movieTitle">{(series.first_air_date.slice(0,4))}</div>

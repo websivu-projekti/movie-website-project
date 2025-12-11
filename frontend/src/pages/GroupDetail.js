@@ -7,8 +7,11 @@ import "./GroupDetail.css"
 const TMDB_API_KEY = process.env.TMDB_API_KEY
 
 function GroupDetail() {
-  const { groupId } = useParams()
+  const {groupId} = useParams()
   const [movies, setMovies] = useState([])
+  const [ groupInfo, setGroupInfo ] = useState([])
+  const [ error, setError ] = useState(null)
+  const [loading, setLoading] = useState(true)
   const members = [
     { name: "User 1", img: "" },
     { name: "User 2", img: "" },
@@ -21,50 +24,6 @@ function GroupDetail() {
     { name: "User 9", img: "" }
   ];
   const moviesSeriesCount = "1 movie, 2 series"
-
-  async function fetchMovies(movieIds) {
-    if (!movieIds || !Array.isArray(movieIds)) return []
-
-    if (!TMDB_API_KEY) {
-      console.error("TMDB_API_KEY puuttuu!")
-      return getPlaceholderMovies(movieIds.length)
-    }
-
-    const fetchedMovies = await Promise.all(
-      movieIds.map(async (id) => {
-        try {
-          const response = await fetch(
-            `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&language=en-US&append_to_response=credits,watch/providers,release_dates`
-          )
-          if (!response.ok) throw new Error("API error")
-          const data = await response.json()
-
-          let theatricalDate = "No showtimes"
-          const releases = data.release_dates?.results || []
-          const countryRelease = releases.find(r => r.iso_3166_1 === "US" || r.iso_3166_1 === "FI")
-          if (countryRelease && countryRelease.release_dates?.length > 0) {
-            theatricalDate = `Theatrical release: ${countryRelease.release_dates[0].release_date}`
-          }
-
-          return {
-            id: data.id,
-            title: data.title || "Untitled",
-            year: data.release_date ? data.release_date.split("-")[0] : "N/A",
-            director: data.credits?.crew?.find(c => c.job === "Director")?.name || "Unknown",
-            image: data.poster_path ? `https://image.tmdb.org/t/p/w300${data.poster_path}` : "",
-            showtimes: [theatricalDate],
-            services: data["watch/providers"]?.results?.US?.flatrate?.map(p => p.provider_name) || [],
-            rating: data.vote_average ? Math.round(data.vote_average / 2) : 0
-          };
-        } catch (err) {
-          console.warn(`Movie ${id} fetch failed:`, err)
-          return getPlaceholderMovie(id)
-        }
-      })
-    );
-
-    return fetchedMovies
-  }
 
   function getPlaceholderMovie(id) {
     return {
@@ -84,9 +43,38 @@ function GroupDetail() {
   }
 
   useEffect(() => {
-    const movieIds = [550, 299536]; // Esimerkkielokuva-ID:t
-    fetchMovies(movieIds).then(setMovies)
-  }, [])
+    async function fetchGroupInfo(){
+      try{
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/groups/group/${groupId}`)
+        if(!res.ok){
+          if(res.status === 404){
+            setError("Group not found")
+          }else{
+            const text = await res.text()
+            setError(`Error fetching movie: ${res.status} ${text}`)
+          }
+          return
+      }
+      
+      const data = await res.json()
+      console.log(groupId)
+      setGroupInfo(data.group)
+    }catch(err){
+      console.error(err)
+    } finally{
+      setLoading(false)
+    }
+    }
+    fetchGroupInfo()
+  }, [groupId])
+
+  if(loading){
+    return(
+      <div className ="container">
+          <p>Loading group...</p>
+        </div>
+    )
+  }
 
   // ADDED: valmiiksi kommentoitu backend-haku tulevaisuutta varten
   /*
@@ -115,7 +103,7 @@ function GroupDetail() {
       <div className="group-container">
         <div className="group-header">
           <h1 className="group-title">
-             {`Group ${groupId}` || "Group List Name"}
+             {`${groupInfo.group_name}` || "Group List Name"}
           </h1>
           <div className="group-info-row">
             <span className="group-info-text">{moviesSeriesCount}</span>
@@ -126,10 +114,10 @@ function GroupDetail() {
             </div>
             <div className="group-info-share-row">
               <div className="share-list">
-                <span className="group-info-text">Share list:</span>
+                <span className="group-info-text">Share list</span>
                 <input
                   className="share-input"
-                  value={`https://url.com/list_${groupId || "name"}`} 
+                  value={`https://url.com/list_${groupInfo.group_id || "name"}`} 
                   readOnly
                 />
               </div>

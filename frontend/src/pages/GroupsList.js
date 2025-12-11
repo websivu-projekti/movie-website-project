@@ -16,7 +16,6 @@ import closeMenu from "../assets/closemenu.svg"
 import { useEffect } from "react";
 
 function GroupsList() {
-  const navigate = useNavigate();
   const { user } = useAuth()
   const [ showCreateGroup, setShowCreateGroup ] = useState(false)
   const [ group_name, setNewGroupName ] = useState("")
@@ -48,11 +47,6 @@ function GroupsList() {
     }
     fetchGroups()
   }, [])
-
-  const handleGroupClick = (groupId) => {
-    navigate(`/groupdetail/${groupId}`) // vie yksittäisen ryhmän sivulle
-    console.log(groupId)
-  }
 
   const openCreateGroup = () => {
     setShowCreateGroup(!showCreateGroup)
@@ -242,14 +236,13 @@ function GroupsList() {
             <React.Fragment key={group.group_id}>
               <div
                 className="groupItem"
-                onClick={() => handleGroupClick(group.group_id)}
                 style={{ cursor: 'pointer' }}
               >
                 <div className="groupLeft">
                   <div className="groupIcon" >
                     <img className="groupIcon" src={require(`../assets/icons/${group.groupicon_url}.png`)}/>
                   </div>
-                  <span className="groupName">{group.group_name}</span>
+                  <span className="groupName"><a onClick={console.log(group.group_id)} href={`/groupdetail/${group.group_id}`}>{group.group_name}</a></span>
                 </div>
                 <div className="groupMeta">Created by: {groupOwnerNames[index].username}</div> {/* ADDED: teksti hieman muutettu */}
               </div>

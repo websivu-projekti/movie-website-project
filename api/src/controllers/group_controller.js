@@ -1,4 +1,4 @@
-import { createNewGroup, combineUserGroup, getAll, getOne, deleteGroup, getGroupOwnerName, getUserGroups, getAllOwners } from "../models/group_model.js"
+import { createNewGroup, combineUserGroup, getAll, getSingleGroup, deleteGroup, getGroupOwnerName, getUserGroups, getAllOwners } from "../models/group_model.js"
 
 export async function createGroup(req, res){
     try{
@@ -69,9 +69,9 @@ export async function getUserOwnedGroups(req, res, next){
 
 export async function getOneGroup(req, res, next){
     try{
-        const { group_id } = req.body
+        const groupId = req.params.groupId
 
-        const foundGroup = await getOne(group_id)
+        const foundGroup = await getSingleGroup(groupId)
         
         if(!foundGroup){
             return res.status(404).json({ error: "Group not found" })

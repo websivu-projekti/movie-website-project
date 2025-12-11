@@ -8,7 +8,7 @@ groupRouter.post("/newgroup", authenticateToken, createGroup)
 
 groupRouter.get("/all", getAllGroups)
 groupRouter.get("/myowngroups/:userid", authenticateToken, getUserOwnedGroups)
-groupRouter.get("/group/:id", getOneGroup)
+groupRouter.get("/group/:groupId", getOneGroup)
 groupRouter.delete("/deletegroup/:id", deleteOneGroup)
 
 export default groupRouter

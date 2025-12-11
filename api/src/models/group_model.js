@@ -60,7 +60,7 @@ export async function getUserGroups(userId){
 }
 
 // hakee ryhmän (yksi)
-export async function getOne(groupId){
+export async function getSingleGroup(groupId){
     try{
         const result = await pool.query(
             'SELECT group_id, group_name, groupicon_url FROM "group" where group_id = $1',

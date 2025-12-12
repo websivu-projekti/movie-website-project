@@ -1,4 +1,5 @@
-import { createNewGroup, combineUserGroup, getAll, getSingleGroup, deleteGroup, getGroupOwnerName, getGroupMemberNames, getUserGroups, getAllOwners, addOne, isAdded, getGroupContent } from "../models/group_model.js"
+import { createNewGroup, combineUserGroup, getAll, getSingleGroup, deleteGroup, getGroupOwnerName, getGroupMemberNames, getUserGroups, getAllOwners, addOne, isAdded, getGroupContent, deleteOne } from "../models/group_model.js"
+import pool from "../database.js"
 
 // ***********************************************
 // *               GROUP MANAGEMENT              *
@@ -171,5 +172,37 @@ export async function getAllGroupContent(req, res, next){
     }catch(error){
         console.error("Get group content error: ", error)
         res.status(500).json({ error: "Failed to fetch group content" })
+    }
+}
+
+export async function deleteFromGroup(req, res, next){
+    try{
+        const { groupId, contentId, tmdbId } = req.body
+
+        let resolvedContentId = contentId
+        if (!resolvedContentId && tmdbId) {
+            const contentRes = await pool.query(
+                "SELECT content_id FROM content WHERE tmdb_id = $1",
+                [tmdbId]
+            )
+            if (contentRes.rows.length === 0) {
+                return res.status(404).json({ error: "Movie not found in database" })
+            }
+            resolvedContentId = contentRes.rows[0].content_id
+        }
+
+        const content = await deleteOne(groupId, resolvedContentId)
+
+        if(!content){
+            return res.status(404).json({ error: "Content not found" })
+        }
+
+        res.json({
+            message: "Content removed from group",
+            content: content
+        })
+    }catch(error){
+        console.error("Delete from group error: ", error)
+        res.status(500).json({ error: "Failed to delete group content" })
     }
 }

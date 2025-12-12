@@ -198,3 +198,19 @@ export async function getGroupContent(groupId){
         throw error
     }
 }
+
+// poista sisältö ryhmästä
+export async function deleteOne(groupId, contentId){
+    try{
+        const result = await pool.query(
+            `DELETE FROM group_content
+            WHERE group_id = $1 AND content_id = $2
+            RETURNING *`,
+            [groupId, contentId]
+        )
+
+        return result.rows[0]
+    }catch(error){
+        throw error
+    }
+}

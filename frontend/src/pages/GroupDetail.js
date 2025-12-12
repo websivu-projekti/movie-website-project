@@ -8,27 +8,13 @@ import { Rating, Star } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 
 function GroupDetail() {
-  const {groupId} = useParams()
+  const { groupId } = useParams()
   const { user } = useAuth()
   const [ movies, setMovies] = useState([])
   const [ groupInfo, setGroupInfo ] = useState([])
   const [ groupMembers, setGroupMembers ] = useState([])
   const [ error, setError ] = useState(null)
   const [loading, setLoading] = useState(true)
-  const moviesSeriesCount = "1 movie, 2 series"
-
-  function getPlaceholderMovie(id) {
-    return {
-      id,
-      title: `Placeholder Movie ${id}`,
-      year: "N/A",
-      director: "Unknown",
-      image: "",
-      showtimes: ["No showtimes"],
-      services: [],
-      rating: 0
-    };
-  }
 
   const customRating = {
         itemShapes: Star,
@@ -94,6 +80,30 @@ function GroupDetail() {
       }
     }
 
+    const handleRemoveFromGroup = async (contentId) => {
+      try {
+          const response = await fetch("http://localhost:3001/groups/remove", {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${user.token}`
+            },
+            body: JSON.stringify({ 
+              groupId: groupId,
+              contentId: contentId
+            })
+          })
+          if (response.ok) {
+            setMovies(movies.filter(mov => mov.content_id !== contentId))
+          } else {
+            const data = await response.json()
+            alert(`Error: ${data.error}`)
+          }
+        } catch (err) {
+          alert(`Error: ${err.message}`)
+        }
+    }
+
   if(loading){
     return(
       <div className ="container">
@@ -112,7 +122,7 @@ function GroupDetail() {
              {`${groupInfo.group_name}` || "Group List Name"}
           </h1>
           <div className="group-info-row">
-            <span className="group-info-text">{moviesSeriesCount}</span>
+            <span className="group-info-text"></span>
             <div className="group-buttons">
               <button>Edit list</button>
               <button>Manage users</button>
@@ -147,26 +157,27 @@ function GroupDetail() {
 
         <div className="group-content">
           {movies.map((movie) => (
-            <div key={movie.tmdb_id} className="group-movie-card-wrapper">
+            <div key={movie.content_id} className="group-movie-card-wrapper">
               <div className="group-movie-card">
                 <div className="group-movie-image">
                   {movie.poster_url ? <img className="group-movie-image"src={movie.poster_url} alt={movie.title} /> : "Image"}
                 </div>
                 <div className="group-movie-title"><a className="group-movie-title" href={`/movieinfo/${movie.tmdb_id}`}>{movie.title}</a></div>
-                <div className="group-movie-details">{movie.release_year} | {movie.director}</div>
+                <div className="group-movie-details"> {movie.release_year} | {movie.director}</div>
 
                 <div className="group-movie-extra">
-                  <div>{movie.genre}</div>
-                  <div className="group-movie-rating">
-                    <Rating 
-                      className="movieRating" 
-                      readOnly 
-                      style={{ maxWidth: 250 }} 
-                      value={(movie.vote_average / 2)}
-                      itemStyles={customRating}
-                    />
-                  </div>
+                  <div className="group-movie-details">{movie.genre?.replace(/[^a-zA-Z ]/g, " ")}</div>
                 </div>
+               <div className="group-movie-rating">
+                  <Rating 
+                    className="movieRating" 
+                    readOnly 
+                    style={{ maxWidth: 250 }} 
+                    value={(movie.vote_average / 2)}
+                    itemStyles={customRating}
+                  />
+                </div>
+                <button className="group-delete-button" onClick={() => handleRemoveFromGroup(movie.content_id)}>Delete from Group</button>
               </div>
             </div>
           ))}

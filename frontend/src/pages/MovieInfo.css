@@ -113,7 +113,11 @@
   display: inline-block;
 }
 
-
+.providerWrapped{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
 
 .providerContainer{
@@ -131,7 +135,7 @@
 .columnWrapped{
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 14px;
   width: fit-content;
 }

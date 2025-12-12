@@ -241,17 +241,6 @@ export async function getSeriesDetails(req, res) {
     const data = await response.json()
 
 
-    // Fetch credits ja sieltä tarkemmin director
-    const creditsRes = await fetch(
-      `https://api.themoviedb.org/3/tv/${seriesId}/credits?api_key=${apiKey}`
-    )
-
-    let director = "Unknown";
-    if (creditsRes.ok) {
-      const credits = await creditsRes.json()
-      const directorObj = credits.crew.find(c => c.job === "Director");
-      if (directorObj) director = directorObj.name;
-    }
 
 
     //Fetch providers
@@ -315,7 +304,7 @@ export async function getSeriesDetails(req, res) {
       name: data.name,
       release: data.first_air_date?.split("-")[0] || "N/A",
       synopsis: data.overview,
-      director: director,
+      producers: data.created_by?.map(p => p.name) || [],
       rating: data.vote_average || "N/A",
       genres: data.genres?.map(g => g.name) || [],
       poster_path: data.poster_path,

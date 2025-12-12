@@ -125,8 +125,8 @@ function SeriesInfo(){
           body: JSON.stringify({
             tmdbId: seriesId,
             title: series.name,
-            releaseYear: series.first_air_date,
-            genre: series.genres?.[0] || 'Unknown',
+            releaseYear: series.release,
+            genre: series.genres || 'Unknown',
             description: series.synopsis,
             posterUrl: series.poster_path ? `https://image.tmdb.org/t/p/w342${series.poster_path}` : null,
             contentType: 'series'
@@ -186,8 +186,8 @@ function SeriesInfo(){
           body: JSON.stringify({
             tmdbId: seriesId,
             title: series.name,
-            releaseYear: series.first_air_date,
-            genre: series.genres?.[0] || 'Unknown',
+            releaseYear: series.release,
+            genre: series.genres || 'Unknown',
             description: series.synopsis,
             posterUrl: series.poster_path ? `https://image.tmdb.org/t/p/w342${series.poster_path}` : null,
             contentType: 'series'
@@ -316,9 +316,11 @@ function SeriesInfo(){
             <h3>{series.name}</h3>
           </div>
 
-          <div className="movieYear">Release year: {series.first_air_date}</div>
+          <div className="movieYear">Release year: {series.release}</div>
 
-          <div className = "movieDirector">Director: {series.director}</div>
+          <div className = "movieDirector">Director: {series.producers?.map((p, index) =>(
+            <span key={index}>{p} </span>
+          ))}</div>
 
           <div className ="movieSynopsis">{series.synopsis}</div>
 

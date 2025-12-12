@@ -80,16 +80,17 @@
 }
 
 .group-content {
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .group-movie-card-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .group-movie-card {
@@ -172,6 +173,20 @@
 
 .add-button:hover {
   background-color: #0056b3;
+}
+
+.group-delete-button{
+  margin-top: 5px;
+  padding: 3px 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--red-acc1);
+  color: white;
+  cursor: pointer;
+}
+
+.group-delete-button:hover{
+  background-color: var(--red-acc2);
 }
 
 .group-movie-rating{

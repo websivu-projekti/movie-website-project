@@ -112,6 +112,66 @@ function MovieInfo(){
       }
     }
 
+    const handleAddToGroup = async () => {
+      if(!user){
+        alert("Kirjaudu sisään lisätäksesi elokuvia tai sarjoja ryhmiin")
+        return
+      }
+
+      try{
+        const saveResponse = await fetch(`http://localhost:3001/movies/saveFromTMDB`, {
+          method: 'POST',
+          headers: {
+            'Content-Type' : 'application/json',
+          },
+          body: JSON.stringify({
+            tmdbId: movieId,
+            title: movie.title,
+            releaseYear: movie.releaseYear,
+            genre: movie.genres?.[0] || 'Unknown',
+            description: movie.synopsis,
+            posterUrl: movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : null,
+            contentType: 'movie'
+          })
+        })
+
+        if (!saveResponse.ok) {
+          const errorText = await saveResponse.text()
+          throw new Error(`Failed to save movie: ${errorText}`)
+        }
+
+        const saveData = await saveResponse.json()
+        
+        if (!saveData.content_id) {
+          console.error('saveData:', saveData)
+          throw new Error("No content_id returned from saveFromTMDB")
+        }
+
+        console.log('Saving to group with content_id: ', saveData.content_id, 'and groupId: ', addedtoGroup)
+        const contentId = saveData.content_id
+        const groupId = addedtoGroup
+
+        const response = await fetch("http://localhost:3001/groups/add", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+          },
+          body: JSON.stringify({ contentId, groupId })
+        })
+
+        const data = await response.json()
+
+        if (response.ok) {
+          alert("Elokuva lisätty ryhmään!")
+        } else {
+          alert(data.error || "Virhe lisättäessä elokuvaa ryhmään")
+        }
+      }catch(error){
+        alert(`Error: ${error.message}`)
+      }
+    }
+
     const handleAddToFavorites = async () => {
       if (!user) {
         alert("Kirjaudu sisään lisätäksesi elokuvia suosikkeihin")
@@ -326,8 +386,8 @@ function MovieInfo(){
                 <p>Login to add to favourites</p>
               )}
               <AddToGroup myGroups={myGroups} addedtoGroup={addedtoGroup} setAddedtoGroup={setAddedtoGroup}/>
-             <button type="submit" className="addToListBtn">
-              Add To List
+             <button onClick={handleAddToGroup} className="addToListBtn">
+              Add To Group
             </button>
           </div>
           </div>              

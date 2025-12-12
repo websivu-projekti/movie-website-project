@@ -1,4 +1,4 @@
-import { createNewGroup, combineUserGroup, getAll, getSingleGroup, deleteGroup, getGroupOwnerName, getGroupMemberNames, getUserGroups, getAllOwners, addOne } from "../models/group_model.js"
+import { createNewGroup, combineUserGroup, getAll, getSingleGroup, deleteGroup, getGroupOwnerName, getGroupMemberNames, getUserGroups, getAllOwners, addOne, isAdded } from "../models/group_model.js"
 
 // ***********************************************
 // *               GROUP MANAGEMENT              *
@@ -130,17 +130,31 @@ export async function deleteOneGroup(req, res, next){
 // lisää tavaraa
 export async function addContent(req, res, next){
     try{
-        const { groupId, contentId } = req.body
+        const { groupId, contentId }= req.body
+
+        console.log('Adding to group - groupId: ', groupId, 'contentId: ', contentId)
+
+        if (!contentId) {
+            return res.status(400).json({ error: "Content ID is required" })
+        }
+
+        const alreadyAdded = await isAdded(groupId, contentId)
+
+        if(alreadyAdded){
+            return res.status(400).json({ error: "Already in group" })
+        }
 
         const addedContent = await addOne(groupId, contentId)
+        console.log('Successfully added content:', addedContent)
 
         res.json({
             message: "Added content",
             addedContent: addedContent
-        })
+        }) 
 
     }catch(err){
-        console.erroe("Add content error: ", err)
+        console.error("Add content error: ", err)
+        console.error("Error details:", err.message, err.stack)
         res.status(500).json({ err: "Failed to add content" })
     }
 }

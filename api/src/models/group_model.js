@@ -169,3 +169,17 @@ export async function addOne(groupId, contentId){
         throw error
     }
 }
+
+// tarkista onko elokuva/sarja jo ryhmässä
+export async function isAdded(groupId, contentId){
+    try{
+        const result = await pool.query(
+            `SELECT * FROM group_content
+            WHERE group_id = $1 AND content_id = $2`,
+            [groupId, contentId]
+        )
+        return result.rows.length > 0
+    }catch(error){
+        throw error
+    }
+}

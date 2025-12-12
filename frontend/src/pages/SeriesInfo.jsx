@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { useAuth } from "../context/AuthContext.js";
 import "./MovieInfo.css"
 import Header from '../components/header.jsx'
+import AddToGroup from "../components/addtogroup.jsx"
 import { Rating, Star } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 
@@ -18,6 +19,8 @@ function SeriesInfo(){
   const [myReviews, setMyReviews] = useState([]);
   const [reviewContent, setReviewContent] = useState("");
   const [rating, setRating] = useState(0)
+  const [ myGroups, setMyGroups ] = useState([])
+  const [ addedtoGroup, setAddedtoGroup ] = useState()
 
 
   useEffect(() => {
@@ -63,6 +66,7 @@ function SeriesInfo(){
     useEffect(() => {
       if (user && user.token && seriesId) {
         checkIfFavourited()
+        getUserGroups()
       }
     }, [user, seriesId])
 
@@ -82,6 +86,87 @@ function SeriesInfo(){
         }
       } catch (err) {
         console.error("Error checking favourite status:", err)
+      }
+    }
+
+    const getUserGroups = async () => {
+        try{
+          console.log("getting users groups with userId: ", user.userId)
+          const response = await fetch(`http://localhost:3001/groups/myowngroups/${user.userId}`, {
+          headers: {
+              'Content-Type' : 'application/json',
+              'Authorization': `Bearer ${user.token}`
+            }
+          })
+          const data = await response.json()
+          if(response.ok){
+            setMyGroups(data.ownedGroups)
+            console.log(myGroups)
+          } else{
+            setError(data.error || "Failed to fetch user's groups")
+          }
+        }catch(error){
+          console.error("Error finding user's groups: ", error)
+        }
+      }
+
+    const handleAddToGroup = async () => {
+      if(!user){
+        alert("Kirjaudu sisään lisätäksesi elokuvia tai sarjoja ryhmiin")
+        return
+      }
+
+      try{
+        const saveResponse = await fetch(`http://localhost:3001/movies/saveFromTMDB`, {
+          method: 'POST',
+          headers: {
+            'Content-Type' : 'application/json'
+          },
+          body: JSON.stringify({
+            tmdbId: seriesId,
+            title: series.name,
+            releaseYear: series.first_air_date,
+            genre: series.genres?.[0] || 'Unknown',
+            description: series.synopsis,
+            posterUrl: series.poster_path ? `https://image.tmdb.org/t/p/w342${series.poster_path}` : null,
+            contentType: 'series'
+          })
+        })
+
+        if (!saveResponse.ok) {
+          const errorText = await saveResponse.text()
+          throw new Error(`Failed to save series: ${errorText}`)
+        }
+
+        const saveData = await saveResponse.json()
+        
+        if (!saveData.content_id) {
+          console.error('saveData:', saveData)
+          throw new Error("No content_id returned from saveFromTMDB")
+        }
+
+        console.log('Saving to group with content_id: ', saveData.content_id, 'and groupId: ', addedtoGroup)
+        const contentId = saveData.content_id
+        const groupId = addedtoGroup
+
+        const response = await fetch("http://localhost:3001/groups/add", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+          },
+          body: JSON.stringify({ contentId, groupId })
+        })
+
+        const data = await response.json()
+
+        if (response.ok) {
+          alert("Sarja lisätty ryhmään!")
+        } else {
+          alert(data.error || "Virhe lisättäessä sarjaa ryhmään")
+        }
+      }catch(error){
+        alert(`Error: ${error.message}`)
       }
     }
 
@@ -298,15 +383,10 @@ function SeriesInfo(){
               ) : (
                 <p>Login to add to favourites</p>
               )}
-
-            <select className="listSelect">
-            <option value="favorites">Favorites</option>
-            <option value="list2 ?">list2</option>
-            </select>
-
-             <button type="submit" className="addToListBtn">
-              Add To List
-            </button>
+              <AddToGroup myGroups={myGroups} addedtoGroup={addedtoGroup} setAddedtoGroup={setAddedtoGroup}/>
+              <button onClick={handleAddToGroup} className="addToListBtn">
+                Add To Group
+              </button>
           </div>
           </div>              
 
@@ -342,7 +422,7 @@ function SeriesInfo(){
                   <div className ="stars">{makeStars(review.rating)}</div>
               </div> 
               </div>          
-               <div class="reviewText">{review.content}</div>
+               <div className="reviewText">{review.content}</div>
               </div>
          ))}
     </div>

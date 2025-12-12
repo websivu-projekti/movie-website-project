@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom"
 import Header from '../components/header.jsx'
 import "../index.css"
 import "./GroupDetail.css" 
-
-const TMDB_API_KEY = process.env.TMDB_API_KEY
+import { useAuth } from "../context/AuthContext.js"
+import { Rating, Star } from '@smastrom/react-rating'
+import '@smastrom/react-rating/style.css'
 
 function GroupDetail() {
   const {groupId} = useParams()
-  const [movies, setMovies] = useState([])
+  const { user } = useAuth()
+  const [ movies, setMovies] = useState([])
   const [ groupInfo, setGroupInfo ] = useState([])
   const [ groupMembers, setGroupMembers ] = useState([])
   const [ error, setError ] = useState(null)
@@ -28,9 +30,11 @@ function GroupDetail() {
     };
   }
 
-  function getPlaceholderMovies(count) {
-    return Array.from({ length: count }, (_, i) => getPlaceholderMovie(i + 1))
-  }
+  const customRating = {
+        itemShapes: Star,
+        activeFillColor: '#90e339',
+        inactiveFillColor: '#cdf0a8'
+      }
 
   useEffect(() => {
     async function fetchGroupInfo(){
@@ -58,6 +62,38 @@ function GroupDetail() {
     fetchGroupInfo()
   }, [groupId])
 
+  useEffect(() =>{
+    if(user && user.token){
+      fetchGroupContent()
+    }
+  }, [user])
+
+  async function fetchGroupContent(){
+      try{
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/groups/groupcontent/${groupId}`, {
+          headers: {
+            'Authorization': `Bearer ${user.token}`
+          }
+        })
+        if(!res.ok){
+          if(res.status === 404){
+            setError("Group content not found")
+          }else{
+            const text = await res.text()
+            setError(`Error fetching group content: ${res.status} ${text}`)
+          }
+          return
+      }
+      
+      const data = await res.json()
+      setMovies(data.content)
+      }catch(err){
+        console.error(err)
+      }finally{
+        setLoading(false)
+      }
+    }
+
   if(loading){
     return(
       <div className ="container">
@@ -66,28 +102,8 @@ function GroupDetail() {
     )
   }
 
-  // ADDED: valmiiksi kommentoitu backend-haku tulevaisuutta varten
-  /*
-  useEffect(() => {
-    async function fetchGroupMovies() {
-      try {
-        const response = await fetch(`/api/groups/${groupId}/movies`)
-        if (!response.ok) throw new Error("Backend fetch failed")
-        const data = await response.json()
-        setMovies(data.movies)
-      } catch (err) {
-        console.error(err)
-      }
-    }
-
-    if (groupId) {
-      fetchGroupMovies()
-    }
-  }, [groupId])
-  */
-
   return (
-    <div>
+    <div className="container">
       <Header/>
 
       <div className="group-container">
@@ -131,35 +147,24 @@ function GroupDetail() {
 
         <div className="group-content">
           {movies.map((movie) => (
-            <div key={movie.id} className="group-movie-card-wrapper">
+            <div key={movie.tmdb_id} className="group-movie-card-wrapper">
               <div className="group-movie-card">
                 <div className="group-movie-image">
-                  {movie.image ? <img src={movie.image} alt={movie.title} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }} /> : "Image"}
+                  {movie.poster_url ? <img className="group-movie-image"src={movie.poster_url} alt={movie.title} /> : "Image"}
                 </div>
-                <div className="group-movie-title">{movie.title}</div>
-                <div className="group-movie-details">{movie.year} | {movie.director}</div>
+                <div className="group-movie-title"><a className="group-movie-title" href={`/movieinfo/${movie.tmdb_id}`}>{movie.title}</a></div>
+                <div className="group-movie-details">{movie.release_year} | {movie.director}</div>
 
                 <div className="group-movie-extra">
-                  <div className="showtimes">
-                    <div className="showtimes-header">Showtimes</div>
-                    {movie.showtimes.map((time, i) => (
-                      <div key={i} className="showtime-entry">{time}</div>
-                    ))}
-                  </div>
-
-                  <div className="services">
-                    <div className="services-header">Services</div>
-                    {movie.services.length ? movie.services.map((service, i) => (
-                      <div key={i} className="service-entry">
-                        <span className="service-icon"></span> {service}
-                      </div>
-                    )) : <div className="service-entry">Not available</div>}
-                  </div>
-
+                  <div>{movie.genre}</div>
                   <div className="group-movie-rating">
-                    {[1,2,3,4,5].map((star) => (
-                      <span key={star} className={`star ${star <= movie.rating ? "filled" : ""}`}>&#9733;</span>
-                    ))}
+                    <Rating 
+                      className="movieRating" 
+                      readOnly 
+                      style={{ maxWidth: 250 }} 
+                      value={(movie.vote_average / 2)}
+                      itemStyles={customRating}
+                    />
                   </div>
                 </div>
               </div>

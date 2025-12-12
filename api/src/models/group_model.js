@@ -183,3 +183,18 @@ export async function isAdded(groupId, contentId){
         throw error
     }
 }
+
+// hae ryhmään tallennettu sisältö
+export async function getGroupContent(groupId){
+    try{
+        const result = await pool.query(
+            `SELECT c.* FROM group_content g
+            JOIN content c ON c.content_id = g.content_id
+            WHERE g.group_id = $1`
+            ,[groupId]
+        )
+        return result.rows
+    }catch(error){
+        throw error
+    }
+}

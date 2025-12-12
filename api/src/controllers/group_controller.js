@@ -1,4 +1,4 @@
-import { createNewGroup, combineUserGroup, getAll, getSingleGroup, deleteGroup, getGroupOwnerName, getGroupMemberNames, getUserGroups, getAllOwners, addOne, isAdded } from "../models/group_model.js"
+import { createNewGroup, combineUserGroup, getAll, getSingleGroup, deleteGroup, getGroupOwnerName, getGroupMemberNames, getUserGroups, getAllOwners, addOne, isAdded, getGroupContent } from "../models/group_model.js"
 
 // ***********************************************
 // *               GROUP MANAGEMENT              *
@@ -156,5 +156,20 @@ export async function addContent(req, res, next){
         console.error("Add content error: ", err)
         console.error("Error details:", err.message, err.stack)
         res.status(500).json({ err: "Failed to add content" })
+    }
+}
+
+// hae ryhmän sisältö
+export async function getAllGroupContent(req, res, next){
+    try{
+        const groupId = req.params.groupId
+        const content = await getGroupContent(groupId)
+
+        res.json({
+            content: content
+        })
+    }catch(error){
+        console.error("Get group content error: ", error)
+        res.status(500).json({ error: "Failed to fetch group content" })
     }
 }

@@ -128,7 +128,7 @@ function MovieInfo(){
             tmdbId: movieId,
             title: movie.title,
             releaseYear: movie.releaseYear,
-            genre: movie.genres?.[0] || 'Unknown',
+            genre: movie.genres || 'Unknown',
             description: movie.synopsis,
             posterUrl: movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : null,
             contentType: 'movie'

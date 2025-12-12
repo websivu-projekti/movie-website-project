@@ -1,26 +1,5 @@
-:root {
---bg-colour: #0e1c1f;
---bg-acc1: #2d464d;
---bg-acc2: #3C5E67;
---blue-acc1: #585cd5;
---green-acc1: #a5e364;
---text-col1: #F5F5F5;
---text-col2: #0f0f0f;
---title-font: "Bagel Fat One", system-ui;
---font: "DM Sans", sans-serif;
-}
-
-* {
-  font-family: var(--font);
-  background-color: var(--bg-colour);
-  color: var(--text-col1);
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  }
-
-  .group-container {
-  padding: 20px;
+.group-container {
+  padding: 10px;
 }
 
 .group-header {
@@ -124,8 +103,7 @@
 }
 
 .group-movie-image {
-  height: 150px;
-  background-color: #777;
+  background-color: var(--bg-acc2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,19 +112,20 @@
 }
 
 .group-movie-title {
-  font-size: 16px;
   font-weight: bold;
+  background-color: var(--bg-acc2);
 }
 
 .group-movie-details {
-  font-size: 12px;
   color: #ccc;
+  background-color: var(--bg-acc2);
 }
 
 .group-movie-extra {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  background-color: var(--bg-acc2);
 }
 
 .showtimes,
@@ -195,13 +174,8 @@
   background-color: #0056b3;
 }
 
-.group-movie-rating .star {
-  color: #ccc;
-  font-size: 16px;
-}
-
-.group-movie-rating .star.filled {
-  color: #f5b50a;
+.group-movie-rating{
+  background-color: var(--bg-acc2);
 }
 
 .group-info-share-row {

@@ -195,7 +195,7 @@
         display: none;
     }
     .filtermenuBtn{
-        display: block;
+        display: grid;
     }
     .moviePoster{
         width: 185px;

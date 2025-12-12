@@ -23,7 +23,7 @@
 
 .container {
     min-height: 100vh;
-    padding: 20px;
+    padding: 10px;
 }
 
 header {
@@ -52,12 +52,12 @@ header {
     height: fit-content;
     width: inherit;
     align-self: center;
+    display: flex;
 }
 
 .searchInput{ 
     padding: 0.5rem; 
     border-radius: 4px; 
-    float: left;
     width: 90%;
     border: none; 
     align-content: center;

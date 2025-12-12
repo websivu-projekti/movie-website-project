@@ -10,19 +10,9 @@ function GroupDetail() {
   const {groupId} = useParams()
   const [movies, setMovies] = useState([])
   const [ groupInfo, setGroupInfo ] = useState([])
+  const [ groupMembers, setGroupMembers ] = useState([])
   const [ error, setError ] = useState(null)
   const [loading, setLoading] = useState(true)
-  const members = [
-    { name: "User 1", img: "" },
-    { name: "User 2", img: "" },
-    { name: "User 3", img: "" },
-    { name: "User 4", img: "" },
-    { name: "User 5", img: "" },
-    { name: "User 6", img: "" },
-    { name: "User 7", img: "" },
-    { name: "User 8", img: "" },
-    { name: "User 9", img: "" }
-  ];
   const moviesSeriesCount = "1 movie, 2 series"
 
   function getPlaceholderMovie(id) {
@@ -57,8 +47,8 @@ function GroupDetail() {
       }
       
       const data = await res.json()
-      console.log(groupId)
       setGroupInfo(data.group)
+      setGroupMembers(data.groupMembers)
     }catch(err){
       console.error(err)
     } finally{
@@ -127,13 +117,13 @@ function GroupDetail() {
         </div>
 
         <div className="group-members">
-          Members ({members.length}):
+          Members ({groupMembers.length}):
         </div>
         <div className="members-list">
-          {members.slice(0, 4).map((member, index) => (
+          {groupMembers.slice(0, 4).map((member, index) => (
             <div key={index} className="member">
-              <img src={member.img || ""} alt={member.name} />
-              <span>{member.name}</span>
+              <img src={member.img || ""} />
+              <span>{member.username}</span>
             </div>
           ))}
           <span className="see-all">, See all...</span>

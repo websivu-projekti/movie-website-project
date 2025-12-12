@@ -68,14 +68,11 @@
 
 .movieInfoWrapper{
   display: flex;
-  flex-direction: wrap;
+  flex-direction: inherit;
   justify-content: center;
   align-items: flex-start;
   gap: 40px;
-  margin-top: 40px auto;
   width: 100%;  
-
-  /*border: 3px solid #0c1ff5;*/
 }
 
 .movieYear{
@@ -271,6 +268,10 @@
   font-size: 16px;
 }
 
+.reviewRating{
+  width: 200px;
+}
+
 .writeReviewRow {
   display: flex;
   flex-direction: column;
@@ -294,4 +295,73 @@
   margin-top: 14px;
 }
 
-  
+
+.group{
+  width:stretch;
+}
+
+
+
+@media only screen and (max-width: 1100px){
+  .movieInfoWrapper{
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .providerContainer{
+    max-width: 100%;
+    flex: auto;
+    width: 100%;
+  }
+
+  .columnWrapped{
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .providerWrapped{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .addToListContainer, .reviewsColumn, .myReviewContainer{
+    width: stretch;
+  }
+
+  .reviewsRowContainer{
+    flex-direction: column-reverse;
+  }
+
+  .reviewRating{
+    width: 250px;
+    gap:8px;
+  }
+  .imgContainer{
+    margin-right: auto;
+  }
+  .movieContainer{
+    margin-left: auto;
+    flex: min-content;
+  }
+}
+
+@media only screen and (max-width: 740px){
+  .movieInfoWrapper{
+    flex-direction: column;
+  }
+  .imgContainer{
+    margin-right: 0px;
+  }
+  .movieContainer{
+    margin-left: 0px;
+    flex: min-content;
+    max-width: 100%;
+  }
+  .reviewRating{
+    width: 200px;
+    gap:0px;
+  }
+}
+

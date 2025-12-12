@@ -1,5 +1,9 @@
 import pool from '../database.js'
 
+// ***********************************************
+// *               GROUP MANAGEMENT              *
+// ***********************************************    
+
 // hakee ryhmät (kaikki)
 export async function getAll(){
     try{
@@ -26,6 +30,39 @@ export async function getAllOwners(){
     }
 }
 
+// hakee ryhmän (yksi)
+export async function getSingleGroup(groupId){
+    try{
+        const result = await pool.query(
+            `SELECT * FROM "group" where group_id = $1`,
+            [groupId]
+        )
+
+        if(result.rows.length === 0){
+            throw new Error("Group not found")
+        }
+        
+        return result.rows[0]
+    } catch (error) {
+        throw error
+    }
+}
+
+// hakee kaikki ryhmään kuuluvien käyttäjänimet
+export async function getGroupMemberNames(groupId){
+    try{
+        const findGroupOwners = await pool.query(
+            `SELECT u.username FROM user_group g 
+            JOIN "user" u ON g.user_id = u.user_id
+            WHERE g.group_id = $1`
+            ,[groupId]
+        )
+        return findGroupOwners.rows
+    }catch(error){
+        throw error
+    }
+}
+
 // hakee yhden ryhmänomistajan käyttäjänimen
 export async function getGroupOwnerName(userId){
     try{
@@ -41,8 +78,6 @@ export async function getGroupOwnerName(userId){
     }
 }
 
-
-
 // hakee käyttäjän omistamat ryhmät
 export async function getUserGroups(userId){
     try{
@@ -55,24 +90,6 @@ export async function getUserGroups(userId){
 
         return findOwnedGroups.rows
     }catch(error){
-        throw error
-    }
-}
-
-// hakee ryhmän (yksi)
-export async function getSingleGroup(groupId){
-    try{
-        const result = await pool.query(
-            'SELECT group_id, group_name, groupicon_url FROM "group" where group_id = $1',
-            [groupId]
-        )
-
-        if(result.rows.length === 0){
-            throw new Error("Group not found")
-        }
-        
-        return result.rows[0]
-    } catch (error) {
         throw error
     }
 }
@@ -115,6 +132,7 @@ export async function combineUserGroup(userId, groupId, isOwner){
     }
 }
 
+// poistaa ryhmän
 export async function deleteGroup(groupId){
     try{
         const result = await pool.query(
@@ -128,6 +146,26 @@ export async function deleteGroup(groupId){
 
         return result.rows[0]
     } catch(error){
+        throw error
+    }
+}
+
+// ***********************************************
+// *           GROUP CONTENT MANAGEMENT          *
+// ***********************************************
+
+// lisää elokuva/sarja group_contenttiin
+export async function addOne(groupId, contentId){
+    try{
+        const result = await pool.query(
+            `INSERT INTO group_content (group_id, content_id)
+            VALUES ($1, $2)
+            RETURNING *`,
+            [groupId, contentId]
+        )
+
+        return result.rows[0]
+    }catch(error){
         throw error
     }
 }

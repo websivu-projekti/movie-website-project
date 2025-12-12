@@ -59,8 +59,6 @@ CREATE TABLE "group" (
   showtime_place VARCHAR(60),
   showtime_date DATE,
   service_provider VARCHAR(500)
-  /* Käytä tätä group_content sijaan, jos haluaa, että ryhmässä on vain yksi content*/
-  /*content_id INT REFERENCES content(content_id) ON DELETE SET NULL*/
 );
 
 CREATE TABLE group_content (

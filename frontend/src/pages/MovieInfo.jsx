@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { useAuth } from "../context/AuthContext.js";
 import "./MovieInfo.css"
 import Header from '../components/header.jsx'
+import AddToGroup from "../components/addtogroup.jsx"
 import { Rating, Star } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 
@@ -18,6 +19,9 @@ function MovieInfo(){
   const [myReviews, setMyReviews] = useState([]);
   const [reviewContent, setReviewContent] = useState("");
   const [rating, setRating] = useState(0)
+  const [ myGroups, setMyGroups ] = useState([])
+  const [ addedtoGroup, setAddedtoGroup ] = useState([])
+  
 
 
   useEffect(() => {
@@ -63,6 +67,7 @@ function MovieInfo(){
     useEffect(() => {
       if (user && user.token && movieId) {
         checkIfFavourited()
+        getUserGroups()
       }
     }, [user, movieId])
 
@@ -82,6 +87,28 @@ function MovieInfo(){
         }
       } catch (err) {
         console.error("Error checking favourite status:", err)
+      }
+    }
+
+    // vielä hakee vain omistetut ryhmät!!
+    const getUserGroups = async () => {
+      try{
+        console.log("getting users groups with userId: ", user.userId)
+        const response = await fetch(`http://localhost:3001/groups/myowngroups/${user.userId}`, {
+        headers: {
+            'Content-Type' : 'application/json',
+            'Authorization': `Bearer ${user.token}`
+          }
+        })
+        const data = await response.json()
+        if(response.ok){
+          setMyGroups(data.ownedGroups)
+          console.log(myGroups)
+        } else{
+          setError(data.error || "Failed to fetch user's groups")
+        }
+      }catch(error){
+        console.error("Error finding user's groups: ", error)
       }
     }
 
@@ -219,7 +246,7 @@ function MovieInfo(){
     return (
     <div className="container">
       <Header/>
-
+      <div className="contentInfoContainer">
       <div className ="movieInfoWrapper">
       <div className = "imgContainer">
         <img src={posterUrl} alt={movie.title}/>
@@ -298,12 +325,7 @@ function MovieInfo(){
               ) : (
                 <p>Login to add to favourites</p>
               )}
-
-            <select className="listSelect">
-            <option value="favorites">Favorites</option>
-            <option value="list2 ?">list2</option>
-            </select>
-
+              <AddToGroup myGroups={myGroups} addedtoGroup={addedtoGroup} setAddedtoGroup={setAddedtoGroup}/>
              <button type="submit" className="addToListBtn">
               Add To List
             </button>
@@ -311,6 +333,8 @@ function MovieInfo(){
           </div>              
 
   </div>
+
+
 
   </div>
 
@@ -357,7 +381,6 @@ function MovieInfo(){
 
                     <Rating 
                     className="reviewRating" 
-                    style={{ maxWidth: 140 }} 
                     value={(rating)}
                     onChange={setRating}
                     itemStyles={customRating}
@@ -457,6 +480,7 @@ function MovieInfo(){
          </div>
 
       </div>
+</div>
 </div>
 </div>
   

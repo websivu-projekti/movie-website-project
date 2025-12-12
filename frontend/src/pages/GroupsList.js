@@ -40,6 +40,7 @@ function GroupsList() {
 
         const data = await res.json()
         setGroups(data.userGroups)
+        console.log(foundGroups)
         setGroupOwnerNames(data.ownerNames)
       }catch(err){
         console.error(err)
@@ -242,7 +243,7 @@ function GroupsList() {
                   <div className="groupIcon" >
                     <img className="groupIcon" src={require(`../assets/icons/${group.groupicon_url}.png`)}/>
                   </div>
-                  <span className="groupName"><a onClick={console.log(group.group_id)} href={`/groupdetail/${group.group_id}`}>{group.group_name}</a></span>
+                  <span className="groupName"><a href={`/groupdetail/${group.group_id}`}>{group.group_name}</a></span>
                 </div>
                 <div className="groupMeta">Created by: {groupOwnerNames[index].username}</div> {/* ADDED: teksti hieman muutettu */}
               </div>

@@ -1,5 +1,10 @@
-import { createNewGroup, combineUserGroup, getAll, getSingleGroup, deleteGroup, getGroupOwnerName, getUserGroups, getAllOwners } from "../models/group_model.js"
+import { createNewGroup, combineUserGroup, getAll, getSingleGroup, deleteGroup, getGroupOwnerName, getGroupMemberNames, getUserGroups, getAllOwners, addOne } from "../models/group_model.js"
 
+// ***********************************************
+// *               GROUP MANAGEMENT              *
+// ***********************************************
+
+// luo ryhmän
 export async function createGroup(req, res){
     try{
         const { group_name, groupicon_url } = req.body
@@ -26,6 +31,8 @@ export async function createGroup(req, res){
     }
 }
 
+
+// hakee kaikki ryhmät ja ryhmänomistajien käyttäjänimet
 export async function getAllGroups(req, res, next){
     try{
         const userGroups = await getAll()
@@ -39,6 +46,8 @@ export async function getAllGroups(req, res, next){
     }
 }
 
+
+// hakee ryhmän omistajan käyttäjänimen (atm ei käytössä)
 export async function getOwnerName(req, res, next) {
     try{
         const userId = req.user.userId
@@ -49,6 +58,8 @@ export async function getOwnerName(req, res, next) {
     }
 }
 
+
+// hakee käyttäjän omistamat ryhmät ja käyttäjänimen
 export async function getUserOwnedGroups(req, res, next){
     try{
         const userId = req.user.userId
@@ -67,19 +78,22 @@ export async function getUserOwnedGroups(req, res, next){
     }
 }
 
+
+// hakee yhden ryhmän ja sen jäsenet
 export async function getOneGroup(req, res, next){
     try{
         const groupId = req.params.groupId
 
         const foundGroup = await getSingleGroup(groupId)
+        const groupMembers = await getGroupMemberNames(groupId)
         
         if(!foundGroup){
             return res.status(404).json({ error: "Group not found" })
         }
 
         res.json({
-            message: "Group found",
-            group: foundGroup
+            group: foundGroup,
+            groupMembers: groupMembers
         })
     } catch(err){
         console.error("Get group error: ", err)
@@ -87,6 +101,8 @@ export async function getOneGroup(req, res, next){
     }
 }
 
+
+// tarvii vielä varmistuksen onko käyttäjä ryhmän omistaja
 export async function deleteOneGroup(req, res, next){
     try{
         const { group_id } = req.body
@@ -104,5 +120,27 @@ export async function deleteOneGroup(req, res, next){
     }catch(err){
         console.error("Delete group error: ", err)
         res.status(500).json({ err: "Failed to delete group" })
+    }
+}
+
+// ***********************************************
+// *           GROUP CONTENT MANAGEMENT          *
+// ***********************************************
+
+// lisää tavaraa
+export async function addContent(req, res, next){
+    try{
+        const { groupId, contentId } = req.body
+
+        const addedContent = await addOne(groupId, contentId)
+
+        res.json({
+            message: "Added content",
+            addedContent: addedContent
+        })
+
+    }catch(err){
+        console.erroe("Add content error: ", err)
+        res.status(500).json({ err: "Failed to add content" })
     }
 }

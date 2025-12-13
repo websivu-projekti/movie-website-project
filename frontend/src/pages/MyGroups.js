@@ -20,7 +20,7 @@ function MyGroups() {
 
   const fetchOwnedGroups = async () => {
     try{
-      const response = await fetch(`http://localhost:3001/groups/myowngroups/${user.userId}`, {
+      const response = await fetch(`http://localhost:3001/groups/usersgroups`, {
         headers: {
           'Content-Type' : 'application/json',
           'Authorization': `Bearer ${user.token}`
@@ -28,8 +28,8 @@ function MyGroups() {
       })
       const data = await response.json()
       if(response.ok){
-        setMyGroups(data.ownedGroups)
-        setGroupOwner(data.groupOwner)
+        setMyGroups(data.groups)
+        setGroupOwner(data.groupowner)
         console.log(myGroups)
       } else {
         setError(data.error || "Failed to fetch user's groups")

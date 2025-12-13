@@ -16,6 +16,84 @@
   margin: 0;
 }
 
+.group-menu-container{
+  width: 35vw;
+  height: fit-content;
+  padding: 20px;
+  background-color: var(--bg-acc2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: absolute;
+  border-radius: 10px;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.manage-members-header{
+  background-color: var(--bg-acc2);
+  display: grid;
+  grid-template-columns: 90% 10%;
+  grid-template-rows: auto;
+  grid-template-areas: 
+  'title button';
+}
+
+.manage-members-title{
+  background-color: var(--bg-acc2);
+  padding: 0px;
+  padding-bottom: 10px;
+  margin: 0px;
+}
+
+.close-group-management{
+  border: none;
+  cursor: pointer;
+  background-color: var(--bg-acc2);
+}
+
+.close-group-management > img{
+  width: 40px;
+}
+
+.group-manage-users{
+  background-color: var(--bg-acc2);
+}
+
+.manage-member{
+  background-color: var(--bg-acc2);
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.manage-member > span, img{
+  background-color: var(--bg-acc2);
+}
+
+.memberPfp{
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #555;
+}
+
+.group-join-request{
+  background-color: var(--bg-acc2);  
+  padding: 10px;
+  width: fit-content;
+  border: 2px solid var(--green-acc1);
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.join-request{
+  background-color: var(--bg-acc2);
+}
+
 .group-info-row {
   display: flex;
   flex-wrap: wrap;
@@ -28,12 +106,12 @@
   color: #ccc;
 }
 
-.group-buttons {
+.group-buttons-row {
   display: flex;
   gap: 10px;
 }
 
-.group-buttons button {
+.group-button {
   background-color: #007bff;
   color: white;
   border: none;
@@ -42,7 +120,7 @@
   border-radius: 4px;
 }
 
-.group-buttons button:hover {
+.group-button:hover {
   background-color: #0056b3;
 }
 
@@ -70,7 +148,6 @@
   height: 32px;
   border-radius: 50%;
   background-color: #555;
-  object-fit: cover;
 }
 
 .see-all {
@@ -176,8 +253,7 @@
 }
 
 .group-delete-button{
-  margin-top: 5px;
-  padding: 3px 8px;
+  padding: 5px 10px;
   border: none;
   border-radius: 4px;
   background-color: var(--red-acc1);

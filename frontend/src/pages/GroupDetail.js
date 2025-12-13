@@ -1,23 +1,26 @@
-import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import React, { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import Header from '../components/header.jsx'
 import { useAuth } from "../context/AuthContext.js"
 import "../index.css"
 import "./GroupDetail.css" 
+import closeMenu from "../assets/closemenu.svg"
 import { Rating, Star } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 
 function GroupDetail() {
   const { groupId } = useParams()
   const { user } = useAuth()
+  const nav = useNavigate()
   const [ movies, setMovies] = useState([])
   const [ groupInfo, setGroupInfo ] = useState([])
   const [ groupMembers, setGroupMembers ] = useState([])
   const [ error, setError ] = useState(null)
   const [loading, setLoading] = useState(true)
-    const [isMember, setIsMember] = useState(false)
+  const [isMember, setIsMember] = useState(false)
   const [isOwner, setIsOwner] = useState(false)
   const [requestSent, setRequestSent] = useState(false)
+  const [ showUserManagement, setShowUserManagement ] = useState(false)
 
   const [status, setStatus] = useState({
   isMember: false,
@@ -212,7 +215,8 @@ function GroupDetail() {
       alert("Error rejecting request")
     }
   }
-      const handleRemoveFromGroup = async (contentId) => {
+    
+  const handleRemoveFromGroup = async (contentId) => {
       try {
           const response = await fetch("http://localhost:3001/groups/remove", {
             method: 'DELETE',
@@ -236,6 +240,56 @@ function GroupDetail() {
         }
     }
 
+    const handleDeleteGroup = async (groupId)=>{
+      try{
+        const response = await fetch("http://localhost:3001/groups/deletegroup", {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+          },
+          body: JSON.stringify({
+            groupId: groupId
+          })
+        })
+        if(response.ok){
+          alert("Group deleted!")
+          nav("/groupslist")
+        }
+      }catch(error){
+        alert(`Error: ${error.message}`)
+      }
+    }
+
+  const handleLeaveGroup = async (groupId)=>{
+    try{
+      const response = await fetch(`http://localhost:3001/groups/leavegroup`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+          },
+          body: JSON.stringify({
+            groupId: groupId
+          })
+      })
+      if(response.ok){
+        alert("Successfully left from group!")
+        nav("/groupslist")
+      }
+    }catch(error){
+      alert(`Error: ${error.message}`)
+    }
+  }
+
+  const openUserManagement = () => {
+    setShowUserManagement(!showUserManagement)
+  }
+
+  const closeUserManagement = () => {
+    setShowUserManagement(!showUserManagement)
+  }
+
   if(loading){
     return(
       <div className ="container">
@@ -249,19 +303,42 @@ function GroupDetail() {
       <Header/>
 
       <div className="group-container">
+        {showUserManagement && (
+            <div className="group-menu-container">
+              <div className="group-manage-users">
+                <div className="manage-members-list">
+                  <div className="manage-members-header">
+                    <h2 className="manage-members-title">Manage Users: </h2>
+                    <button onClick={closeUserManagement} className="close-group-management">
+                      <img src={closeMenu}/>
+                    </button>
+                    {!status.isOwner && status.isMember && (
+                      <div className="group-manage-users">You must be a group's owner to manage members</div>
+                    )}
+                  </div>
+                  {groupMembers.map((member, index) => (
+                    <div key={index} className="manage-member">
+                      <img className="memberPfp" src={member.img || ""} />
+                      <span>{member.username} {groupMembers[index].is_owner ? "(Owner)" : "(Member)"}</span>
+                      {!groupMembers[index].is_owner && status.isOwner && (
+                        <button className="group-button">Remove from group</button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+        )}
+        
         <div className="group-header">
           <h1 className="group-title">
              {`${groupInfo.group_name}` || "Group List Name"}
           </h1>
-          <div className="group-info-row">
-            <span className="group-info-text"></span>
-            <div className="group-buttons">
-              <button>Edit list</button>
-              <button>Manage users</button>
-              <button>Leave group</button>
-
-              {!status.isOwner && !status.isMember && !status.requestSent &&(
-                <button onClick={handleJoinRequest}>Request to Join</button>
+          {!status.isOwner && !status.isMember && !status.requestSent &&(
+              <div className="group-buttons-row group-join-request">
+                <div className="join-request">You must be a member of the group to see it's content</div>
+                <button className="group-button" onClick={handleJoinRequest}>Request to Join Group</button>
+                </div>
               )}
 
               {status.requestSent && !status.isMember &&(
@@ -275,10 +352,10 @@ function GroupDetail() {
                     <div>
                       <h3>Join Requests:</h3>
                       {joinRequests.map(req => (
-                        <div key={req.request_id}>
-                          <span>{req.username} wants to join</span>
-                          <button onClick={() => handleApproveRequest(req.request_id)}>Approve</button>
-                          <button onClick={() => handleRejectRequest(req.request_id)}>Reject</button>
+                        <div className="group-join-request" key={req.request_id}>
+                          <span className="join-request">{req.username} wants to join</span>
+                          <button className="group-button" onClick={() => handleApproveRequest(req.request_id)}>Approve</button>
+                          <button className="group-button" onClick={() => handleRejectRequest(req.request_id)}>Reject</button>
                         </div>
                       ))}
                     </div>
@@ -289,6 +366,17 @@ function GroupDetail() {
               {status.isMember && !status.isOwner && (
                 <p>You are a member of this group</p>
               )}
+         
+          <div className="group-info-row">
+            {status.isMember && (
+              <>
+            <span className="group-info-text"></span>
+            <div className="group-buttons-row">
+              <button onClick={openUserManagement} className="group-button">Manage users</button>
+              <button onClick={() => handleLeaveGroup(groupId)} className="group-button">Leave group</button>
+              {status.isOwner &&(<button onClick={() => handleDeleteGroup(groupId)} className="group-delete-button">Delete group</button>)}
+
+              
 
             </div>
             <div className="group-info-share-row">
@@ -300,11 +388,15 @@ function GroupDetail() {
                   readOnly
                 />
               </div>
-              <button className="group-buttons">Copy link</button>
+              <button className="group-button">Copy link</button>
             </div>
+            </>
+            )}
           </div>
+         
         </div>
-
+         {status.isMember && (
+          <React.Fragment>
         <div className="group-members">
           Members ({groupMembers.length}):
         </div>
@@ -315,7 +407,7 @@ function GroupDetail() {
               <span>{member.username}</span>
             </div>
           ))}
-          <span className="see-all">, See all...</span>
+          <span onClick={openUserManagement} className="see-all">, See all...</span>
         </div>
 
         <div className="group-content">
@@ -345,6 +437,8 @@ function GroupDetail() {
             </div>
           ))}
         </div>
+        </React.Fragment>
+        )}
       </div>
     </div>
   )

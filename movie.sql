@@ -17,7 +17,7 @@ CREATE TABLE content (
   tmdb_id VARCHAR(20) UNIQUE,
   title VARCHAR(100) NOT NULL,
   release_year INT,
-  genre VARCHAR(50),
+  genre VARCHAR(200),
   description TEXT,
   poster_url VARCHAR(500),
   content_type VARCHAR(10) NOT NULL CHECK (content_type IN ('movie', 'series'))

@@ -25,7 +25,10 @@ function GroupsList() {
   const [ error, setError ] = useState(null)
 
   useEffect(() => {
-    async function fetchGroups(){
+    fetchGroups()
+  }, [])
+
+  const fetchGroups = async() => {
       try{
         const res = await fetch(`${process.env.REACT_APP_API_URL}/groups/all`)
         if(!res.ok){
@@ -46,8 +49,6 @@ function GroupsList() {
         console.error(err)
       }
     }
-    fetchGroups()
-  }, [])
 
   const openCreateGroup = () => {
     setShowCreateGroup(!showCreateGroup)
@@ -73,7 +74,10 @@ function GroupsList() {
 
       const data = await response.json()
 
-      if(!response.ok){
+      if(response.ok){
+        fetchGroups()
+        closeCreateGroup()
+      }else{
         throw new Error(data.error || "An error occurred while creating a group")
       }
     }catch(err){
@@ -103,7 +107,7 @@ function GroupsList() {
             <button className="closeCreateGroup" onClick={closeCreateGroup}>
                 <img src={closeMenu}/>
             </button>
-              <form className="createGroupForm" onSubmit={handleSubmit}>
+              <form className="createGroupForm">
                 <label className="createGroupLabel nameLabel">Group Name: 
                   <input 
                   className="createGroupInput nameInput" 
@@ -226,7 +230,7 @@ function GroupsList() {
                     <img className="createGroupIcon" src={pf9} alt="Icon option 9, sharkhorse with pink background"/>
                   </label>  
                 </div>
-                <button type="submit" className="createGroupBtn">Create Group!</button>
+                <button onClick={handleSubmit} className="createGroupBtn">Create Group!</button>
               </form>
             </div>
         </div>

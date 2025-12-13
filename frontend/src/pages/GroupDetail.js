@@ -404,7 +404,7 @@ function GroupDetail() {
           {groupMembers.slice(0, 4).map((member, index) => (
             <div key={index} className="member">
               <img src={member.img || ""} />
-              <span>{member.username}</span>
+              <span><a href={`/profile/${member.user_id}`}>{member.username}</a></span>
             </div>
           ))}
           <span onClick={openUserManagement} className="see-all">, See all...</span>

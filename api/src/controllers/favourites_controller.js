@@ -1,10 +1,25 @@
 import { getUserFavourites, addFavourite, removeFavourite, isFavourited } from "../models/favourites_model.js"
 import pool from "../database.js"
 
-// Get users favourites movies
+// Get user's favourites movies
 export async function getFavourites(req, res) {
     try {
         const userId = req.user.userId
+        const favourites = await getUserFavourites(userId)
+
+        res.json({
+            favourites: favourites
+        })
+    } catch (error) {
+        console.error("Get favourites error:", error)
+        res.status(500).json({ error: "Failed to fetch favourite movies" })
+    }
+}
+
+// Get another user's favourites
+export async function getUsersFavourites(req, res) {
+    try {
+        const userId = req.params.userId
         const favourites = await getUserFavourites(userId)
 
         res.json({

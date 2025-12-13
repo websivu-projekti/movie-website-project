@@ -2,9 +2,10 @@
 import React, { useState } from "react";
 import "../EditProfile.css";
 import Header from '../components/header.jsx'
+import { useAuth } from "../context/AuthContext.js";
 
 function EditProfile() {
-  //const [password, setPassword] = useState("")
+  const { user } = useAuth()
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
@@ -72,6 +73,34 @@ function EditProfile() {
        newPasswordConfirm })
   }*/
   };
+
+  const handleDeleteAccount = async () => {
+      if (window.confirm(`Haluatko varmasti poistaa käyttäjäsi, ${user.username}? Toimintoa ei voi perua.`)) {
+        try {
+          const response = await fetch("http://localhost:3001/auth/account", {
+            method: 'DELETE',
+            headers: {
+              'Content-Type' : 'application/json',
+              'Authorization' : `Bearer ${user.token}`
+            },
+            body: JSON.stringify({ username: user.username })
+          });
+  
+          const data = await response.json()
+  
+          if (!response.ok) {
+            throw new Error(data.error || "Failed to fetch profile")
+          }
+  
+          alert('Käyttäjä poistettu onnistuneesti.')
+          logout()
+          navigate('/')
+  
+        } catch (err) {
+          alert(`Error: ${error.message}`)
+          }
+        }
+    }
 
   return (
     <div className="container">
@@ -142,7 +171,7 @@ function EditProfile() {
           <button type="submit" className="changeBtn button">
             Change Password
           </button>
-          <button className="deleteButton">
+          <button onClick={handleDeleteAccount} className="deleteButton">
             Delete Account
           </button>
         </form>

@@ -1,34 +1,40 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../context/AuthContext.js"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import "../index.css"
 import './Profile.css'
 import Header from '../components/header.jsx'
 
-function Profile(){
-  const { user, logout } = useAuth()
+function UserProfile(){
+  const { userId } = useParams()
   const navigate = useNavigate()
+  const [ userInfo, setUserInfo ] = useState([])
   const [favourites, setFavourites] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/login')
-    }
-  }, [user, navigate])
-
   useEffect(() =>{
+    fetchUserInfo()
     fetchFavourites()
   }, [])
 
+  const fetchUserInfo = async () => {
+    try{
+        const response = await fetch(`http://localhost:3001/auth/profile/${userId}`)
+            const data = await response.json()
+            if (response.ok) {
+                setUserInfo(data.user)
+            } else {
+                setError(data.error || "Failed to fetch user data")
+            }
+    }catch (err){
+        setError(err.message)
+    }
+  }
+
   const fetchFavourites = async () => {
         try {
-            const response = await fetch("http://localhost:3001/favourites/", {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
+            const response = await fetch(`http://localhost:3001/favourites/${userId}`)
             const data = await response.json()
             if (response.ok) {
                 setFavourites(data.favourites)
@@ -42,15 +48,6 @@ function Profile(){
         }
     }
 
-  if (!user) {
-    return (
-      <div className="container">
-        <Header/>
-        <p>Loading...</p>
-      </div>
-    )
-  }
-
 
   return (
     <div className="container">
@@ -60,14 +57,11 @@ function Profile(){
                 <div className="profileHeader">
                     <div className="profileInfo">
                         <div className="profilePic">User</div>
-                        <span className="username">{user.username}</span>
+                        <span className="username">{userInfo.username}</span>
                     </div>
-                    <button className="pfNavBtn" onClick={() => navigate("/editprofile")}>
-                        Edit Profile
-                    </button>
                 </div>
                 <div className="favouritesContainer">
-                    <h2>{user.username}'s Favourite Movies and Series</h2>
+                    <h2>{userInfo.username}'s Favourite Movies and Series</h2>
                     {loading ? (
                       <p>Loading favourites...</p>
                     ) : error ? (
@@ -94,7 +88,7 @@ function Profile(){
                       </div>
                     )}
                     <button 
-                      onClick={() => navigate("/profile/favouritelist")}
+                      onClick={() => navigate(`/profile/favouritelist/${userInfo.user_id}`)}
                       className="pfNavBtn"
                     >
                       Favourites List
@@ -102,7 +96,7 @@ function Profile(){
                 </div>
                 
                 <div className="pfGroupsContainer">
-                  <h2>{user.username}'s Groups</h2>
+                  <h2>{userInfo.username}'s Groups</h2>
                   <button className="pfNavBtn" onClick={() => navigate("/mygroups")}>
                       My Groups
                   </button>
@@ -112,4 +106,4 @@ function Profile(){
   )
 }
 
-export default Profile
+export default UserProfile

@@ -52,7 +52,7 @@ export async function getSingleGroup(groupId){
 export async function getGroupMemberNames(groupId){
     try{
         const findGroupOwners = await pool.query(
-            `SELECT u.username, g.is_owner FROM user_group g 
+            `SELECT u.user_id, u.username, g.is_owner FROM user_group g 
             JOIN "user" u ON g.user_id = u.user_id
             WHERE g.group_id = $1`
             ,[groupId]

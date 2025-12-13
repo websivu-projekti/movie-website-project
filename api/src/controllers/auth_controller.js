@@ -106,6 +106,21 @@ export async function getProfile(req, res) {
     }
 }
 
+// hae toisen käyttäjän profiili
+export async function getAnotherUser(req, res){
+    try{
+        const userId = req.params.userId
+        const user = await getUserById(userId)
+        
+        res.json({
+            user: user
+        })
+    }catch(error){
+        console.error("Get another user error: ", error)
+        res.status(500).json({ error: "Internal server error" })
+    }
+}
+
 // Middleware JWT varmistus
 export function authenticateToken(req, res, next) {
     const authHeader = req.headers["authorization"]

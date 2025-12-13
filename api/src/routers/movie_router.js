@@ -13,7 +13,6 @@ movieRouter.get("/movieDetails/:movieId", getMovieDetails);
 movieRouter.get("/seriesDetails/:seriesId", getSeriesDetails);
 movieRouter.get("/moviesearch/:query", getMovieSearchresults);
 movieRouter.get("/tvsearch/:query", getTvSearchresults);
-
 movieRouter.get("/discovermovies/:params", getDiscoverMovies);
 movieRouter.get("/discovertv/:params", getDiscoverTV);
 movieRouter.get("/genres", getGenres);
@@ -21,8 +20,8 @@ movieRouter.get("/seriesgenres", getSeriesGenres);
 movieRouter.get("/languages", getLanguages);
 movieRouter.get("/movieproviders", getMovieProviders);
 movieRouter.get("/tvproviders", getTvProviders);
-movieRouter.get("/:id", getMovie);
 
+movieRouter.get("/:id", getMovie);
 movieRouter.post("/", addMovie);
 movieRouter.put("/:id", updateMovie);
 movieRouter.delete("/:id", deleteMovie);

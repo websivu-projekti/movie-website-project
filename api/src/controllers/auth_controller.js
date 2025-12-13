@@ -24,10 +24,11 @@ export async function register(req, res) {
             })
         }
 
-        // Salasanan pituus oikea
-        if (password.length < 6) {
+        // Salasanan vaatimukset: väh. 8 merkkiä, 1 iso kirjain, 1 numero
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/
+        if (!passwordRegex.test(password)) {
             return res.status(400).json({
-                error: "Password must be at least 6 characters long"
+                error: "Password must be at least 8 characters, contain one uppercase letter, and one number"
             })
         }
 

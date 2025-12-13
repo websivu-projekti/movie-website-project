@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import Header from '../components/header.jsx'
+import { useAuth } from "../context/AuthContext.js"
 import "../index.css"
 import "./GroupDetail.css" 
-import { useAuth } from "../context/AuthContext.js"
 import { Rating, Star } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 
@@ -15,6 +15,17 @@ function GroupDetail() {
   const [ groupMembers, setGroupMembers ] = useState([])
   const [ error, setError ] = useState(null)
   const [loading, setLoading] = useState(true)
+    const [isMember, setIsMember] = useState(false)
+  const [isOwner, setIsOwner] = useState(false)
+  const [requestSent, setRequestSent] = useState(false)
+
+  const [status, setStatus] = useState({
+  isMember: false,
+  isOwner: false,
+  requestSent: false
+  });
+  
+  const [joinRequests, setJoinRequests] = useState([]);
 
   const customRating = {
         itemShapes: Star,
@@ -80,7 +91,128 @@ function GroupDetail() {
       }
     }
 
-    const handleRemoveFromGroup = async (contentId) => {
+    useEffect(() => {
+    async function fetchGroupStatus() {
+      if(!user || !user.token) return
+
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/groups/${groupId}/status`, {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setIsMember(data.isMember)
+        setIsOwner(data.isOwner)
+        setRequestSent(data.requestSent)
+        setStatus(data)
+      }
+    }
+    fetchGroupStatus()
+  }, [groupId, user])
+
+  useEffect(() => {
+    async function fetchJoinRequests() {
+      if(!user || !user.token || !status.isOwner) return
+
+      try {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/groups/${groupId}/requests`, {
+          headers: {
+            'Authorization': `Bearer ${user.token}`
+          }
+        })
+        if (res.ok) {
+          const data = await res.json()
+          setJoinRequests(data.requests || [])
+        }
+      } catch (err) {
+        console.error("Failed to fetch join requests:", err)
+      }
+    }
+    fetchJoinRequests()
+  }, [groupId, user, status.isOwner])
+
+  const handleJoinRequest = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/groups/join-request`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`
+        },
+        body: JSON.stringify({group_id: groupId})
+      })
+
+      const data = await res.json()
+
+      if(!res.ok) throw new Error(data.error || "Join request failed") 
+      
+      alert("Join request sent!")
+      setStatus(prev => ({ ...prev, requestSent: true }));
+    } catch (err) {
+      console.error(err)
+      alert("Error sending join request")
+    }
+  }
+
+  const handleApproveRequest = async (requestId) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/groups/requests/${requestId}/approve`, {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
+
+      if (!res.ok) throw new Error("Failed to approve request")
+      
+      alert("Request approved!")
+      setJoinRequests(prev => prev.filter(req => req.request_id !== requestId))
+      //päivittää näkymän/statuksen omistajalle
+      const statusRes = await fetch(`${process.env.REACT_APP_API_URL}/groups/${groupId}/status`, {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
+      if (statusRes.ok) {
+        const data = await statusRes.json()
+        setStatus(data)
+      }
+    } catch (err) {
+      console.error(err)
+      alert("Error approving request")
+    }
+  }
+
+  const handleRejectRequest = async (requestId) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/groups/requests/${requestId}/reject`, {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
+
+      if (!res.ok) throw new Error("Failed to reject request")
+      
+      alert("Request rejected")
+      setJoinRequests(prev => prev.filter(req => req.request_id !== requestId))
+      // Päivittää näkymän kaikille
+      const statusRes = await fetch(`${process.env.REACT_APP_API_URL}/groups/${groupId}/status`, {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
+      if (statusRes.ok) {
+        const data = await statusRes.json()
+        setStatus(data)
+      }
+    } catch (err) {
+      console.error(err)
+      alert("Error rejecting request")
+    }
+  }
+      const handleRemoveFromGroup = async (contentId) => {
       try {
           const response = await fetch("http://localhost:3001/groups/remove", {
             method: 'DELETE',
@@ -127,6 +259,37 @@ function GroupDetail() {
               <button>Edit list</button>
               <button>Manage users</button>
               <button>Leave group</button>
+
+              {!status.isOwner && !status.isMember && !status.requestSent &&(
+                <button onClick={handleJoinRequest}>Request to Join</button>
+              )}
+
+              {status.requestSent && !status.isMember &&(
+                <p>Your join request is waiting for approval</p>
+              )}
+
+              {status.isOwner && (
+                <div>
+                  <p>You are the owner of this group</p>
+                  {joinRequests.length > 0 && (
+                    <div>
+                      <h3>Join Requests:</h3>
+                      {joinRequests.map(req => (
+                        <div key={req.request_id}>
+                          <span>{req.username} wants to join</span>
+                          <button onClick={() => handleApproveRequest(req.request_id)}>Approve</button>
+                          <button onClick={() => handleRejectRequest(req.request_id)}>Reject</button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {status.isMember && !status.isOwner && (
+                <p>You are a member of this group</p>
+              )}
+
             </div>
             <div className="group-info-share-row">
               <div className="share-list">

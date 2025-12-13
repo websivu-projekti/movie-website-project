@@ -73,3 +73,11 @@ CREATE TABLE user_group (
   is_owner BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (user_id, group_id)
 );
+
+CREATE TABLE group_join_request(
+  request_id SERIAL PRIMARY KEY,
+  group_id INT NOT NULL REFERENCES "group"(group_id) ON DELETE CASCADE,
+  user_id INT NOT NULL REFERENCES "user"(user_id) ON DELETE CASCADE,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)

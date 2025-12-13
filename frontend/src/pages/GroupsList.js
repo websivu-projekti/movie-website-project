@@ -83,7 +83,6 @@ function GroupsList() {
     }catch(err){
       console.log(err)
     }
-
   }
 
   return (

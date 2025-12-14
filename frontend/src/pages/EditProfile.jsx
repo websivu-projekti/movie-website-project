@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import "../EditProfile.css";
 import Header from '../components/header.jsx'
@@ -24,6 +23,7 @@ function SignUp() {
             <button type="submit" className="changePfp button">
               Change Profile Picture
             </button>
+
             <form className="accessibility">
               <h4>
                 Settings
@@ -32,20 +32,8 @@ function SignUp() {
                 <input type="checkbox" />
                 <label className="settingsLabel">Dyslexia friendly font</label>
               </div>
-              <div className="field">
-                <input type="checkbox" />
-                <label className="settingsLabel">Text-to-Speech</label>
-              </div>
-              <div className="field">
-                <input type="checkbox" />
-                <label className="settingsLabel">Autoplay content</label>
-              </div>
-              <div className="field">
-                <input type="checkbox" />
-                <label className="settingsLabel">Show adult content</label>
-              </div>
             </form>
-          <form className="manageUser" onSubmit={handleSubmit}>
+              <form className="manageUser" onSubmit={handleSubmit}>
             <div className="field usrnameField">
               <label className="label">Username</label>
               <input

@@ -127,7 +127,7 @@
 
 .changePfp{
   grid-area: changepfp;
-  margin: 10px;
+
 }
 
 .button {
@@ -185,6 +185,7 @@
     width: 100%;
     place-items: center;
     margin: auto;
+    row-gap: 20px;
   }
 
 }

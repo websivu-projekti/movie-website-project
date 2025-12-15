@@ -218,7 +218,7 @@ function GroupDetail() {
     
   const handleRemoveFromGroup = async (contentId) => {
       try {
-          const response = await fetch("http://localhost:3001/groups/remove", {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/remove`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
@@ -242,7 +242,7 @@ function GroupDetail() {
 
     const handleDeleteGroup = async (groupId)=>{
       try{
-        const response = await fetch("http://localhost:3001/groups/deletegroup", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/deletegroup`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

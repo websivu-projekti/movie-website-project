@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUserData = async (token) => {
         try {
-            const response = await fetch("http://localhost:3001/auth/profile", {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/profile`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

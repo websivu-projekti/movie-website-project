@@ -29,7 +29,7 @@ function EditProfile() {
       const token = localStorage.getItem("token");
       
       
-      const response = await fetch("http://localhost:3001/auth/editprofile", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/editprofile`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -77,7 +77,7 @@ function EditProfile() {
   const handleDeleteAccount = async () => {
       if (window.confirm(`Haluatko varmasti poistaa käyttäjäsi, ${user.username}? Toimintoa ei voi perua.`)) {
         try {
-          const response = await fetch("http://localhost:3001/auth/account", {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/account`, {
             method: 'DELETE',
             headers: {
               'Content-Type' : 'application/json',

@@ -27,7 +27,7 @@ function FavouriteList() {
 
     const fetchFavourites = async () => {
         try {
-            const response = await fetch("http://localhost:3001/favourites/", {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -47,7 +47,7 @@ function FavouriteList() {
 
     const handleRemoveFavourite = async (contentId) => {
         try {
-            const response = await fetch("http://localhost:3001/favourites/remove", {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/remove`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 import "../index.css"
 import "./Profile.css"
 import Header from "../components/header.jsx"
+import SharedFavouritesLink from "../components/SharedFavouritesLink.jsx" 
+
 
 function FavouriteList() {
     const { user } = useAuth()
@@ -91,6 +93,7 @@ function FavouriteList() {
                 <p>No movies added to favourites</p>
             ) : (
                 <div className="favouritesMovieRow">
+                    
                     {favourites.map(movie => (
                         <div key={movie.content_id} className="movieCard">
                             <div className="moviePoster">

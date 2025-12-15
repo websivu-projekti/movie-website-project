@@ -18,6 +18,7 @@ import SeriesInfo from "./pages/SeriesInfo"
 import FavouriteList from "./pages/FavouriteList"
 import UsersFavouriteList from "./pages/UsersFavouriteList"
 import SearchResults from "./pages/SearchResults"
+import SharedFavourites from "./pages/SharedFavourites.jsx"
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/profile/favouritelist" element={<FavouriteList />} />
           <Route path="/profile/favouritelist/:userId" element={<UsersFavouriteList />} />
           <Route path="/searchresults/:query" element={<SearchResults/>}/>
+          <Route path="/shared-favourites/:userId" element={<SharedFavourites />} />
         </Routes>
       </Router>
     </AuthProvider>

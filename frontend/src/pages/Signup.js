@@ -16,6 +16,22 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError("")
+
+    const passwordErrors = []
+    if (password.length < 8) {
+      passwordErrors.push("be at least 8 characters long")
+    }
+    if (!/[A-Z]/.test(password)) {
+      passwordErrors.push("contain at least one uppercase letter")
+    }
+    if (!/\d/.test(password)) {
+      passwordErrors.push("contain at least one number")
+    }
+
+    if (passwordErrors.length > 0) {
+      setError(`Password must: ${passwordErrors.join(", ")}.`)
+      return
+    }
     setLoading(true)
 
     try {
@@ -82,7 +98,7 @@ function SignUp() {
               onChange={(e) => setPassword(e.target.value)}
               className="input"
               required
-              minLength="6"
+              minLength="8"
             />
           </div>
           <button type="submit" className="button" disabled={loading}>

@@ -1,115 +1,122 @@
-import React, { useState, useEffect } from "react"
-import { useAuth } from "../context/AuthContext.js"
-import { useNavigate } from "react-router-dom"
-import "../index.css"
-import './Profile.css'
-import Header from '../components/header.jsx'
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext.js";
+import { useNavigate } from "react-router-dom";
+import "../index.css";
+import './Profile.css';
+import Header from '../components/header.jsx';
 
-function Profile(){
-  const { user, logout } = useAuth()
-  const navigate = useNavigate()
-  const [favourites, setFavourites] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
+function Profile() {
+  const { user, logout, loading } = useAuth();
+  const navigate = useNavigate();
+  
+  const [favourites, setFavourites] = useState([]);
+  const [favouritesLoading, setFavouritesLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login')
+    if (!loading) {
+      if (!user) {
+        navigate('/login');
+      }
     }
-  }, [user, navigate])
+  }, [user, loading, navigate]);
 
-  useEffect(() =>{
-    fetchFavourites()
-  }, [])
-
-  const fetchFavourites = async () => {
+  useEffect(() => {
+    const fetchFavourites = async () => {
+      if (user && user.token) {
         try {
-            const response = await fetch("http://localhost:3001/favourites/", {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const data = await response.json()
-            if (response.ok) {
-                setFavourites(data.favourites)
-            } else {
-                setError(data.error || "Failed to fetch favourite movies")
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/`, {
+            headers: {
+              'Authorization': `Bearer ${user.token}`
             }
+          });
+          const data = await response.json();
+          if (response.ok) {
+            setFavourites(data.favourites);
+          } else {
+            setError(data.error || "Failed to fetch favourite movies");
+          }
         } catch (err) {
-            setError(err.message)
+          setError(err.message);
         } finally {
-            setLoading(false)
+          setFavouritesLoading(false);
         }
-    }
+      } else if (!loading) {
+        setFavouritesLoading(false);
+      }
+    };
 
-  if (!user) {
+    fetchFavourites();
+  }, [user, loading]);
+
+  if (loading) {
     return (
       <div className="container">
-        <Header/>
+        <Header />
         <p>Loading...</p>
       </div>
-    )
+    );
   }
-
 
   return (
     <div className="container">
-      <Header/>
+      <Header />
       <h1>Profile</h1>
-            <div className="profileContainer">
-                <div className="profileHeader">
-                    <div className="profileInfo">
-                        <div className="profilePic">User</div>
-                        <span className="username">{user.username}</span>
+      <div className="profileContainer">
+        <div className="profileHeader">
+          <div className="profileInfo">
+            <div className="profilePic">User</div>
+            <span className="username">{user.username}</span>
+          </div>
+          <button className="pfNavBtn" onClick={() => navigate("/editprofile")}>
+            Edit Profile
+          </button>
+        </div>
+        <div className="favouritesContainer">
+          <h2>{user.username}'s Favourite Movies and Series</h2>
+          {favouritesLoading ? (
+            <p>Loading favourites...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : favourites.length === 0 ? (
+            <p>This user doesn't have any favourites yet!</p>
+          ) : (
+            <div className="pfMovieRow">
+              {favourites.slice(0, 3).map(movie => (
+                <div key={movie.content_id} className="movieCard">
+                  {movie.poster_url ? (
+                    <img src={movie.poster_url} alt={movie.title} className="pfMoviePoster" />
+                  ) : (
+                    <div className="noPoster">
+                      No Image
                     </div>
-                    <button className="pfNavBtn" onClick={() => navigate("/editprofile")}>
-                        Edit Profile
-                    </button>
+                  )}
+                  <div className="listInfo">
+                    <div className="movieTitle">{movie.title}</div>
+                    <div className="movieTitle">{movie.release_year || "N/A"}</div>
+                    <div className="movieTitle">{movie.genre || "N/A"}</div>
+                  </div>
                 </div>
-                <div className="favouritesContainer">
-                    <h2>{user.username}'s Favourite Movies and Series</h2>
-                    {loading ? (
-                      <p>Loading favourites...</p>
-                    ) : error ? (
-                      <p>{error}</p>
-                    ) : favourites.length === 0 ? (
-                      <p>This user doesn't have any favourites yet!</p>
-                    ) : (
-                      <div className="pfMovieRow">
-                        {favourites.slice(0,3).map(movie => (
-                          <div key={movie.content_id} className="movieCard">
-                            {movie.poster_url ? (
-                              <img src={movie.poster_url} alt={movie.title} className="pfMoviePoster"/>
-                            ) : (
-                              <div className="noPoster">
-                                No Image
-                              </div>
-                            )}
-                            <div className="listInfo">
-                              <div className="movieTitle">{movie.title}</div>
-                              <div className="movieTitle">{movie.release_year || "N/A"}</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    <button 
-                      onClick={() => navigate("/profile/favouritelist")}
-                      className="pfNavBtn"
-                    >
-                      Favourites List
-                    </button>
-                </div>
-                
-                <div className="pfGroupsContainer">
-                  <h2>{user.username}'s Groups</h2>
-                  <button className="pfNavBtn" onClick={() => navigate("/mygroups")}>
-                      My Groups
-                  </button>
-                </div>
+              ))}
             </div>
-  </div>
-  )
+          )}
+          <button
+            onClick={() => navigate("/profile/favouritelist")}
+            className="pfNavBtn"
+          >
+            Favourites List
+          </button>
+        </div>
+
+        <div className="pfGroupsContainer">
+          <h2>{user.username}'s Groups</h2>
+          <button className="pfNavBtn" onClick={() => navigate("/mygroups")}>
+            My Groups
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default Profile
+export default Profile;

@@ -2,6 +2,7 @@
     --bg-colour: #0e1c1f;
     --bg-acc1: #2d464d;
     --bg-acc2: #3C5E67;
+    --bg-acc3: #6597A4;
     --blue-acc1: #585cd5;
     --blue-acc2: #7c80de;
     --green-acc1: #a5e364;
@@ -22,7 +23,7 @@
 
 .container {
     min-height: 100vh;
-    padding: 20px;
+    padding: 10px;
 }
 
 header {
@@ -51,15 +52,15 @@ header {
     height: fit-content;
     width: inherit;
     align-self: center;
+    display: flex;
 }
 
 .searchInput{ 
     padding: 0.5rem; 
     border-radius: 4px; 
-    width: stretch;
-    width: -moz-available;
-    width: -webkit-fill-available;
+    width: 90%;
     border: none; 
+    align-content: center;
 }
 
 .buttonBox{
@@ -86,6 +87,19 @@ header {
     border-radius: 4px; 
     cursor: pointer;
     text-decoration: none;
+}
+
+.searchBtn{
+    background-color: var(--bg-acc2);
+    border: none;
+    width: 10%;
+    padding: 5px;
+    border-radius: 5px;
+    float: right;
+}
+
+.searchBtn > img{
+    background-color: var(--bg-acc2);
 }
 
 .loginBtn:hover, .registerBtn:hover, .menuButton:hover{
@@ -163,9 +177,7 @@ header {
         height: fit-content;
     }
     .searchInput{
-        width: stretch;
-        width: -moz-available;
-        width: -webkit-fill-available;
+        min-width: 90%;
     }
     .buttonBox{
         grid-area: menubar;

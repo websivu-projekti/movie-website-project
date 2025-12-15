@@ -2,9 +2,10 @@
 import React, { useState } from "react";
 import "../EditProfile.css";
 import Header from '../components/header.jsx'
+import { useAuth } from "../context/AuthContext.js";
 
 function EditProfile() {
-  //const [password, setPassword] = useState("")
+  const { user } = useAuth()
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
@@ -73,13 +74,41 @@ function EditProfile() {
   }*/
   };
 
+  const handleDeleteAccount = async () => {
+      if (window.confirm(`Haluatko varmasti poistaa käyttäjäsi, ${user.username}? Toimintoa ei voi perua.`)) {
+        try {
+          const response = await fetch("http://localhost:3001/auth/account", {
+            method: 'DELETE',
+            headers: {
+              'Content-Type' : 'application/json',
+              'Authorization' : `Bearer ${user.token}`
+            },
+            body: JSON.stringify({ username: user.username })
+          });
+  
+          const data = await response.json()
+  
+          if (!response.ok) {
+            throw new Error(data.error || "Failed to fetch profile")
+          }
+  
+          alert('Käyttäjä poistettu onnistuneesti.')
+          logout()
+          navigate('/')
+  
+        } catch (err) {
+          alert(`Error: ${error.message}`)
+          }
+        }
+    }
+
   return (
     <div className="container">
       <Header />
       <div className="content">
         <h1 className="editTitle">Edit Profile</h1>
         <div className="imageContainer">
-          <img src="" alt="Profile picture" className="pfp"></img>
+          <img src="" alt="Profile picture" className="editPfp"></img>
         </div>
         <button type="submit" className="changePfp button">
           Change Profile Picture
@@ -90,19 +119,19 @@ function EditProfile() {
           </h4>
           <div className="field">
             <input type="checkbox" />
-            <label className="label">Dyslexia friendly font</label>
+            <label className="settingsLabel">Dyslexia friendly font</label>
           </div>
           <div className="field">
             <input type="checkbox" />
-            <label className="label">Text-to-Speech</label>
+            <label className="settingsLabel">Text-to-Speech</label>
           </div>
           <div className="field">
             <input type="checkbox" />
-            <label className="label">Autoplay content</label>
+            <label className="settingsLabel">Autoplay content</label>
           </div>
           <div className="field">
             <input type="checkbox" />
-            <label className="label">Show adult content</label>
+            <label className="settingsLabel">Show adult content</label>
           </div>
           <button type="submit" className="saveSettings button">
             Save Settings
@@ -142,7 +171,7 @@ function EditProfile() {
           <button type="submit" className="changeBtn button">
             Change Password
           </button>
-          <button className="deleteButton">
+          <button onClick={handleDeleteAccount} className="deleteButton">
             Delete Account
           </button>
         </form>

@@ -1,29 +1,3 @@
-:root{
-    --bg-colour: #0e1c1f;
-    --bg-acc1: #2d464d;
-    --bg-acc2: #3C5E67;
-    --blue-acc1: #585cd5;
-    --blue-acc2: #7c80de;
-    --green-acc1: #a5e364;
-    --green-acc2: #cdf0a8;
-    --red-acc1: #ef4a31;
-    --red-acc2: #d33e27;
-    --text-col1: #F5F5F5;
-    --text-col2: #0f0f0f;
-    --title-font: "Bagel Fat One", system-ui;
-    --font: "DM Sans", sans-serif;
-}
-
-*{
-    font-family: var(--font);
-    background-color: var(--bg-colour);
-    color: var(--text-col1);
-}
-
-.container {
-    min-height: 100vh;
-}
-
 .loginContent{
     display: grid;
     gap: 10px;

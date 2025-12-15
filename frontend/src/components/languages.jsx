@@ -1,7 +1,7 @@
 import Select from 'react-select'
 import React, { useEffect, useState } from "react"
 
-export default function FilterLanguages(){
+export default function FilterLanguages({chosenLan, setChosenLan}){
     const [ languages, setLanguages ] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -21,16 +21,22 @@ export default function FilterLanguages(){
                 fetchLanguages()
         }, [])
 
+    const chooseLan = (lan) => {
+        setChosenLan(lan.value)
+        console.log(chosenLan)
+    }
+
     const languageOptions = languages.map((lan) => ({
         value: lan.iso_639_1,
         label: lan.english_name
     }))
 
     return(
-        <Select 
+        <Select
+        defaultValue={'en'}
         className="filter languages"
         classNamePrefix='select'
-        isMulti
+        onChange={chooseLan}
         options={languageOptions}
         theme={(theme) => ({
             ...theme,
@@ -46,15 +52,9 @@ export default function FilterLanguages(){
             },
         })}
         styles={{
-            multiValueLabel: (baseStyles) => ({
+            singleValue: (baseStyles) => ({
                 ...baseStyles,
-                color: '#0f0f0f',
-                backgroundColor: '#a5e364'
-            }),
-            multiValueRemove: (baseStyles) => ({
-                ...baseStyles,
-                color: '#0f0f0f',
-                backgroundColor: '#a5e364'
+                color: '#F5F5F5'
             }),
             valueContainer: (baseStyles) => ({
                 ...baseStyles,

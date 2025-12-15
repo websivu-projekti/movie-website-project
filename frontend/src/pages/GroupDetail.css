@@ -1,26 +1,5 @@
-:root {
---bg-colour: #0e1c1f;
---bg-acc1: #2d464d;
---bg-acc2: #3C5E67;
---blue-acc1: #585cd5;
---green-acc1: #a5e364;
---text-col1: #F5F5F5;
---text-col2: #0f0f0f;
---title-font: "Bagel Fat One", system-ui;
---font: "DM Sans", sans-serif;
-}
-
-* {
-  font-family: var(--font);
-  background-color: var(--bg-colour);
-  color: var(--text-col1);
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  }
-
-  .group-container {
-  padding: 20px;
+.group-container {
+  padding: 10px;
 }
 
 .group-header {
@@ -37,6 +16,84 @@
   margin: 0;
 }
 
+.group-menu-container{
+  width: 35vw;
+  height: fit-content;
+  padding: 20px;
+  background-color: var(--bg-acc2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: absolute;
+  border-radius: 10px;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.manage-members-header{
+  background-color: var(--bg-acc2);
+  display: grid;
+  grid-template-columns: 90% 10%;
+  grid-template-rows: auto;
+  grid-template-areas: 
+  'title button';
+}
+
+.manage-members-title{
+  background-color: var(--bg-acc2);
+  padding: 0px;
+  padding-bottom: 10px;
+  margin: 0px;
+}
+
+.close-group-management{
+  border: none;
+  cursor: pointer;
+  background-color: var(--bg-acc2);
+}
+
+.close-group-management > img{
+  width: 40px;
+}
+
+.group-manage-users{
+  background-color: var(--bg-acc2);
+}
+
+.manage-member{
+  background-color: var(--bg-acc2);
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.manage-member > span, img{
+  background-color: var(--bg-acc2);
+}
+
+.memberPfp{
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #555;
+}
+
+.group-join-request{
+  background-color: var(--bg-acc2);  
+  padding: 10px;
+  width: fit-content;
+  border: 2px solid var(--green-acc1);
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.join-request{
+  background-color: var(--bg-acc2);
+}
+
 .group-info-row {
   display: flex;
   flex-wrap: wrap;
@@ -49,12 +106,12 @@
   color: #ccc;
 }
 
-.group-buttons {
+.group-buttons-row {
   display: flex;
   gap: 10px;
 }
 
-.group-buttons button {
+.group-button {
   background-color: #007bff;
   color: white;
   border: none;
@@ -63,7 +120,7 @@
   border-radius: 4px;
 }
 
-.group-buttons button:hover {
+.group-button:hover {
   background-color: #0056b3;
 }
 
@@ -91,7 +148,6 @@
   height: 32px;
   border-radius: 50%;
   background-color: #555;
-  object-fit: cover;
 }
 
 .see-all {
@@ -101,16 +157,17 @@
 }
 
 .group-content {
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .group-movie-card-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .group-movie-card {
@@ -124,8 +181,7 @@
 }
 
 .group-movie-image {
-  height: 150px;
-  background-color: #777;
+  background-color: var(--bg-acc2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,19 +190,20 @@
 }
 
 .group-movie-title {
-  font-size: 16px;
   font-weight: bold;
+  background-color: var(--bg-acc2);
 }
 
 .group-movie-details {
-  font-size: 12px;
   color: #ccc;
+  background-color: var(--bg-acc2);
 }
 
 .group-movie-extra {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  background-color: var(--bg-acc2);
 }
 
 .showtimes,
@@ -195,13 +252,21 @@
   background-color: #0056b3;
 }
 
-.group-movie-rating .star {
-  color: #ccc;
-  font-size: 16px;
+.group-delete-button{
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--red-acc1);
+  color: white;
+  cursor: pointer;
 }
 
-.group-movie-rating .star.filled {
-  color: #f5b50a;
+.group-delete-button:hover{
+  background-color: var(--red-acc2);
+}
+
+.group-movie-rating{
+  background-color: var(--bg-acc2);
 }
 
 .group-info-share-row {

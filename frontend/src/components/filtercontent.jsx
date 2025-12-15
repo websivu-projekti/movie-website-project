@@ -1,20 +1,28 @@
-export default function FilterContent(){
+export default function FilterContent({chosenContent, setChosenContent}){
+
+  const chooseContent = e => {
+    setChosenContent(e.target.value)
+    console.log(chosenContent)
+  }
     return(
         <form className="filter rating">
             <label>
               <input
-              defaultChecked={true}
                 type="radio"
-                name="movie"
+                name="content"
                 value={"movie"}
+                checked={chosenContent === 'movies'}
+                onClick={chooseContent}
               />Movies
             </label>
             <br/>
             <label>
               <input
                 type="radio"
-                name="tv"
+                name="content"
                 value={"tv"}
+                checked={chosenContent === 'tv'}
+                onClick={chooseContent}
               />TV Series
             </label>
             <br/>

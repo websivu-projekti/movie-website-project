@@ -1,4 +1,5 @@
 import { getAll, getOne, addOne, updateOne, deleteOne } from "../models/movie_model.js";
+import pool from "../database.js"
 
 export async function getMovies(req, res, next) {
   try {
@@ -50,5 +51,36 @@ export async function deleteMovie(req, res, next) {
     res.json(content);
   } catch (err) {
     next(err);
+  }
+}
+
+export async function saveMovieFromTMDB(req, res, next) {
+  try {
+    const { tmdbId, title, releaseYear, genre, description, posterUrl, contentType } = req.body
+    
+    console.log('Saving movie with tmdbId:', tmdbId)
+
+    const existing = await pool.query(
+      "SELECT * FROM content WHERE tmdb_id = $1",
+      [tmdbId]
+    )
+
+    if (existing.rows.length > 0) {
+      console.log('Movie already exists:', existing.rows[0])
+      return res.json(existing.rows[0])
+    }
+
+    const result = await pool.query(
+      `INSERT INTO content (tmdb_id, title, release_year, genre, description, poster_url, content_type)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *`,
+      [tmdbId, title, releaseYear, genre, description, posterUrl, contentType || 'movie']
+    )
+
+    console.log('Saved new movie:', result.rows[0])
+    res.json(result.rows[0])
+  } catch (err) {
+    console.error('saveMovieFromTMDB error:', err)
+    next(err)
   }
 }

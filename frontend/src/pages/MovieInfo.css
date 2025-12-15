@@ -1,83 +1,3 @@
-:root{
-    --bg-colour: #0e1c1f;
-    --bg-acc1: #2d464d;
-    --bg-acc2: #3C5E67;
-    --blue-acc1: #585cd5;
-    --blue-acc2: #7c80de;
-    --green-acc1: #a5e364;
-    --green-acc2: #cdf0a8;
-    --red-acc1: #ef4a31;
-    --red-acc2: #d33e27;
-    --text-col1: #F5F5F5;
-    --text-col2: #0f0f0f;
-    --title-font: "Bagel Fat One", system-ui;
-    --font: "DM Sans", sans-serif;
-}
-
-*{
-    font-family: var(--font);
-    background-color: var(--bg-colour);
-    color: var(--text-col1);
-}
-
-.container {
-    min-height: 100vh;
-    padding: 20px;
-}
-
-header {
-    display: grid;
-    margin-bottom: 0.5rem;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    grid-template-areas: 
-    'title empty empty empty login search';
-}
-
-.pageTitle{ 
-    font-size: 3em;
-    font-family: var(--title-font);
-    grid-area: title;
-    color: var(--blue-acc1);
-    margin: 0px;
-    text-decoration: none;
-}
-
-.searchBox{ 
-    background-color: var(--bg-acc1);
-    grid-area: search;
-    padding: 0.5rem;
-    border-radius: 8px; 
-    height: fit-content;
-    width: inherit;
-    align-self: center;
-}
-
-.searchInput{ 
-    padding: 0.5rem; 
-    border-radius: 4px; 
-    width: stretch;
-    width: -moz-available;
-    width: -webkit-fill-available;
-    border: none; 
-}
-
-.buttonBox{
-    background-color: var(--bg-acc1);
-    border-radius: 8px;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 1rem;
-  }
-
-.loginBar{
-    grid-area: login;
-    align-self: center;
-    margin: auto;
-}
-
-.loginBtn, .registerBtn, .menuButton,
 .publishBtn, .addToListBtn, .listSelect{ 
     margin: 2px;
     padding: 0.5rem 1rem; 
@@ -89,12 +9,12 @@ header {
     text-decoration: none;
 }
 
-.loginBtn:hover, .registerBtn:hover, .menuButton:hover, .addToListBtn:hover,
+
 .listSelect:hover, .publishBtn:hover{
     outline: solid var(--green-acc2) 2px;
 }
 
-.loginBtn:active, .registerBtn:active, .menuButton:active,
+
 .addToListBtn:active, .publishBtn:active{
     color: var(--text-col2);
     background-color: var(--green-acc1);
@@ -115,57 +35,12 @@ header {
     min-width: 80px;
 }
 
-/* Breakpoints */ 
-@media only screen and (max-width: 740px){
-    .container{
-        display: grid;
-        grid-template-columns: auto;
-        grid-template-rows: fit-content(100px) fit-content(100px) fit-content(100px);
-        grid-template-areas: 
-            'header'
-            'menubar'
-            'main';
-    }
-    header{
-        grid-area: header;
-        grid-template-areas: 
-        'title login'
-        'search search';
-        height: fit-content;
-    }
-    .title{
-        grid-area: title;
-        align-self: center;
-    }
-    .loginBar{
-        grid-area: login;
-        margin:auto;
-    }
-    .searchBox{
-        grid-area: search;
-        height: fit-content;
-    }
-    .searchInput{
-        width: stretch;
-        width: -moz-available;
-        width: -webkit-fill-available;
-    }
-    .buttonBox{
-        grid-area: menubar;
-        height: fit-content;
-        width: auto;
-    }
-    .movieRow{
-        grid-area: main;
-    }
-}
-
 
 
 /*MOVIEINFO*/
 
 .imgContainer{
-  width: auto;
+  width: 342px;
   height: auto;
   display: flex;
   justify-content: center;
@@ -173,10 +48,19 @@ header {
   overflow: hidden;
   border-radius: 8px;
   border: 1px solid #c7c7c7;
+
+}
+
+.imgContainer img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
 }
 
 .movieContainer{
-  width: 450px;
+  flex: 1 1 350px;
+  max-width: 600px;
   padding: 20px;
   border: 1px solid #c7c7c7;
   border-radius: 10px;
@@ -184,11 +68,24 @@ header {
 
 .movieInfoWrapper{
   display: flex;
-  flex-direction: row;
+  flex-direction: inherit;
+  justify-content: center;
   align-items: flex-start;
   gap: 40px;
-  margin-top: 40px auto;
-  width: fit-content;
+  width: 100%;  
+}
+
+.movieYear{
+  margin-top: 8px;
+}
+
+.movieDirector{
+  margin-top: 8px;
+}
+
+.movieSynopsis{
+  margin-top: 8px;
+  line-height: 1.5;
 }
 
 .movieGenres{
@@ -197,12 +94,14 @@ header {
 
 .genreTitle{
   font-weight: bold;
+  margin-top: 8px;
 }
 
 .genresWrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 8px;
 }
 
 .genrePill {
@@ -214,29 +113,29 @@ header {
   display: inline-block;
 }
 
-
-/*.movieInfoWrapper{
-    border-bottom: 2px solid #c7c7c7;
-    margin-bottom: 20px;
-}*/
+.providerWrapped{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
 
 .providerContainer{
-  width: 250px;
+  flex: 1 1 250px;
+  max-width: 260px;
   padding: 20px;
   border: 1px solid #c7c7c7;
   border-radius: 10px;
   display: flex;
-  flex-wrap: wrap; 
-  font-size: 14px; 
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+  gap: 12px;
 }
 
 .columnWrapped{
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 14px;
   width: fit-content;
 }
@@ -245,11 +144,13 @@ header {
     border-radius: 10px;
     width: 32px;
     height: 32px;
+    object-fit: cover;
 }
 
 
 .addListWrapped{
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 14px;
@@ -258,10 +159,13 @@ header {
 
 
 .reviewContainer{
-  /*border: 3px solid #ccc;*/
+  /*border: 3px solid #e52c2c;*/
   margin-top: 10px;
   margin-bottom: 10px;
+}
 
+.reviewContainer h3{
+  margin-bottom: 10px;
 }
 
 .reviewsColumn{
@@ -312,7 +216,7 @@ header {
 }
 
 .reviewName {
-  font-weight: 700;
+  font-weight: bold;
   font-size: 16px;
 }
 
@@ -352,12 +256,24 @@ header {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 8px;
+  justify-content: space-between; 
+  gap: 10px;
+
 }
 
-.myStars{
-  font-size: 22px;
-   margin-left: auto;
+.profileAndName{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.myReviewName{
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.reviewRating{
+  width: 200px;
 }
 
 .writeReviewRow {
@@ -365,6 +281,7 @@ header {
   flex-direction: column;
   margin-top: 20px;
   gap: 5px;
+
 }
 
 .reviewTextarea {
@@ -383,32 +300,73 @@ header {
 }
 
 
+.group{
+  width:stretch;
+}
 
-/*@media only screen and (max-width: 740px) {
+
+
+@media only screen and (max-width: 1100px){
   .movieInfoWrapper{
-  flex-direction: row;
-  gap: 20px;
-  margin-top: 20px;
-  width: 100%;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
   }
-  .imgContainer {
-   width: 100%;
-   max-width: 320px;
-   margin: 0 auto;
-  }
-  .imgContainer img {
-    width: 100%;
-    height: auto;
-  }
-  .movieContainer,
+
   .providerContainer{
+    max-width: 100%;
+    flex: auto;
     width: 100%;
-    padding: 15px;
   }
-  .genresWrapper{
-    gap: 6px;
+
+  .columnWrapped{
+    flex-direction: row;
+    flex-wrap: wrap;
   }
+
   .providerWrapped{
-    width: 100%;
-  }*/
-  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .addToListContainer, .reviewsColumn, .myReviewContainer{
+    width: stretch;
+  }
+
+  .reviewsRowContainer{
+    flex-direction: column-reverse;
+  }
+
+  .reviewRating{
+    width: 250px;
+    gap:8px;
+  }
+  .imgContainer{
+    margin-right: auto;
+  }
+  .movieContainer{
+    margin-left: auto;
+    flex: min-content;
+  }
+}
+
+@media only screen and (max-width: 740px){
+  .movieInfoWrapper{
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  .imgContainer{
+    margin-right: 0px;
+  }
+  .movieContainer{
+    margin-left: 0px;
+    flex: min-content;
+    max-width: 100%;
+  }
+  .reviewRating{
+    width: 200px;
+    gap:0px;
+  }
+}
+

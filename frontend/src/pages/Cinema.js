@@ -31,7 +31,7 @@ function Home() {
 
   const customRating = {
     itemShapes: Star,
-    activeFillColor: '#a5e364',
+    activeFillColor: '#90e339',
     inactiveFillColor: '#cdf0a8'
   }
 
@@ -74,7 +74,7 @@ function Home() {
                 <SwiperSlide key={index}>
                   <div key={movie.id} className="movieCard">
                     <img src={`http://image.tmdb.org/t/p/w300/${movie.poster_path}`}/>
-                    <p className="movieTitle"><a className="movieLink" href="">{movie.title}</a></p>
+                    <p className="movieTitle"><a className="movieLink" href={`/movieinfo/${movie.id}`}>{movie.title}</a></p>
                     <div className="movieTitle">{(movie.release_date.slice(0,4))}</div>
                     <Rating 
                       className="movieRating" 

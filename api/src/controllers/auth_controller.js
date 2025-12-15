@@ -36,7 +36,7 @@ export async function register(req, res) {
 
         // Generoi JWT tokeni
         const token = jwt.sign(
-            { userId: newUser.user_id, email: newUser.email },
+            { userId: newUser.user_id, email: newUser.email, username: newUser.username },
             JWT_SECRET,
             { expiresIn: "24h" }
         )
@@ -72,7 +72,7 @@ export async function login(req, res) {
 
         // Generoi JWT tokeni
         const token = jwt.sign(
-            { userId: user.user_id, email: user.email },
+            { userId: user.user_id, email: user.email, username: user.username },
             JWT_SECRET,
             { expiresIn: "24h" }
         )
@@ -106,6 +106,21 @@ export async function getProfile(req, res) {
     }
 }
 
+// hae toisen käyttäjän profiili
+export async function getAnotherUser(req, res){
+    try{
+        const userId = req.params.userId
+        const user = await getUserById(userId)
+        
+        res.json({
+            user: user
+        })
+    }catch(error){
+        console.error("Get another user error: ", error)
+        res.status(500).json({ error: "Internal server error" })
+    }
+}
+
 // Middleware JWT varmistus
 export function authenticateToken(req, res, next) {
     const authHeader = req.headers["authorization"]
@@ -129,21 +144,22 @@ export async function deleteAccount(req, res) {
     try {
         const userId = req.user.userId
         const { username: confirmationUsername } = req.body
-
-        // 1. Validate that confirmation username is provided
+        
+        // Vaadi käyttäjänimen kirjoittaminen poiston aikan
+        // !!! ei toimi vielä
         if (!confirmationUsername) {
             return res.status(400).json({ error: "Username confirmation is required" })
         }
 
-        // 2. Fetch user details from the database
+        // Etsi databasesta
         const user = await getUserById(userId)
 
-        // 3. Compare the provided username with the one in the database
+        // vertaa nimiä
         if (user.username !== confirmationUsername) {
             return res.status(403).json({ error: "Username confirmation failed. Deletion not allowed." })
         }
 
-        // 4. If they match, proceed with deletion
+        // poista käyttäjä
         const deleted = await deleteUser(userId)
         
         return res.json({

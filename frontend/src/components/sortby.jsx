@@ -2,8 +2,7 @@ import React, { useState } from "react"
 import Select from 'react-select'
 
 
-export default function SortBy(){
-    const [ sorting, setSorting ] = useState({})
+export default function SortBy({sorting, setSorting}){
 
     const Options = [
         { value: 'popularity.desc', label: 'Popularity' },
@@ -12,12 +11,14 @@ export default function SortBy(){
         { value: 'title.desc', label: 'Title A-Z' },
         { value: 'title.asc', label: 'Title Z-A' },
         { value: 'vote_average.desc', label: 'Best rated first' },
-        { value: 'vote_average.asc', label: 'Worst rated first' }
+        { value: 'vote_average.asc', label: 'Worst rated first' },
+        { value: 'vote_count.desc', label: 'Most ratings' },
+        { value: 'vote_count.asc', label: 'Least ratings' }
     ]
 
-    const chooseSort = (sort) => {
-        setSorting(sort)
-        console.log(sorting.value)
+    const chooseSort = e => {
+        setSorting(e.value)
+        console.log(sorting)
     }
 
     return(
@@ -25,6 +26,7 @@ export default function SortBy(){
         className="filter sortby"
         options={Options}
         onChange={chooseSort}
+        value={Options.filter(obj => obj.value === sorting)}
         defaultValue={Options[0]}
         classNamePrefix='select'
         theme={(theme) => ({

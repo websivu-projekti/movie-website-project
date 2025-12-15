@@ -14,9 +14,10 @@ CREATE TABLE "user" (
 Eli entinen movie INT ja series INT on nyt content*/
 CREATE TABLE content (
   content_id SERIAL PRIMARY KEY,
+  tmdb_id VARCHAR(20) UNIQUE,
   title VARCHAR(100) NOT NULL,
   release_year INT,
-  genre VARCHAR(50),
+  genre VARCHAR(200),
   description TEXT,
   poster_url VARCHAR(500),
   content_type VARCHAR(10) NOT NULL CHECK (content_type IN ('movie', 'series'))
@@ -58,8 +59,6 @@ CREATE TABLE "group" (
   showtime_place VARCHAR(60),
   showtime_date DATE,
   service_provider VARCHAR(500)
-  /* Käytä tätä group_content sijaan, jos haluaa, että ryhmässä on vain yksi content*/
-  /*content_id INT REFERENCES content(content_id) ON DELETE SET NULL*/
 );
 
 CREATE TABLE group_content (
@@ -74,3 +73,11 @@ CREATE TABLE user_group (
   is_owner BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (user_id, group_id)
 );
+
+CREATE TABLE group_join_request(
+  request_id SERIAL PRIMARY KEY,
+  group_id INT NOT NULL REFERENCES "group"(group_id) ON DELETE CASCADE,
+  user_id INT NOT NULL REFERENCES "user"(user_id) ON DELETE CASCADE,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)

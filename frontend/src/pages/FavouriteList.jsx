@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { useAuth } from "../context/AuthContext.js"
 import { useNavigate } from "react-router-dom"
-import "../index.css"
-import "./Profile.css"
+import "../index.js"
+import "./Profile.js"
 import Header from "../components/header.jsx"
 import SharedFavouritesLink from "../components/SharedFavouritesLink.jsx" 
-
 
 function FavouriteList() {
     const { user } = useAuth()
@@ -46,43 +45,45 @@ function FavouriteList() {
         }
     }
 
-     const handleRemoveFavourite = async (contentId) => {
+    const handleRemoveFavourite = async (contentId) => {
         try {
-          const response = await fetch("http://localhost:3001/favourites/remove", {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${user.token}`
-            },
-            body: JSON.stringify({ contentId })
-          })
-          if (response.ok) {
-            setFavourites(favourites.filter(fav => fav.content_id !== contentId))
-          } else {
-            const data = await response.json()
-            alert(`Error: ${data.error}`)
-          }
+            const response = await fetch("http://localhost:3001/favourites/remove", {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: JSON.stringify({ contentId })
+            })
+            if (response.ok) {
+                setFavourites(favourites.filter(fav => fav.content_id !== contentId))
+            } else {
+                const data = await response.json()
+                alert(`Error: ${data.error}`)
+            }
         } catch (err) {
-          alert(`Error: ${err.message}`)
+            alert(`Error: ${err.message}`)
         }
-      }
-      
-      if (!user) {
-        return (
-          <div className="container">
-            <Header />
-            <p>Loading...</p>
-          </div>
-        )
-      }
+    }
 
-      return (
+    if (!user) {
+        return (
+            <div className="container">
+                <Header />
+                <p>Loading...</p>
+            </div>
+        )
+    }
+
+    const userIdForLink = user.userId || "unknown"
+
+    return (
         <div className="container">
             <Header/>
             <h1>My Favourite Movies</h1>
 
-            <button onClick={() => navigate("/profile")} className="pfNavBtn">
-                Go Back
+            <button onClick={() => navigate("/profile")} style={{marginBottom: "20px"}}>
+                Profile Page
             </button>
 
             {loading ? (
@@ -92,35 +93,39 @@ function FavouriteList() {
             ) : favourites.length === 0 ? (
                 <p>No movies added to favourites</p>
             ) : (
-                <div className="favouritesMovieRow">
+                <>
                     
-                    {favourites.map(movie => (
-                        <div key={movie.content_id} className="movieCard">
-                            <div className="moviePoster">
-                                {movie.poster_url ? (
-                                    <img src={movie.poster_url} alt={movie.title} style={{width: "100%", objectFit: "cover"}} />
-                                ) : (
-                                    <div style={{width: "100%", height: "200px", backgroundColor: "ccc", display: "flex", alignItems: "center", justifyContent: "center"}}>
-                                        No Image
-                                    </div>
-                                )}
+                    <SharedFavouritesLink userId={user.userId} />
+
+                    <div className="movieRow">
+                        {favourites.map(movie => (
+                            <div key={movie.content_id} className="movieCard">
+                                <div className="moviePoster">
+                                    {movie.poster_url ? (
+                                        <img src={movie.poster_url} alt={movie.title} style={{width: "100%", objectFit: "cover"}} />
+                                    ) : (
+                                        <div style={{width: "100%", height: "200px", backgroundColor: "ccc", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                                            No Image
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="listInfo">
+                                    <div className="movieTitle">{movie.title}</div>
+                                    <div className="movieTitle">{movie.release_year || "N/A"}</div>
+                                    <button
+                                        onClick={() => handleRemoveFavourite(movie.content_id)}
+                                        style={{paddingTop: "10px", backgroundColor: "red", color: "white", padding: "5px 10px", border: "none", cursor: "pointer"}}
+                                    >
+                                        Remove
+                                    </button>
+                                </div>
                             </div>
-                            <div className="listInfo">
-                                <div className="movieTitle">{movie.title}</div>
-                                <div className="movieTitle">{movie.release_year || "N/A"}</div>
-                                <button
-                                    onClick={() => handleRemoveFavourite(movie.content_id)}
-                                    style={{paddingTop: "10px", backgroundColor: "red", color: "white", padding: "5px 10px", border: "none", cursor: "pointer"}}
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                </>
             )}
         </div>
-      )
+    )
 }
 
 export default FavouriteList

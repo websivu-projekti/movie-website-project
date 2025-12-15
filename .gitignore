@@ -5,4 +5,4 @@ frontend/.env
 api/.env
 node_modules
 .env.example
-api./env.example
+api/.env.example

@@ -49,7 +49,7 @@ function Profile() {
     fetchFavourites();
   }, [user, loading]);
 
-  if (loading) {
+  if (loading || !user) {
     return (
       <div className="container">
         <Header />
@@ -65,7 +65,11 @@ function Profile() {
       <div className="profileContainer">
         <div className="profileHeader">
           <div className="profileInfo">
-            <div className="profilePic">User</div>
+            {user.pfp_url ? (
+              <img src={user.pfp_url} alt="Profile" className="profilePic" />
+            ) : (
+              <div className="profilePic">User</div>
+            )}
             <span className="username">{user.username}</span>
           </div>
           <button className="pfNavBtn" onClick={() => navigate("/editprofile")}>

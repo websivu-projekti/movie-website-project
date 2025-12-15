@@ -35,7 +35,8 @@ export async function getUsersFavourites(req, res) {
 export async function addToFavourites(req, res) {
     try {
         const userId = req.user.userId
-        const { contentId } = req.body
+        // Accept both contentId and content_id from frontend
+        const contentId = req.body.contentId || req.body.content_id;
 
         console.log('Adding to favourites - userId:', userId, 'contentId:', contentId)
 

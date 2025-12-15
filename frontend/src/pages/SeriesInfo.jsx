@@ -149,7 +149,7 @@ function SeriesInfo(){
         const contentId = saveData.content_id
         const groupId = addedtoGroup
 
-        const response = await fetch("http://localhost:3001/groups/add", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/add`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -209,7 +209,7 @@ function SeriesInfo(){
         console.log('Saving to favourites with content_id:', saveData.content_id)
         const contentId = saveData.content_id
 
-        const response = await fetch("http://localhost:3001/favourites/add", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/add`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -238,7 +238,7 @@ function SeriesInfo(){
 
       setFavouriteLoading(true)
       try {
-        const response = await fetch("http://localhost:3001/favourites/remove", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/remove`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

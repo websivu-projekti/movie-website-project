@@ -62,16 +62,6 @@ function EditProfile() {
     } finally {
       setLoading(false)
     }
-
-
-    /*const handleSubmit = (e) => {
-      e.preventDefault()
-
-      console.log("Password change submitted", { 
-        currentPassword,
-       newPassword,
-       newPasswordConfirm })
-  }*/
   };
 
   const handleDeleteAccount = async () => {
@@ -120,18 +110,6 @@ function EditProfile() {
           <div className="field">
             <input type="checkbox" />
             <label className="settingsLabel">Dyslexia friendly font</label>
-          </div>
-          <div className="field">
-            <input type="checkbox" />
-            <label className="settingsLabel">Text-to-Speech</label>
-          </div>
-          <div className="field">
-            <input type="checkbox" />
-            <label className="settingsLabel">Autoplay content</label>
-          </div>
-          <div className="field">
-            <input type="checkbox" />
-            <label className="settingsLabel">Show adult content</label>
           </div>
           <button type="submit" className="saveSettings button">
             Save Settings

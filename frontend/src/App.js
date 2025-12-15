@@ -13,7 +13,6 @@ import GroupsList from "./pages/GroupsList"
 import GroupDetail from "./pages/GroupDetail"
 import MovieInfo from "./pages/MovieInfo"
 
-
 function App() {
   return (
     <Router>

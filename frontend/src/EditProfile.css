@@ -27,6 +27,7 @@
   width: fit-content;
   text-align: center;
   margin: auto;
+  column-gap: 100px;
 }
 
 .editTitle {
@@ -35,6 +36,8 @@
   font-weight: bold;
   grid-area: title;
   text-align: left;
+  font-family: var(--title-font);
+  color: var(--blue-acc1);
 }
 
 .pfp {
@@ -180,7 +183,7 @@
 
 }
 
-@media only screen and (max-width: 1200px){
+@media only screen and (max-width: 1200px) and (min-width: 871px) {
   .content{
     width: 80%;
   }

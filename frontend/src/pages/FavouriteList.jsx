@@ -112,6 +112,7 @@ function FavouriteList() {
                                 <div className="listInfo">
                                     <div className="movieTitle">{movie.title}</div>
                                     <div className="movieTitle">{movie.release_year || "N/A"}</div>
+                                    <div className="movieTitle">{movie.genre || "N/A"}</div>
                                     <button
                                         onClick={() => handleRemoveFavourite(movie.content_id)}
                                         style={{paddingTop: "10px", backgroundColor: "red", color: "white", padding: "5px 10px", border: "none", cursor: "pointer"}}

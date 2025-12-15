@@ -98,7 +98,13 @@ function Profile() {
                   <div className="listInfo">
                     <div className="movieTitle">{movie.title}</div>
                     <div className="movieTitle">{movie.release_year || "N/A"}</div>
-                    <div className="movieTitle">{movie.genre || "N/A"}</div>
+                    <div className="movieTitle">
+                      {movie.genre
+                        ? movie.genre
+                            .replace(/[{}"]/g, "")
+                            .replace(/,/g, ", ")
+                        : "N/A"}
+                    </div>
                   </div>
                 </div>
               ))}

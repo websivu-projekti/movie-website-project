@@ -423,15 +423,6 @@ function GroupDetail() {
                 <div className="group-movie-extra">
                   <div className="group-movie-details">{movie.genre?.replace(/[^a-zA-Z ]/g, " ")}</div>
                 </div>
-               <div className="group-movie-rating">
-                  <Rating 
-                    className="movieRating" 
-                    readOnly 
-                    style={{ maxWidth: 250 }} 
-                    value={(movie.vote_average / 2)}
-                    itemStyles={customRating}
-                  />
-                </div>
                 <button className="group-delete-button" onClick={() => handleRemoveFromGroup(movie.content_id)}>Delete from Group</button>
               </div>
             </div>

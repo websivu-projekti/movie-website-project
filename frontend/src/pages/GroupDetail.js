@@ -263,7 +263,7 @@ function GroupDetail() {
 
   const handleLeaveGroup = async (groupId)=>{
     try{
-      const response = await fetch(`http://localhost:3001/groups/leavegroup`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/leavegroup`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

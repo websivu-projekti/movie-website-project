@@ -20,7 +20,7 @@ function UserProfile(){
 
   const fetchUserInfo = async () => {
     try{
-        const response = await fetch(`http://localhost:3001/auth/profile/${userId}`)
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/profile/${userId}`)
             const data = await response.json()
             if (response.ok) {
                 setUserInfo(data.user)
@@ -34,7 +34,7 @@ function UserProfile(){
 
   const fetchFavourites = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/favourites/${userId}`)
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/${userId}`)
             const data = await response.json()
             if (response.ok) {
                 setFavourites(data.favourites)

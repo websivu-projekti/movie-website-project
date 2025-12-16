@@ -73,7 +73,7 @@ function SeriesInfo(){
     const checkIfFavourited = async () => {
       try {
         console.log('Checking if favourited with tmdbId:', seriesId)
-        const response = await fetch(`http://localhost:3001/favourites/check?tmdbId=${seriesId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/check?tmdbId=${seriesId}`, {
           headers: {
             'Authorization': `Bearer ${user.token}`
           }
@@ -92,7 +92,7 @@ function SeriesInfo(){
     const getUserGroups = async () => {
         try{
           console.log("getting users groups with userId: ", user.userId)
-          const response = await fetch(`http://localhost:3001/groups/usersgroups`, {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/usersgroups`, {
           headers: {
               'Content-Type' : 'application/json',
               'Authorization': `Bearer ${user.token}`
@@ -117,7 +117,7 @@ function SeriesInfo(){
       }
 
       try{
-        const saveResponse = await fetch(`http://localhost:3001/movies/saveFromTMDB`, {
+        const saveResponse = await fetch(`${process.env.REACT_APP_API_URL}/movies/saveFromTMDB`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json'
@@ -178,7 +178,7 @@ function SeriesInfo(){
 
       setFavouriteLoading(true)
       try {
-        const saveResponse = await fetch(`http://localhost:3001/movies/saveFromTMDB`, {
+        const saveResponse = await fetch(`${process.env.REACT_APP_API_URL}/movies/saveFromTMDB`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json',

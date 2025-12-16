@@ -18,10 +18,12 @@ export async function registerUser(email, password, username) {
         const saltRounds = 10
         const hashedPassword = await bcrypt.hash(password, saltRounds)
         
+        // Default profile picture URL
+        const defaultPfpUrl = "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
         // Uuden käyttäjän lisäys databaseen
         const result = await pool.query(
-            'INSERT INTO "user" (username, email, password) VALUES ($1, $2, $3) RETURNING user_id, username, email',
-            [username, email, hashedPassword]
+            'INSERT INTO "user" (username, email, password, pfp_url) VALUES ($1, $2, $3, $4) RETURNING user_id, username, email, pfp_url',
+            [username, email, hashedPassword, defaultPfpUrl]
         )
         
         return result.rows[0]

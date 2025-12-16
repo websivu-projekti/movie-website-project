@@ -1,6 +1,6 @@
 # :clapper: Movie-website \(WIP\)
 
-This is a website based around movies, where users are able to search for movies, see movies that are currently in nearby theaters and create lists and groups for movie-watching. The website is based on React and Node-technologies and uses PostgreSQL for database-related needs. This is a project created towards Web Development Project-course.
+This is a website based around movies, where users are able to search for movies or series, mark their favourites, see movies that are currently in nearby theaters and create groups for movie-watching. The website is based on React and Node-technologies and uses PostgreSQL for database-related needs. This is a project created towards Web Development Project-course.
 
 ## Contents
 - [Features](#features)
@@ -15,15 +15,15 @@ This is a website based around movies, where users are able to search for movies
 
 ## Features
 
-On the website, users are able to browse through movies or TV-series and get information about them. Registered or signed in users can create lists about their favourite movies/series and groups with other users for communal movie-watching.
+On the website, users are able to browse through movies or TV-series and get information about them. Registered or signed in users can add their favourite movies/series to their favourites-list and groups with other users for communal movie-watching.
 
 ### :star: Search for and browse movies
 
-Users can search for movies from the search bar, or from the Films-page, this function doesn't require signing in. Users can filter through the search results with the filters on the side bar. 
+Users can search for movies and series from the search bar, or from the Films-page, this function doesn't require signing in. On Films-page, users can filter through movies and series using the filter bar on the side. Available filters include sorting by different ways, genres, decades, rating and by content providers available in the user's region. Search results aren't filterable due to API restrictions.
 
 ### :star: Currently playing
 
-On the "Now in Cinemas"-page, users can see what might be playing in nearby theaters. \(Tarkentuu vielä\)
+On the "Now in Cinemas"-page, users can see what might be playing in their region's theaters.
 
 ### :star: Create an account or sign in
 
@@ -33,22 +33,19 @@ Registered users can sign in from the Sign In-button, located in the header near
 
 ### :star: Add a review
 
-On movies' and TV-series' individual pages, users can leave their review of said content. Reviews consist of a star rating going from 1 to 5 stars and a possibility to write a review in the text box. Only logged in users can leave reviews, but logged out users are welcome to browse them.
-
-### :star: Create a list
-
-\(Pysytäänkö ainoastaan yhdessä favourite listassa vai annetaanko mahdollisuus tehdä useampi lista?\)
+On movies' and TV-series' individual pages, users can leave their review of said content. Reviews consist of a star rating going from 1 to 5 stars and a possibility to write a review in the text box. Only logged in users can leave reviews, but logged out users are welcome to browse them. Logged in users are able to add movies and series to their favourites, or to 
+groups they own or are a member of.
 
 ### :star: Create a group
 
-Logged in users can create groups with other users in them. Users belonging to a group can then add movies and TV-series they might want to watch to the group's list. If the movie or TV-series has an upcoming showtime in a nearby theater or can be watched from a service, users can link those next to the content.
+Logged in users can create groups where other users can send join requests. Users belonging to a group can then add movies and TV-series they might want to watch to the group's list.
 
 \(Users can also change the icon for their group.\)
 
 
 ## Installation
 
-\(Tarkentuu\)
+The site is available on \(insert website\). You can also get a local development version by copying the repository. 
 
 ## Technical information
 

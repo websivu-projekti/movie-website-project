@@ -18,7 +18,7 @@ function UsersFavouriteList() {
 
     const fetchFavourites = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/${userId}`)
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/shared/${userId}`)
             const data = await response.json()
             if (response.ok) {
                 setFavourites(data.favourites)

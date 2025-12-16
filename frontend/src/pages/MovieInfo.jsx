@@ -94,7 +94,7 @@ function MovieInfo(){
     const getUserGroups = async () => {
       try{
         console.log("getting users groups with userId: ", user.userId)
-        const response = await fetch(`http://localhost:3001/groups/usersgroups`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/usersgroups`, {
         headers: {
             'Content-Type' : 'application/json',
             'Authorization': `Bearer ${user.token}`
@@ -119,7 +119,7 @@ function MovieInfo(){
       }
 
       try{
-        const saveResponse = await fetch(`http://localhost:3001/movies/saveFromTMDB`, {
+        const saveResponse = await fetch(`${process.env.REACT_APP_API_URL}/movies/saveFromTMDB`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json',

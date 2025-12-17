@@ -348,10 +348,7 @@ function GroupDetail() {
                   </div>
                   {groupMembers.map((member, index) => (
                     <div key={index} className="manage-member">
-                      <img 
-                        className="memberPfp" 
-                        src={member.pfp_url && member.pfp_url.startsWith('http') ? member.pfp_url : require(`../assets/icons/${member.pfp_url || 'pf1'}.png`)} 
-                      />
+                      <img className="memberPfp" src={require(`../assets/icons/${member.pfp_url}.png`) || ""} />
                       <span>{member.username} {groupMembers[index].is_owner ? "(Owner)" : "(Member)"}</span>
                       {!groupMembers[index].is_owner && status.isOwner && (
                         <button className="group-button" onClick={() => handleRemoveMember(member.user_id)}>Remove from group</button>
@@ -410,17 +407,6 @@ function GroupDetail() {
               {status.isOwner &&(<button onClick={() => handleDeleteGroup(groupId)} className="group-delete-button">Delete group</button>)}
 
             </div>
-            <div className="group-info-share-row">
-              <div className="share-list">
-                <span className="group-info-text">Share list</span>
-                <input
-                  className="share-input"
-                  value={`https://url.com/list_${groupInfo.group_id || "name"}`} 
-                  readOnly
-                />
-              </div>
-              <button className="group-button">Copy link</button>
-            </div>
             </>
             )}
           </div>
@@ -434,9 +420,7 @@ function GroupDetail() {
         <div className="members-list">
           {groupMembers.slice(0, 4).map((member, index) => (
             <div key={index} className="member">
-              <img 
-                src={member.pfp_url && member.pfp_url.startsWith('http') ? member.pfp_url : require(`../assets/icons/${member.pfp_url || 'pf1'}.png`)} 
-              />
+              <img src={require(`../assets/icons/${member.pfp_url}.png`) || ""} />
               <span><a href={`/profile/${member.user_id}`}>{member.username}</a></span>
             </div>
           ))}

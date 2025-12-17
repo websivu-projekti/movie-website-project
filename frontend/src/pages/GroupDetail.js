@@ -282,6 +282,36 @@ function GroupDetail() {
     }
   }
 
+  const handleRemoveMember = async (memberUserId) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/groups/deletefromgroup`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
+        },
+        body: JSON.stringify({
+          groupId: groupId,
+          userId: memberUserId
+        })
+      })
+      if (response.ok) {
+        alert("User removed from group")
+        // Refetch members
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/groups/group/${groupId}`)
+        if (res.ok) {
+          const data = await res.json()
+          setGroupMembers(data.groupMembers)
+        }
+      } else {
+        const data = await response.json()
+        alert(`Error: ${data.error}`)
+      }
+    } catch (error) {
+      alert(`Error: ${error.message}`)
+    }
+  }
+
   const openUserManagement = () => {
     setShowUserManagement(!showUserManagement)
   }
@@ -318,10 +348,13 @@ function GroupDetail() {
                   </div>
                   {groupMembers.map((member, index) => (
                     <div key={index} className="manage-member">
-                      <img className="memberPfp" src={require(`../assets/icons/${member.pfp_url}.png`) || ""} />
+                      <img 
+                        className="memberPfp" 
+                        src={member.pfp_url && member.pfp_url.startsWith('http') ? member.pfp_url : require(`../assets/icons/${member.pfp_url || 'pf1'}.png`)} 
+                      />
                       <span>{member.username} {groupMembers[index].is_owner ? "(Owner)" : "(Member)"}</span>
                       {!groupMembers[index].is_owner && status.isOwner && (
-                        <button className="group-button">Remove from group</button>
+                        <button className="group-button" onClick={() => handleRemoveMember(member.user_id)}>Remove from group</button>
                       )}
                     </div>
                   ))}
@@ -376,8 +409,17 @@ function GroupDetail() {
               <button onClick={() => handleLeaveGroup(groupId)} className="group-button">Leave group</button>
               {status.isOwner &&(<button onClick={() => handleDeleteGroup(groupId)} className="group-delete-button">Delete group</button>)}
 
-              
-
+            </div>
+            <div className="group-info-share-row">
+              <div className="share-list">
+                <span className="group-info-text">Share list</span>
+                <input
+                  className="share-input"
+                  value={`https://url.com/list_${groupInfo.group_id || "name"}`} 
+                  readOnly
+                />
+              </div>
+              <button className="group-button">Copy link</button>
             </div>
             </>
             )}
@@ -392,7 +434,9 @@ function GroupDetail() {
         <div className="members-list">
           {groupMembers.slice(0, 4).map((member, index) => (
             <div key={index} className="member">
-              <img src={require(`../assets/icons/${member.pfp_url}.png`) || ""} />
+              <img 
+                src={member.pfp_url && member.pfp_url.startsWith('http') ? member.pfp_url : require(`../assets/icons/${member.pfp_url || 'pf1'}.png`)} 
+              />
               <span><a href={`/profile/${member.user_id}`}>{member.username}</a></span>
             </div>
           ))}

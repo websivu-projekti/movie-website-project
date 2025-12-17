@@ -83,7 +83,12 @@ function Profile() {
             <div className="profileContainer">
                 <div className="profileHeader">
                     <div className="profileInfo">
-                        <div className="profilePic"><img className="profileIcon" src={require(`../assets/icons/${userPfp}.png`)}/></div>
+                        <div className="profilePic">
+                            <img 
+                                className="profileIcon" 
+                                src={userPfp && userPfp.startsWith('http') ? userPfp : require(`../assets/icons/${userPfp || 'pf1'}.png`)}
+                            />
+                        </div>
                         <span className="username">{user.username}</span>
                     </div>
                     <button className="pfNavBtn" onClick={() => navigate("/editprofile")}>

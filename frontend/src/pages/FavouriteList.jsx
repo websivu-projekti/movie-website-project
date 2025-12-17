@@ -82,7 +82,7 @@ function FavouriteList() {
             <Header/>
             <h1>My Favourite Movies</h1>
 
-            <button onClick={() => navigate("/profile")} style={{marginBottom: "20px"}}>
+            <button onClick={() => navigate("/profile")} className="pfNavBtn">
                 Profile Page
             </button>
             

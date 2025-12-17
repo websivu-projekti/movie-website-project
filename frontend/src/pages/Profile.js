@@ -6,7 +6,7 @@ import './Profile.css';
 import Header from '../components/header.jsx';
 
 function Profile() {
-  const { user, logout } = useAuth();
+  const { user, logout, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   
   const [favourites, setFavourites] = useState([]);
@@ -16,10 +16,10 @@ function Profile() {
   const [ userPfp, setUserPfp ] = useState("pf1")
 
   useEffect(() => {
-    if (!user) {
+    if (!authLoading && !user) {
       navigate('/login');
     }
-  }, [user, navigate]);
+  }, [user, authLoading, navigate]);
 
   useEffect(() =>{
     fetchFavourites()

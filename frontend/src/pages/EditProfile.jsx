@@ -113,30 +113,6 @@ function EditProfile() {
         <button type="submit" className="changePfp button">
           Change Profile Picture
         </button>
-        <form className="accessibility">
-          <h4>
-            Settings
-          </h4>
-          <div className="field">
-            <input type="checkbox" />
-            <label className="settingsLabel">Dyslexia friendly font</label>
-          </div>
-          <div className="field">
-            <input type="checkbox" />
-            <label className="settingsLabel">Text-to-Speech</label>
-          </div>
-          <div className="field">
-            <input type="checkbox" />
-            <label className="settingsLabel">Autoplay content</label>
-          </div>
-          <div className="field">
-            <input type="checkbox" />
-            <label className="settingsLabel">Show adult content</label>
-          </div>
-          <button type="submit" className="saveSettings button">
-            Save Settings
-          </button>
-        </form>
         <form className="manageUser" onSubmit={handleChangePassword}>
           <div className="field usrnameField">
             <label className="label">Current password</label>

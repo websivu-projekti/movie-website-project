@@ -1,4 +1,4 @@
-# :clapper: Movie-website \(WIP\)
+# :clapper: Clipper \(WIP\)
 
 This is a website based around movies, where users are able to search for movies or series, mark their favourites, see movies that are currently in nearby theaters and create groups for movie-watching. The website is based on React and Node-technologies and uses PostgreSQL for database-related needs. This is a project created towards Web Development Project-course.
 
@@ -6,7 +6,6 @@ This is a website based around movies, where users are able to search for movies
 - [Features](#features)
 - [Installation](#installation)
 - [Technical information](#techincal-information)
-- [Other information](#other-information)
 
 ## Project poster
 
@@ -27,7 +26,7 @@ On the "Now in Cinemas"-page, users can see what might be playing in their regio
 
 ### :star: Create an account or sign in
 
-Users are able to create an account from the Register-button in the header. Username, email and a password are required for creating an account. 
+Users are able to create an account from the Register-button in the header. Username, email and a password are required for creating an account.
 
 Registered users can sign in from the Sign In-button, located in the header nearby the Register-button. Users sign in by providing their email and password.
 
@@ -40,17 +39,14 @@ groups they own or are a member of.
 
 Logged in users can create groups where other users can send join requests. Users belonging to a group can then add movies and TV-series they might want to watch to the group's list.
 
-\(Users can also change the icon for their group.\)
-
 
 ## Installation
 
-The site is available on \(insert website\). You can also get a local development version by copying the repository. 
+The site is available for viewing on [http://13.49.77.96:3000/](http://13.49.77.96:3000/). You can also get a local development version by copying the repository.
 
 ## Technical information
 
-\(Tarkentuu\)
+API documentation can be viewed here [https://documenter.getpostman.com/view/43497144/2sB3dTrn85](https://documenter.getpostman.com/view/43497144/2sB3dTrn85) .
 
-## Other information
-
-\(Tarkentuu\)
+Below is a class diagram of the database used:
+![Class diagram of database](/documentation/DBclassdiagram.png)

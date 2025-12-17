@@ -84,7 +84,7 @@ function FavouriteList() {
             <button onClick={() => navigate("/profile")} className="pfNavBtn">
                 Go Back
             </button>
-
+            <SharedFavouritesLink userId={user.userId}/>
             {loading ? (
                 <p>Loading favouritelist...</p>
             ) : error ? (

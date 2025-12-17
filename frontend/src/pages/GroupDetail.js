@@ -379,17 +379,6 @@ function GroupDetail() {
               
 
             </div>
-            <div className="group-info-share-row">
-              <div className="share-list">
-                <span className="group-info-text">Share list</span>
-                <input
-                  className="share-input"
-                  value={`https://url.com/list_${groupInfo.group_id || "name"}`} 
-                  readOnly
-                />
-              </div>
-              <button className="group-button">Copy link</button>
-            </div>
             </>
             )}
           </div>

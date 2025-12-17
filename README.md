@@ -7,11 +7,6 @@ This is a website based around movies, where users are able to search for movies
 - [Installation](#installation)
 - [Technical information](#technical-information)
 
-## Project poster
-
-\(Here comes a picture of the project poster\)
-
-
 ## Features
 
 On the website, users are able to browse through movies or TV-series and get information about them. Registered or signed in users can add their favourite movies/series to their favourites-list and groups with other users for communal movie-watching.
@@ -44,9 +39,14 @@ Logged in users can create groups where other users can send join requests. User
 
 The site is available for viewing on [http://13.49.77.96:3000/](http://13.49.77.96:3000/). You can also get a local development version by copying the repository.
 
+For deploying a development version of the site, use Docker. The project uses PostgreSQL, but you won't need a server as it's driven in Docker. If you want to inspect the database, you can use psql or pgAdmin as a client. Use the `docker compose up -build` command in the project's root folder to build it. To unbuild it, use the `docker compose down` command.
+
 ## Technical information
 
-API documentation can be viewed here [https://documenter.getpostman.com/view/43497144/2sB3dTrn85](https://documenter.getpostman.com/view/43497144/2sB3dTrn85) .
+API documentation can be viewed here [https://documenter.getpostman.com/view/43497144/2sB3dTrn85](https://documenter.getpostman.com/view/43497144/2sB3dTrn85).
+
+Site's wireframe was made in Moqups, changes to page structure were made during development, but it still somewhat follows the initial wireframe. 
+Wireframe can be viewed here [https://app.moqups.com/H3pSKjq5KR7jFpC39XbAgoNNwBFY8Yev/view/page/a03550308](https://app.moqups.com/H3pSKjq5KR7jFpC39XbAgoNNwBFY8Yev/view/page/a03550308).
 
 Below is a class diagram of the database used:
 ![Class diagram of database](/documentation/DBclassdiagram.png)

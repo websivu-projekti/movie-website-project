@@ -96,13 +96,6 @@ function UserProfile(){
                       Favourites List
                     </button>
                 </div>
-                
-                <div className="pfGroupsContainer">
-                  <h2>{userInfo.username}'s Groups</h2>
-                  <button className="pfNavBtn" onClick={() => navigate("/mygroups")}>
-                      My Groups
-                  </button>
-                </div>
             </div>
   </div>
   )

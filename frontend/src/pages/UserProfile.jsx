@@ -36,15 +36,16 @@ function UserProfile(){
 
   const fetchFavourites = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/${userId}`)
-            const data = await response.json()
-            if (response.ok) {
-                setFavourites(data.favourites)
-            } else {
-                setError(data.error || "Failed to fetch favourite movies")
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/shared/${userId}`)
+            if (!response.ok) {
+                setError("Failed to fetch favourites")
+                return
             }
+            const data = await response.json()
+            setFavourites(data.favourites)
         } catch (err) {
-            setError(err.message)
+            console.error("Error fetching favourites:", err)
+            setError("Could not load favourites")
         } finally {
             setLoading(false)
         }
@@ -66,6 +67,9 @@ function UserProfile(){
                         </div>
                         <span className="username">{userInfo.username}</span>
                     </div>
+                    <button className="pfNavBtn" onClick={() => navigate(-1)}>
+                        Go Back
+                    </button>
                 </div>
                 <div className="favouritesContainer">
                     <h2>{userInfo.username}'s Favourite Movies and Series</h2>

@@ -432,7 +432,8 @@ function MovieInfo(){
               <div key = {index} className ="reviewBox">
                
                 <div className ="reviewHeader">
-                    <img src={require(`../assets/icons/${review.avatar}.png`)}
+                    <img 
+                      src={review.avatar && review.avatar.startsWith('http') ? review.avatar : require(`../assets/icons/${review.avatar || 'null'}.png`)}
                       alt="Profile" 
                       className="pfp"
                     />

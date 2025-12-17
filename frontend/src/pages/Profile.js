@@ -6,27 +6,26 @@ import './Profile.css';
 import Header from '../components/header.jsx';
 
 function Profile() {
-  const { user, logout, loading: authLoading } = useAuth();
+  const { user, logout, loading } = useAuth();
   const navigate = useNavigate();
   
   const [favourites, setFavourites] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [favouritesLoading, setFavouritesLoading] = useState(true);
   const [error, setError] = useState("");
   const [ userData, setUserData ] = useState([])
   const [ userPfp, setUserPfp ] = useState("pf1")
 
   useEffect(() => {
-    if (!authLoading && !user) {
-      navigate('/login');
+    if (!loading) {
+      if (!user) {
+        navigate('/login');
+      }
     }
-  }, [user, authLoading, navigate]);
+  }, [user, loading, navigate]);
 
-  useEffect(() =>{
-    fetchFavourites()
-    fetchUserInfo()
-  }, [])
-
-  const fetchFavourites = async () => {
+  useEffect(() => {
+    const fetchFavourites = async () => {
+      if (user && user.token) {
         try {
           const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/`, {
             headers: {
@@ -42,11 +41,15 @@ function Profile() {
         } catch (err) {
           setError(err.message);
         } finally {
-          setLoading(false);
+          setFavouritesLoading(false);
         }
+      } else if (!loading) {
+        setFavouritesLoading(false);
+      }
     };
 
     const fetchUserInfo = async () => {
+      if (user && user.token) {
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/profile`, {
                 headers: {
@@ -62,12 +65,15 @@ function Profile() {
             }
         } catch (err) {
             setError(err.message)
-        } finally {
-            setLoading(false)
         }
-    }
+      }
+    };
 
-  if (!user) {
+    fetchFavourites();
+    fetchUserInfo();
+  }, [user, loading]);
+
+  if (loading || !user) {
     return (
       <div className="container">
         <Header />
@@ -97,7 +103,7 @@ function Profile() {
                 </div>
                 <div className="favouritesContainer">
                     <h2>{user.username}'s Favourite Movies and Series</h2>
-                    {loading ? (
+                    {favouritesLoading ? (
                       <p>Loading favourites...</p>
                     ) : error ? (
                       <p>{error}</p>

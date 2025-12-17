@@ -133,3 +133,23 @@ export async function changeUserPassword(userId, newPassword, currentPassword) {
         throw error
     }
 }
+
+// profiilikuvan päivitys
+export async function changePfp(userId, pfpUrl){
+    try{
+        const user = await getUserById(userId)
+
+        if(!user){
+            throw new Error("User not found")
+        }
+
+        const result = await pool.query(
+            `UPDATE "user" SET pfp_url = $1 WHERE user_id = $2 RETURNING user_id, username, pfp_url`,
+            [pfpUrl, userId]
+        )
+
+        return result.rows[0]
+    }catch(error){
+        throw error
+    }
+}

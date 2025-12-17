@@ -11,6 +11,8 @@ function Profile(){
   const [favourites, setFavourites] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [ userData, setUserData ] = useState([])
+  const [ userPfp, setUserPfp ] = useState("pf1")
 
   useEffect(() => {
     if (!user) {
@@ -20,6 +22,7 @@ function Profile(){
 
   useEffect(() =>{
     fetchFavourites()
+    fetchUserInfo()
   }, [])
 
   const fetchFavourites = async () => {
@@ -34,6 +37,27 @@ function Profile(){
                 setFavourites(data.favourites)
             } else {
                 setError(data.error || "Failed to fetch favourite movies")
+            }
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const fetchUserInfo = async () => {
+        try {
+            const response = await fetch("http://localhost:3001/auth/profile", {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const data = await response.json()
+            if (response.ok) {
+                setUserData(data.user)
+                setUserPfp(data.user.pfp_url)
+            } else {
+                setError(data.error || "Failed to fetch user data")
             }
         } catch (err) {
             setError(err.message)
@@ -59,7 +83,7 @@ function Profile(){
             <div className="profileContainer">
                 <div className="profileHeader">
                     <div className="profileInfo">
-                        <div className="profilePic">User</div>
+                        <div className="profilePic"><img className="profileIcon" src={require(`../assets/icons/${userPfp}.png`)}/></div>
                         <span className="username">{user.username}</span>
                     </div>
                     <button className="pfNavBtn" onClick={() => navigate("/editprofile")}>

@@ -1,17 +1,8 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../EditProfile.css";
 import Header from '../components/header.jsx'
 import { useAuth } from "../context/AuthContext.js";
-import pf1 from "../assets/icons/pf1.png"
-import pf2 from "../assets/icons/pf2.png"
-import pf3 from "../assets/icons/pf3.png"
-import pf4 from "../assets/icons/pf4.png"
-import pf5 from "../assets/icons/pf5.png"
-import pf6 from "../assets/icons/pf6.png"
-import pf7 from "../assets/icons/pf7.png"
-import pf8 from "../assets/icons/pf8.png"
-import pf9 from "../assets/icons/pf9.png"
+import {pf1, pf2, pf3, pf4, pf5, pf6, pf7, pf8, pf9} from "../App.js"
 import closeMenu from "../assets/closemenu.svg"
 
 
@@ -21,10 +12,16 @@ function EditProfile() {
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
   const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [showChangePfp, setShowChangePfp] = useState(false)
-  const [pfp_url, setNewPfp] = useState("pf1")
+  const [ pfp_url, setNewPfp ] = useState()
+  const [ userData, setUserData ] = useState([])
+  const [ userPfp, setUserPfp ] = useState("pf1")
 
+  useEffect(() =>{
+    fetchUserInfo()
+    setLoading(false)
+  }, [])
 
   const handleChangePassword = async (e) => {
     e.preventDefault()
@@ -104,6 +101,22 @@ function EditProfile() {
       }
     }
   }
+
+    const fetchUserInfo = async () => {
+        try {
+            const response = await fetch(`http://localhost:3001/auth/profile/${user.userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const data = await response.json()
+            setUserPfp(data.user.pfp_url)
+            setUserData(data.user)
+        } catch (err) {
+            setError(err.message)
+        }
+    }
+
   const openChangePfp = () => {
     setShowChangePfp(!showChangePfp)
   }
@@ -121,12 +134,11 @@ function EditProfile() {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${user.token}`,
         },
-        body: JSON.stringify({ pfp_url }),
+        body: JSON.stringify({ pfpUrl: pfp_url }),
       });
       const data = await response.json()
 
       if(response.ok){
-        //fetchPfp()
         closeChangePfp()
       }else{
         throw new Error(data.error || "An error occurred while changing profile picture")
@@ -142,7 +154,11 @@ function EditProfile() {
       <div className="content">
         <h1 className="editTitle">Edit Profile</h1>
         <div className="imageContainer">
-          <img src={pfp_url} alt="Profile picture" className="editPfp"></img>
+          {loading ? (
+            <p>Loading profile picture...</p>
+          ) : (
+            <img src={require(`../assets/icons/${userPfp}.png`)} alt="Profile picture" className="editPfp"></img>
+          )}
         </div>
         <button type="submit" className="changePfp button" onClick={openChangePfp}>
           Change Profile Picture

@@ -18,6 +18,17 @@ import SeriesInfo from "./pages/SeriesInfo"
 import FavouriteList from "./pages/FavouriteList"
 import UsersFavouriteList from "./pages/UsersFavouriteList"
 import SearchResults from "./pages/SearchResults"
+export {default as pf1} from './assets/icons/pf1.png'
+export {default as pf2} from './assets/icons/pf2.png'
+export {default as pf3} from './assets/icons/pf3.png'
+export {default as pf4} from './assets/icons/pf4.png'
+export {default as pf5} from './assets/icons/pf5.png'
+export {default as pf6} from './assets/icons/pf6.png'
+export {default as pf7} from './assets/icons/pf7.png'
+export {default as pf8} from './assets/icons/pf8.png'
+export {default as pf9} from './assets/icons/pf9.png'
+
+
 
 function App() {
   return (

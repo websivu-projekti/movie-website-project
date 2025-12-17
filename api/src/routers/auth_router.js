@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { register, login, getProfile, getAnotherUser, authenticateToken, deleteAccount, changePassword } from "../controllers/auth_controller.js"
+import { register, login, getProfile, getAnotherUser, authenticateToken, deleteAccount, changePassword, changeUserPfp } from "../controllers/auth_controller.js"
 
 const authRouter = Router()
 
@@ -14,5 +14,6 @@ authRouter.get("/profile/:userId", getAnotherUser)
 authRouter.get("/profile", authenticateToken, getProfile)
 authRouter.delete("/account", authenticateToken, deleteAccount)
 authRouter.patch("/editprofile", authenticateToken, changePassword)
+authRouter.patch("/editprofile/pfp", authenticateToken, changeUserPfp)
 
 export default authRouter

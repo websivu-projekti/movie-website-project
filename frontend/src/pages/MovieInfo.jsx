@@ -21,6 +21,9 @@ function MovieInfo(){
   const [rating, setRating] = useState(0)
   const [ myGroups, setMyGroups ] = useState([])
   const [ addedtoGroup, setAddedtoGroup ] = useState([])
+  const [ userData, setUserData ] = useState([])
+  const [ userPfp, setUserPfp ] = useState("pf1")
+  const [ reviewUserPfp, setReviewUserPfp ] = useState("pf1")
   
 
 
@@ -54,6 +57,8 @@ function MovieInfo(){
         if (res.ok) {
           const data = await res.json();
           setMyReviews(data);
+          setReviewUserPfp(data.avatar)
+          console.log(reviewUserPfp)
         }
       } catch(err){
         console.error("Error fetching reviews:", err)
@@ -68,8 +73,24 @@ function MovieInfo(){
       if (user && user.token && movieId) {
         checkIfFavourited()
         getUserGroups()
+        fetchUserInfo()
       }
     }, [user, movieId])
+
+    const fetchUserInfo = async () => {
+    try{
+        const response = await fetch(`http://localhost:3001/auth/profile/${user.userId}`)
+            const data = await response.json()
+            if (response.ok) {
+                setUserData(data.user)
+                setUserPfp(data.user.pfp_url)
+            } else {
+                setError(data.error || "Failed to fetch user data")
+            }
+    }catch (err){
+        setError(err.message)
+    }
+  }
 
     const checkIfFavourited = async () => {
       try {
@@ -90,7 +111,6 @@ function MovieInfo(){
       }
     }
 
-    // vielä hakee vain omistetut ryhmät!!
     const getUserGroups = async () => {
       try{
         console.log("getting users groups with userId: ", user.userId)
@@ -300,7 +320,7 @@ function MovieInfo(){
     }
 
     //yhdistää kirjoitetut arvostelut muihin
-    const allReviews = [...myReviews, ...(movie.reviews || [])];
+    const allReviews = [...(movie.reviews || [])];
 
 
     return (
@@ -408,15 +428,35 @@ function MovieInfo(){
         <div className="reviewsRowContainer">
 
           <div className = "reviewsColumn">
+            {myReviews?.map((review,index) => (
+              <div key = {index} className ="reviewBox">
+               
+                <div className ="reviewHeader">
+                    <img src={require(`../assets/icons/${review.avatar}.png`)}
+                      alt="Profile" 
+                      className="pfp"
+                    />
+       
+              <div className="reviewInfo">
+                <div className ="nameRow">
+                 <div className ="reviewName">{review.username}</div>
+                  <div className ="reviewDate">{review.date}</div>
+                </div>
+                  <div className ="stars">{makeStars(review.rating)}</div>
+              </div> 
+              </div>          
+               <div className="reviewText">{review.content}</div>
+              </div>
+         ))}
             
             {allReviews?.map((review,index) => (
               <div key = {index} className ="reviewBox">
                
                 <div className ="reviewHeader">
-                <img src={review.avatar || "https://i.imgur.com/MVFmDAe.jpeg"}
-                alt="Profile" 
-                className="pfp"
-                />
+                    <img src={"https://i.imgur.com/MVFmDAe.jpeg"}
+                      alt="Profile" 
+                      className="pfp"
+                    />
        
               <div className="reviewInfo">
                 <div className ="nameRow">
@@ -435,7 +475,7 @@ function MovieInfo(){
 
             <div className ="myReviewRow">
               <div className="profileAndName">
-                   <img src={user?.avatar || user?.pfp_url || "https://i.imgur.com/MVFmDAe.jpeg"} alt="Profile" className="pfp"/>
+                   <img src={require(`../assets/icons/${userPfp}.png`) || "https://i.imgur.com/MVFmDAe.jpeg"} alt="Profile" className="pfp"/>
                 <div className ="myReviewName">{user ? user.username : "Not logged in"}</div>
               </div>
 

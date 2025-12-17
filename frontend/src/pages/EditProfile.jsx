@@ -157,7 +157,11 @@ function EditProfile() {
           {loading ? (
             <p>Loading profile picture...</p>
           ) : (
-            <img src={require(`../assets/icons/${userPfp}.png`)} alt="Profile picture" className="editPfp"></img>
+            <img 
+              src={userPfp && userPfp.startsWith('http') ? userPfp : require(`../assets/icons/${userPfp || 'pf1'}.png`)} 
+              alt="Profile picture" 
+              className="editPfp"
+            />
           )}
         </div>
         <button type="submit" className="changePfp button" onClick={openChangePfp}>

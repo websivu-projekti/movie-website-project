@@ -475,7 +475,11 @@ function MovieInfo(){
 
             <div className ="myReviewRow">
               <div className="profileAndName">
-                   <img src={require(`../assets/icons/${userPfp}.png`) || "https://i.imgur.com/MVFmDAe.jpeg"} alt="Profile" className="pfp"/>
+                   <img 
+                     src={userPfp && userPfp.startsWith('http') ? userPfp : require(`../assets/icons/${userPfp || 'pf1'}.png`)} 
+                     alt="Profile" 
+                     className="pfp"
+                   />
                 <div className ="myReviewName">{user ? user.username : "Not logged in"}</div>
               </div>
 

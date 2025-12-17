@@ -10,13 +10,11 @@ function UserProfile(){
   const navigate = useNavigate()
   const [ userInfo, setUserInfo ] = useState([])
   const [ userPfp, setUserPfp ] = useState("pf1")
-  const [favourites, setFavourites] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
   useEffect(() =>{
     fetchUserInfo()
-    fetchFavourites()
   }, [])
 
   const fetchUserInfo = async () => {
@@ -31,25 +29,10 @@ function UserProfile(){
             }
     }catch (err){
         setError(err.message)
+    } finally {
+        setLoading(false)
     }
   }
-
-  const fetchFavourites = async () => {
-        try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/favourites/shared/${userId}`)
-            if (!response.ok) {
-                setError("Failed to fetch favourites")
-                return
-            }
-            const data = await response.json()
-            setFavourites(data.favourites)
-        } catch (err) {
-            console.error("Error fetching favourites:", err)
-            setError("Could not load favourites")
-        } finally {
-            setLoading(false)
-        }
-    }
 
 
   return (
@@ -71,39 +54,11 @@ function UserProfile(){
                         Go Back
                     </button>
                 </div>
-                <div className="favouritesContainer">
-                    <h2>{userInfo.username}'s Favourite Movies and Series</h2>
-                    {loading ? (
-                      <p>Loading favourites...</p>
-                    ) : error ? (
-                      <p>{error}</p>
-                    ) : favourites.length === 0 ? (
-                      <p>This user doesn't have any favourites yet!</p>
-                    ) : (
-                      <div className="pfMovieRow">
-                        {favourites.slice(0,3).map(movie => (
-                          <div key={movie.content_id} className="movieCard">
-                            {movie.poster_url ? (
-                              <img src={movie.poster_url} alt={movie.title} className="pfMoviePoster"/>
-                            ) : (
-                              <div className="noPoster">
-                                No Image
-                              </div>
-                            )}
-                            <div className="listInfo">
-                              <div className="movieTitle">{movie.title}</div>
-                              <div className="movieTitle">{movie.release_year || "N/A"}</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    <button 
-                      onClick={() => navigate(`/profile/favouritelist/${userInfo.user_id}`)}
-                      className="pfNavBtn"
-                    >
-                      Favourites List
-                    </button>
+                <div className="pfGroupsContainer">
+                  <h2>{userInfo.username}'s Favourites</h2>
+                  <button className="pfNavBtn" onClick={() => navigate(`/profile/favouritelist/${userInfo.user_id}`)}>
+                      View Favourites
+                  </button>
                 </div>
             </div>
   </div>

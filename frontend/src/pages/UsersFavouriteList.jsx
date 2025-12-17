@@ -11,9 +11,11 @@ function UsersFavouriteList() {
     const [favourites, setFavourites] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
+    const [ userInfo, setUserInfo ] = useState([])
 
     useEffect(() => {
         fetchFavourites()
+        fetchUserInfo()
     }, [])
 
     const fetchFavourites = async () => {
@@ -31,6 +33,20 @@ function UsersFavouriteList() {
             setLoading(false)
         }
     }
+
+    const fetchUserInfo = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/profile/${userId}`)
+            const data = await response.json()
+            if (response.ok) {
+                setUserInfo(data.user)
+            } else {
+                setError(data.error || "Failed to fetch user data")
+            }
+        } catch (err) {
+            setError(err.message)
+        }
+    }
       
       if (loading) {
         return (
@@ -44,15 +60,13 @@ function UsersFavouriteList() {
       return (
         <div className="container">
             <Header/>
-            <h1>My Favourite Movies</h1>
+            <h2>{userInfo.username}'s Favourites</h2>
 
             <button onClick={() => navigate(`/profile/${userId}`)} className="pfNavBtn">
                 Go Back
             </button>
 
-            {loading ? (
-                <p>Loading favouritelist...</p>
-            ) : error ? (
+            {error ? (
                 <p style={{color: "red"}}>{error}</p>
             ) : favourites.length === 0 ? (
                 <p>No movies added to favourites</p>

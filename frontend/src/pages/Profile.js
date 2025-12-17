@@ -6,22 +6,20 @@ import './Profile.css';
 import Header from '../components/header.jsx';
 
 function Profile() {
-  const { user, logout, loading } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   
   const [favourites, setFavourites] = useState([]);
-  const [favouritesLoading, setFavouritesLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [ userData, setUserData ] = useState([])
   const [ userPfp, setUserPfp ] = useState("pf1")
 
   useEffect(() => {
-    if (!loading) {
-      if (!user) {
-        navigate('/login');
-      }
+    if (!user) {
+      navigate('/login');
     }
-  }, [user, loading, navigate]);
+  }, [user, navigate]);
 
   useEffect(() =>{
     fetchFavourites()
@@ -44,7 +42,7 @@ function Profile() {
         } catch (err) {
           setError(err.message);
         } finally {
-          setFavouritesLoading(false);
+          setLoading(false);
         }
     };
 
@@ -64,6 +62,8 @@ function Profile() {
             }
         } catch (err) {
             setError(err.message)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -83,7 +83,12 @@ function Profile() {
             <div className="profileContainer">
                 <div className="profileHeader">
                     <div className="profileInfo">
-                        <div className="profilePic"><img className="profileIcon" src={require(`../assets/icons/${userPfp}.png`)}/></div>
+                        <div className="profilePic">
+                            <img 
+                                className="profileIcon" 
+                                src={userPfp && userPfp.startsWith('http') ? userPfp : require(`../assets/icons/${userPfp || 'pf1'}.png`)}
+                            />
+                        </div>
                         <span className="username">{user.username}</span>
                     </div>
                     <button className="pfNavBtn" onClick={() => navigate("/editprofile")}>

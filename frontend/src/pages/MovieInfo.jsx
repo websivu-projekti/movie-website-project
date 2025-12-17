@@ -476,7 +476,7 @@ function MovieInfo(){
             <div className ="myReviewRow">
               <div className="profileAndName">
                    <img 
-                     src={userPfp && userPfp.startsWith('http') ? userPfp : require(`../assets/icons/${userPfp || 'pf1'}.png`)} 
+                     src={userPfp && userPfp.startsWith('http') ? userPfp : require(`../assets/icons/${userPfp || 'null'}.png`)} 
                      alt="Profile" 
                      className="pfp"
                    />

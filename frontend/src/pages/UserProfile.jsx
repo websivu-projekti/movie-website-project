@@ -61,7 +61,7 @@ function UserProfile(){
                         <div className="profilePic">
                             <img 
                                 className="profileIcon" 
-                                src={userPfp && userPfp.startsWith('http') ? userPfp : require(`../assets/icons/${userPfp || 'pf1'}.png`)}
+                                src={userPfp && userPfp.startsWith('http') ? userPfp : require(`../assets/icons/${userPfp || 'null'}.png`)}
                             />
                         </div>
                         <span className="username">{userInfo.username}</span>

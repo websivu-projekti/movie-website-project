@@ -158,7 +158,7 @@ function EditProfile() {
             <p>Loading profile picture...</p>
           ) : (
             <img 
-              src={userPfp && userPfp.startsWith('http') ? userPfp : require(`../assets/icons/${userPfp || 'pf1'}.png`)} 
+              src={userPfp && userPfp.startsWith('http') ? userPfp : require(`../assets/icons/${userPfp || 'null'}.png`)} 
               alt="Profile picture" 
               className="editPfp"
             />

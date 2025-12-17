@@ -431,7 +431,7 @@ function SeriesInfo(){
               <div key = {index} className ="reviewBox">
                
                 <div className ="reviewHeader">
-                <img src={review.avatar || "https://i.imgur.com/MVFmDAe.jpeg"}
+                <img src={review.avatar && review.avatar.startsWith('http') ? review.avatar : require(`../assets/icons/${review.avatar || 'null'}.png`)}
                 alt="Profile" 
                 className="pfp"
                 />
@@ -541,7 +541,7 @@ function SeriesInfo(){
                 date: new Date().toISOString().split("T")[0],
                 rating: rating * 2,
                 content: reviewContent,
-                avatar: user.avatar || "https://i.imgur.com/MVFmDAe.jpeg"
+                avatar: userPfp || "null"
               }
               setMyReviews([newReview, ...myReviews])
 

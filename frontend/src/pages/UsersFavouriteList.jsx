@@ -62,7 +62,7 @@ function UsersFavouriteList() {
             <Header/>
             <h2>{userInfo.username}'s Favourites</h2>
 
-            <button onClick={() => navigate(`/profile/${userId}`)} className="pfNavBtn">
+            <button onClick={() => navigate(`/profile/${userId}`, { replace: true })} className="pfNavBtn">
                 Go Back
             </button>
 

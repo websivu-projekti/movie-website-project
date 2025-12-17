@@ -43,10 +43,10 @@ function SharedFavourites() {
       ) : (
         <div className="movieRow">
           {favourites.map((movie) => (
-            <div key={movie.movieId} className="movieCard">
+            <div key={movie.content_id} className="movieCard">
               <div className="moviePoster">
-                {movie.poster ? (
-                  <img src={movie.poster} alt={movie.title} style={{ width: "100%", objectFit: "cover" }} />
+                {movie.poster_url ? (
+                  <img src={movie.poster_url} alt={movie.title} style={{ width: "100%", objectFit: "cover" }} />
                 ) : (
                   <div style={{ width: "100%", height: "200px", backgroundColor: "#ccc", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     No Image
@@ -55,7 +55,7 @@ function SharedFavourites() {
               </div>
               <div className="listInfo">
                 <div className="movieTitle">{movie.title}</div>
-                <div className="movieTitle">{movie.releaseYear || "N/A"}</div>
+                <div className="movieTitle">{movie.release_year || "N/A"}</div>
               </div>
             </div>
           ))}

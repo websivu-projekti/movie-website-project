@@ -17,10 +17,10 @@ export async function getSharedFavourites(userId) {
 
 
         return result.rows.map(item => ({
-            movieId: item.content_id,
+            content_id: item.content_id,
             title: item.title,
-            poster: item.poster_url,
-            releaseYear: item.release_year
+            poster_url: item.poster_url,
+            release_year: item.release_year
         }))
 
     } catch (error) {

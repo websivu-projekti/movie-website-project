@@ -5,7 +5,7 @@ This is a website based around movies, where users are able to search for movies
 ## Contents
 - [Features](#features)
 - [Installation](#installation)
-- [Technical information](#techincal-information)
+- [Technical information](#technical-information)
 
 ## Project poster
 

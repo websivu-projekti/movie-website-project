@@ -85,7 +85,7 @@ function FavouriteList() {
             <button onClick={() => navigate("/profile")} style={{marginBottom: "20px"}}>
                 Profile Page
             </button>
-
+            <SharedFavouritesLink userId={user.userId}/>
             {loading ? (
                 <p>Loading favouritelist...</p>
             ) : error ? (

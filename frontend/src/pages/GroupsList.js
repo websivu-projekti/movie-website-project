@@ -33,10 +33,10 @@ function GroupsList() {
         const res = await fetch(`${process.env.REACT_APP_API_URL}/groups/all`)
         if(!res.ok){
           if(res.status === 404){
-            setError("Movie not found")
+            setError("Groups not found")
           } else {
             const text = await res.text()
-            setError(`Error fetching movie: ${res.status} ${text}`)
+            setError(`Error fetching groups: ${res.status} ${text}`)
           }
           return
         }

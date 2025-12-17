@@ -1,7 +1,7 @@
 import { Router } from "express"
-import { getFavourites, addToFavourites, removeFromFavourites, checkFavourite } from "../controllers/favourites_controller.js"
-import { authenticateToken } from "../controllers/auth_controller.js"
+import { getFavourites, getUsersFavourites, addToFavourites, removeFromFavourites, checkFavourite } from "../controllers/favourites_controller.js"
 import { getSharedFavourites } from "../models/sharedFavourites_model.js"
+import { authenticateToken } from "../controllers/auth_controller.js"
 
 const favouritesRouter = Router()
 

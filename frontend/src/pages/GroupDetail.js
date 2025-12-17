@@ -318,7 +318,7 @@ function GroupDetail() {
                   </div>
                   {groupMembers.map((member, index) => (
                     <div key={index} className="manage-member">
-                      <img className="memberPfp" src={member.img || ""} />
+                      <img className="memberPfp" src={require(`../assets/icons/${member.pfp_url}.png`) || ""} />
                       <span>{member.username} {groupMembers[index].is_owner ? "(Owner)" : "(Member)"}</span>
                       {!groupMembers[index].is_owner && status.isOwner && (
                         <button className="group-button">Remove from group</button>
@@ -379,17 +379,6 @@ function GroupDetail() {
               
 
             </div>
-            <div className="group-info-share-row">
-              <div className="share-list">
-                <span className="group-info-text">Share list</span>
-                <input
-                  className="share-input"
-                  value={`https://url.com/list_${groupInfo.group_id || "name"}`} 
-                  readOnly
-                />
-              </div>
-              <button className="group-button">Copy link</button>
-            </div>
             </>
             )}
           </div>
@@ -403,7 +392,7 @@ function GroupDetail() {
         <div className="members-list">
           {groupMembers.slice(0, 4).map((member, index) => (
             <div key={index} className="member">
-              <img src={member.img || ""} />
+              <img src={require(`../assets/icons/${member.pfp_url}.png`) || ""} />
               <span><a href={`/profile/${member.user_id}`}>{member.username}</a></span>
             </div>
           ))}

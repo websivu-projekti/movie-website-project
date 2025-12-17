@@ -131,7 +131,7 @@ function Films(){
             </button>
             {showContentMovies &&
             <div className="mobileFiltersRow" key={render}>
-                  Filters (movie)
+                  Filters
                   <a className="resetLink" onClick={resetFilters}>Reset filters</a>
                   {/* SORT BY */}
                   <div className="filterTitle">Sort by:</div>
@@ -155,7 +155,7 @@ function Films(){
               }
             {showContentTv &&
               <div className="mobileFiltersRow" key={render}>
-                  Filters (series)
+                  Filters
                   <a className="resetLink" onClick={resetFilters}>Reset filters</a>
                   {/* SORT BY */}
                   <div className="filterTitle">Sort by:</div>
@@ -182,7 +182,7 @@ function Films(){
         <div className="filtersRow">
           {showContentMovies &&
             <div className="filtersRow" key={render}>
-                  Filters (movie)
+                  Filters
                   <a className="resetLink" onClick={resetFilters}>Reset filters</a>
                   {/* SORT BY */}
                   <div className="filterTitle">Sort by:</div>
@@ -206,7 +206,7 @@ function Films(){
               }
             {showContentTv &&
               <div className="filtersRow" key={render}>
-                  Filters (series)
+                  Filters
                   <a className="resetLink" onClick={resetFilters}>Reset filters</a>
                   {/* SORT BY */}
                   <div className="filterTitle">Sort by:</div>

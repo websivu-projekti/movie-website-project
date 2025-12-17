@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { registerUser, loginUser, getUserById, deleteUser, changeUserPassword } from "../models/user_model.js"
+import { registerUser, loginUser, getUserById, deleteUser, changeUserPassword, changePfp } from "../models/user_model.js"
 
 // JWT Salaus
 const JWT_SECRET = process.env.JWT_SECRET || "secret-key-for-development"
@@ -204,5 +204,27 @@ export async function changePassword(req, res) {
             return res.status(404).json({ error: error.message });
         }
         return res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+export async function changeUserPfp(req, res){
+    try{
+        const { pfpUrl } = req.body
+        const userId = req.user.userId
+
+        if(!pfpUrl){
+            return res.status(400).json({ error: "Profile picture url is required" })
+        }
+
+        const newPfp = await changePfp(userId, pfpUrl)
+
+        return res.json({
+            message: "Profile picture changed successfully",
+            user: newPfp
+        })
+
+    }catch(error){
+        console.error("Change pfp error: ", error)
+        return res.status(500).json({ error: "Internal server error" })
     }
 }

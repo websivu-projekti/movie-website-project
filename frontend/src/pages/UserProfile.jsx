@@ -9,6 +9,7 @@ function UserProfile(){
   const { userId } = useParams()
   const navigate = useNavigate()
   const [ userInfo, setUserInfo ] = useState([])
+  const [ userPfp, setUserPfp ] = useState("pf1")
   const [favourites, setFavourites] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
@@ -24,6 +25,7 @@ function UserProfile(){
             const data = await response.json()
             if (response.ok) {
                 setUserInfo(data.user)
+                setUserPfp(data.user.pfp_url)
             } else {
                 setError(data.error || "Failed to fetch user data")
             }
@@ -56,7 +58,7 @@ function UserProfile(){
             <div className="profileContainer">
                 <div className="profileHeader">
                     <div className="profileInfo">
-                        <div className="profilePic">User</div>
+                        <div className="profilePic"><img className="profileIcon" src={require(`../assets/icons/${userPfp}.png`) || ""}/></div>
                         <span className="username">{userInfo.username}</span>
                     </div>
                 </div>
@@ -93,13 +95,6 @@ function UserProfile(){
                     >
                       Favourites List
                     </button>
-                </div>
-                
-                <div className="pfGroupsContainer">
-                  <h2>{userInfo.username}'s Groups</h2>
-                  <button className="pfNavBtn" onClick={() => navigate("/mygroups")}>
-                      My Groups
-                  </button>
                 </div>
             </div>
   </div>

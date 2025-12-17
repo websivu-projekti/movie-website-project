@@ -50,7 +50,7 @@ function Profile() {
 
     const fetchUserInfo = async () => {
         try {
-            const response = await fetch(`http://${process.env.REACT_APP_API_URL}/auth/profile`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/profile`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -64,8 +64,6 @@ function Profile() {
             }
         } catch (err) {
             setError(err.message)
-        } finally {
-            setLoading(false)
         }
     }
 

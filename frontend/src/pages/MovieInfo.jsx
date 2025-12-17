@@ -79,7 +79,7 @@ function MovieInfo(){
 
     const fetchUserInfo = async () => {
     try{
-        const response = await fetch(`http://localhost:3001/auth/profile/${user.userId}`)
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/profile/${user.userId}`)
             const data = await response.json()
             if (response.ok) {
                 setUserData(data.user)

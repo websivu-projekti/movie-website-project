@@ -77,7 +77,7 @@ function EditProfile() {
   const handleDeleteAccount = async () => {
     if (window.confirm(`Haluatko varmasti poistaa käyttäjäsi, ${user.username}? Toimintoa ei voi perua.`)) {
       try {
-        const response = await fetch("http://localhost:3001/auth/account", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/account`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ function EditProfile() {
 
     const fetchUserInfo = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/auth/profile/${user.userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/profile/${user.userId}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -128,7 +128,7 @@ function EditProfile() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3001/auth/editprofile/pfp", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/editprofile/pfp`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

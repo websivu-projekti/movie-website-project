@@ -149,29 +149,3 @@
         width: 150px;
     }
 }
-
-@media only screen and (max-width: 740px){
-    .movieRow {
-        justify-content: center;
-    }
-    
-    .movieCard {
-        max-width: 100%;
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-    
-    .moviePoster img {
-        max-width: 100%;
-        height: auto;
-    }
-    
-    .profileContainer {
-        width: 95%;
-    }
-    
-    .profileHeader {
-        flex-direction: column;
-        gap: 1rem;
-    }
-}

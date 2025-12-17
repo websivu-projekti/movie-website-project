@@ -96,7 +96,7 @@ function FavouriteList() {
                 <>
                     <SharedFavouritesLink userId={user.userId} />
 
-                    <div className="movieRow">
+                    <div className="favouritesMovieRow">
                         {favourites.map(movie => (
                             <div key={movie.content_id} className="movieCard">
                                 <div className="moviePoster">

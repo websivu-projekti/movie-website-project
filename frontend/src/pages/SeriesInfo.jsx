@@ -21,6 +21,7 @@ function SeriesInfo(){
   const [rating, setRating] = useState(0)
   const [ myGroups, setMyGroups ] = useState([])
   const [ addedtoGroup, setAddedtoGroup ] = useState()
+  const [ userPfp, setUserPfp ] = useState("null")
 
 
   useEffect(() => {
@@ -64,9 +65,28 @@ function SeriesInfo(){
     }, [seriesId])
 
     useEffect(() => {
+      const fetchUserInfo = async () => {
+        if (user && user.token) {
+          try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/profile`, {
+              headers: {
+                'Authorization': `Bearer ${user.token}`
+              }
+            })
+            if (response.ok) {
+              const data = await response.json()
+              setUserPfp(data.user.pfp_url)
+            }
+          } catch (err) {
+            console.error("Error fetching user info:", err)
+          }
+        }
+      }
+
       if (user && user.token && seriesId) {
         checkIfFavourited()
         getUserGroups()
+        fetchUserInfo()
       }
     }, [user, seriesId])
 
@@ -433,7 +453,7 @@ function SeriesInfo(){
 
             <div className ="myReviewRow">
               <div className="profileAndName">
-                   <img src={user?.avatar || user?.pfp_url || "https://i.imgur.com/MVFmDAe.jpeg"} alt="Profile" className="pfp"/>
+                   <img src={userPfp && userPfp.startsWith('http') ? userPfp : require(`../assets/icons/${userPfp || 'null'}.png`)} alt="Profile" className="pfp"/>
                 <div className ="myReviewName">{user ? user.username : "Not logged in"}</div>
               </div>
 

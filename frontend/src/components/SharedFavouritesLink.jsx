@@ -4,8 +4,31 @@ function SharedFavouritesLink({ userId }) {
   const shareUrl = `${window.location.origin}/shared-favourites/${userId}`
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(shareUrl)
-    alert("Link copied!")
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareUrl)
+        .then(() => alert("Link copied!"))
+        .catch(() => {
+          fallbackCopy()
+        })
+    } else {
+      fallbackCopy()
+    }
+  }
+
+  const fallbackCopy = () => {
+    const textArea = document.createElement("textarea")
+    textArea.value = shareUrl
+    textArea.style.position = "fixed"
+    textArea.style.left = "-999999px"
+    document.body.appendChild(textArea)
+    textArea.select()
+    try {
+      document.execCommand('copy')
+      alert("Link copied!")
+    } catch (err) {
+      alert("Could not copy link")
+    }
+    document.body.removeChild(textArea)
   }
 
   return (

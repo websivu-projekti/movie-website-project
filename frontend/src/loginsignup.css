@@ -1,0 +1,38 @@
+.loginContent{
+    display: grid;
+    gap: 10px;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    'title form'
+    'empt link';
+    min-width: 40%;
+    width: fit-content;
+    text-align: center;
+    margin: auto;
+}
+
+.title{
+    grid-area: title;
+}
+
+.loginForm{
+    display: grid;
+    grid-area: form;
+    gap: 10px;
+    place-items: center;
+}
+
+.link{
+    grid-area: link;
+}
+
+@media only screen and (max-width: 740px){
+    .loginContent{
+        grid-template-areas: 
+        'title'
+        'form'
+        'link';
+        width: 100%;
+    }
+}

@@ -1,0 +1,19 @@
+services:
+  api:
+    restart: unless-stopped
+    command: node src/index.js
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    restart: unless-stopped
+    command: npm start
+    environment:
+      - NODE_ENV=production
+      - PORT=${FRONTEND_PORT}
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+
+  db:
+    restart: unless-stopped
+    mem_limit: 2g

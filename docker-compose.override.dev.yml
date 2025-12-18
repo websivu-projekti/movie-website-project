@@ -1,0 +1,24 @@
+services:
+  api:
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev           # Api käynnistetään Nodemonilla
+
+  frontend:
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - PORT=${FRONTEND_PORT}
+    command: npm start           
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+
+  db:
+    mem_limit: 1g
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]

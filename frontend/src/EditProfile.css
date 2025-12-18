@@ -1,0 +1,318 @@
+:root{
+    --bg-colour: #0e1c1f;
+    --bg-acc1: #2d464d;
+    --bg-acc2: #3C5E67;
+    --blue-acc1: #585cd5;
+    --blue-acc2: #7c80de;
+    --green-acc1: #a5e364;
+    --green-acc2: #cdf0a8;
+    --red-acc1: #e33b22;
+    --red-acc2: #ed523b;
+    --text-col1: #F5F5F5;
+    --text-col2: #0f0f0f;
+    --title-font: "Bagel Fat One", system-ui;
+    --font: "DM Sans", sans-serif;
+}
+
+.content{
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  grid-template-areas:
+  'title empty' 
+  'pfppic manage'
+  'changepfp changepfp'
+  'acc acc';
+  min-width: 40%;
+  width: fit-content;
+  text-align: center;
+  margin: auto;
+  column-gap: 100px;
+}
+
+.editTitle {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  grid-area: title;
+  text-align: left;
+  font-family: var(--title-font);
+  color: var(--blue-acc1);
+}
+
+.editPfp {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  background-color: #e0e0e0;
+  color: #0f0f0f;
+}
+
+.imageContainer {
+  width: 250px;
+  height: 250px;
+  padding: 10px;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 8px;
+  border: 8px solid #ccc;
+  grid-area: pfppic;
+}
+
+.accessibility {
+  display: grid;
+  gap: 10px;
+  padding-top: 10px;
+  width: fit-content;
+  grid-area: acc;
+}
+
+.manageUser {
+  display: grid;
+  gap: 15px;
+  grid-area: manage;
+  place-items: center;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  grid-template-areas: 
+  'field1'
+  'field2'
+  'field3'
+  'change'
+  'delete';
+}
+
+.field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.usrnameField{
+  grid-area: field1;
+}
+
+.emailField{
+  grid-area: field2;
+}
+
+.passwordField{
+  grid-area: field3;
+}
+
+.label {
+  padding: 5px;
+  font-size: 1rem;
+  width: 100px;
+}
+
+.settingsLabel {
+  padding: 5px;
+  font-size: 1rem;
+}
+
+.input {
+  flex: 1;
+  padding: 8px;
+  font-size: 1rem;
+  color: #000;
+  background-color: #e0e0e0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.changePfp{
+  grid-area: changepfp;
+
+}
+
+.button {
+  padding: 10px;
+  width: 180px;
+  height: fit-content;
+  font-size: 1rem;
+  background-color: var(--blue-acc1);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.deleteButton {
+  padding: 10px;
+  width: 180px;
+  height: fit-content;
+  font-size: 1rem;
+  background-color: var(--red-acc1);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  grid-area: delete;
+}
+
+.deleteButton:hover{
+  background-color: var(--red-acc2);
+}
+
+.deleteButton:active{
+  background-color: #c4321b;
+}
+
+.button:hover {
+  background-color: var(--blue-acc2);
+}
+.button:active {
+  background-color: #004080;
+}   
+
+.changeBtn{
+  grid-area: change;
+}
+
+.pfpMenu{
+  width: 50vw;
+  height: fit-content;
+  padding: 20px;
+  background-color: var(--bg-acc2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: absolute;
+  border-radius: 10px;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    'title close'
+    'groupform nots'
+  ;
+}
+
+.pfpMenuTitle{
+  background-color: var(--bg-acc2);
+  grid-area: title;
+}
+
+.choosePfpForm{
+  padding: 10px;
+  gap: 10px;
+  display: grid;
+  background-color: var(--bg-acc2);
+}
+
+.closePfpMenu{
+  background-color: var(--bg-acc2);
+  border: none;
+  grid-area: close;
+  margin-left: auto;
+  width: 40px;
+}
+
+.closePfpMenu > img{
+  background-color: var(--bg-acc2);
+  border: none;
+  width: 32px;
+}
+
+.pfpIconGrid{
+  display: grid;
+  width: fit-content;
+  background-color: var(--bg-acc3);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  grid-template-columns: fit-content(252px) fit-content(252px) fit-content(252px);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.createPfpIcon{
+  width: 128px;
+  margin: 10px;
+  border: 2px var(--bg-acc1) solid;
+  border-radius: 8px;
+  background-color: var(--bg-acc3);
+}
+
+.createPfpIcon:hover{
+  border: var(--green-acc1) 2px solid;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: scale(110%);
+}
+
+.pfpIconRadio{
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.pfpIconRadio + img {
+  cursor: pointer;
+}
+
+.pfpIconRadio:checked + img {
+  border: 4px solid var(--green-acc2);
+}
+
+.pfpIconLabel{
+  background-color: var(--bg-acc3);
+  border-radius: 8px;
+}
+
+.choosePfpLabel{
+  font-size: 1.25rem;
+  background-color: var(--bg-acc2);
+}
+
+.choosePfpBtn{
+  padding: 0.5rem 1rem; 
+  margin-top: 10px;
+  background-color: var(--bg-acc1);
+  color: var(--text-col1);
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer;
+  text-decoration: none;
+  max-width: fit-content;
+  margin-right: auto;
+}
+
+.choosePfpBtn:hover{
+    outline: solid var(--green-acc2) 2px;
+    text-decoration: underline;
+}
+
+.choosePfpBtn:active{
+  color: var(--text-col2);
+  background-color: var(--green-acc1);
+}
+
+/* BREAKPOINTS */
+@media only screen and (max-width: 870px){
+  .content{
+    grid-template-areas:
+    'title' 
+    'pfppic'
+    'changepfp'
+    'manage'
+    'acc';
+    width: 100%;
+    place-items: center;
+    margin: auto;
+    row-gap: 20px;
+  }
+
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 871px) {
+  .content{
+    width: 80%;
+  }
+
+}

@@ -6,6 +6,7 @@ This is a website based around movies, where users are able to search for movies
 - [Features](#features)
 - [Installation](#installation)
 - [Technical information](#technical-information)
+- [Other information](#other-information)
 
 ## Features
 
@@ -50,3 +51,8 @@ Wireframe can be viewed here [https://app.moqups.com/H3pSKjq5KR7jFpC39XbAgoNNwBF
 
 Below is a class diagram of the database used:
 ![Class diagram of database](/documentation/DBclassdiagram.png)
+
+## Other information
+
+Group's work diary can be found here: [https://unioulu-my.sharepoint.com/:x:/g/personal/t2sone00_students_oamk_fi/EQMMcQR0T_tAo_flIuGgs6kBhodtleJ-5jwdfjyO5t_zeg?e=zec8ov](https://unioulu-my.sharepoint.com/:x:/g/personal/t2sone00_students_oamk_fi/EQMMcQR0T_tAo_flIuGgs6kBhodtleJ-5jwdfjyO5t_zeg?e=zec8ov)
+

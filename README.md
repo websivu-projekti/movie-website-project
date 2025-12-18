@@ -1,4 +1,4 @@
-# :clapper: Clipper \(WIP\)
+# :clapper: Clipper
 
 This is a website based around movies, where users are able to search for movies or series, mark their favourites, see movies that are currently in nearby theaters and create groups for movie-watching. The website is based on React and Node-technologies and uses PostgreSQL for database-related needs. This is a project created towards Web Development Project-course.
 

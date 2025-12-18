@@ -12,7 +12,7 @@ This is a website based around movies, where users are able to search for movies
 
 Here you can find a presentation about how our project went and all features written more precisely. 
 
-(https://1drv.ms/p/c/68891eacfbec9491/IQBoNQrHZQyAQa5DmfjxohbCASZMUJM3EavVJuzivBv-1sc?e=n3fDSE)[https://1drv.ms/p/c/68891eacfbec9491/IQBoNQrHZQyAQa5DmfjxohbCASZMUJM3EavVJuzivBv-1sc?e=n3fDSE]
+[https://1drv.ms/p/c/68891eacfbec9491/IQBoNQrHZQyAQa5DmfjxohbCASZMUJM3EavVJuzivBv-1sc?e=n3fDSE](https://1drv.ms/p/c/68891eacfbec9491/IQBoNQrHZQyAQa5DmfjxohbCASZMUJM3EavVJuzivBv-1sc?e=n3fDSE)
 
 ## Features
 
